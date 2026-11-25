@@ -286,7 +286,7 @@
           "lab": {
             "id": "4.1",
             "title": "Claims tested in code, then proved",
-            "summary": "An added lab, beyond the entry's five: test claims on generated cases, prove them by induction and invariants, meet a claim that holds for forty cases and fails on the next, and find the gap in a flawed proof.",
+            "summary": "An added lab: test claims on generated cases, prove them by induction and invariants, and find the gap in a flawed proof.",
             "minutes": 105,
             "href": "W4_1.ipynb",
             "steps": [
@@ -299,7 +299,7 @@
                 "minutes": 15
               },
               {
-                "text": "A claim true for forty cases and false on the next",
+                "text": "True for forty cases, false on the next",
                 "minutes": 10
               },
               {
@@ -315,11 +315,11 @@
                 "minutes": 15
               },
               {
-                "text": "Record which claims are proved and which are only tested",
+                "text": "Record which claims are proved",
                 "minutes": 15
               }
             ],
-            "stretch": "Write and prove an invariant for binary search over the sorted volunteer codes"
+            "stretch": "Prove an invariant for binary search over the volunteer codes"
           },
           "summary": "Mathematical and structural induction, loop invariants, and why a claim tested on many cases is not proved"
         }

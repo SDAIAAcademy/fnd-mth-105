@@ -407,6 +407,151 @@
       "level": "apply",
       "pool": "practice",
       "weight": 1
+    },
+    {
+      "id": "w4-hypothesis-use",
+      "type": "single",
+      "prompt": "In an induction proof that 3 divides n³ − n for every n ≥ 1, where must the hypothesis be used?",
+      "options": [
+        "In the base case, to check n = 1",
+        "In the step, to rewrite the part of (k + 1)³ − (k + 1) that equals k³ − k",
+        "At the end, to conclude the claim for all n",
+        "Nowhere: the step is pure algebra"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "(k + 1)³ − (k + 1) = (k³ − k) + 3k² + 3k; the hypothesis says 3 divides k³ − k, and 3 divides the rest.",
+      "misconceptions": [
+        "Confuses the base case with the step: the base is checked directly",
+        "",
+        "Thinks the conclusion uses the hypothesis: it follows from base and step together",
+        "Misses that divisibility of k³ − k is exactly what the algebra cannot supply"
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "week4",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w4-tested-claim",
+      "type": "single",
+      "prompt": "A claim about every positive integer passes all tests for n up to 10,000. What may the report say?",
+      "options": [
+        "The claim is true",
+        "The claim is true for all practical purposes",
+        "No counterexample for n from 1 to 10,000; not yet proved",
+        "The claim is false beyond 10,000"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Tests show the absence of a counterexample in the range tried; only a proof covers every n.",
+      "misconceptions": [
+        "Treats tests as proof: patterns can break after many passes",
+        "Softens the same error: 'practical purposes' still claims more than was checked",
+        "",
+        "Turns absence of evidence into a refutation"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "week4",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w4-invariant-parts",
+      "type": "single",
+      "prompt": "An analyst shows that an invariant holds before a loop and after every pass. What else does the correctness proof need?",
+      "options": [
+        "Nothing more",
+        "That the loop terminates, and that the invariant with the exit condition gives the result",
+        "A test on random inputs",
+        "That the invariant also holds in the middle of a pass"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Initialisation and maintenance give an invariant; termination and the exit condition turn it into the result.",
+      "misconceptions": [
+        "Forgets termination and the link to the result",
+        "",
+        "Treats a test as a substitute for the missing proof steps",
+        "Asks for more than an invariant promises: it may be broken inside a pass"
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "week4",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w4-flawed-step",
+      "type": "single",
+      "prompt": "A proof that '2ⁿ ≥ n³ for every n ≥ 1' checks n = 1 and has a step that uses 2k³ ≥ (k + 1)³ without saying so. Testing shows 2² = 4 < 8 = 2³. Where is the gap?",
+      "options": [
+        "In the base case",
+        "In the step, which is not valid for small k",
+        "In the identity 2ᵏ⁺¹ = 2 · 2ᵏ",
+        "Nowhere: a proof outweighs a test"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "2k³ ≥ (k + 1)³ holds only from k = 4 on, so the step from n = 1 to n = 2 is not justified.",
+      "misconceptions": [
+        "Blames the base case, which was checked and is true",
+        "",
+        "Blames a correct identity",
+        "Trusts the argument over a concrete counterexample, which settles the claim"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "week4",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w4-structural",
+      "type": "single",
+      "prompt": "A recursive function counts the files in a folder tree by adding the counts of its subfolders. A proof of its correctness by structural induction assumes:",
+      "options": [
+        "the function is correct on the whole tree",
+        "the function is correct on every subfolder of the folder",
+        "the tree has at most two levels",
+        "every folder has the same number of files"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "The hypothesis is the claim for every immediate part; the step shows it for the folder built from them.",
+      "misconceptions": [
+        "Assumes the conclusion",
+        "",
+        "Restricts the structure for no reason: the induction covers any depth",
+        "Adds a condition the proof does not need"
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "week4",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
     }
   ]
 }
