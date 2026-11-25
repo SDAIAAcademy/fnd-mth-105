@@ -32,17 +32,15 @@ sys.path.insert(0, os.getcwd())
 # *Your answer:*
 
 # %% [markdown]
-# ## 2 [code] · Arrangements and selections
+# ## 2 [code] · Arrangements of a word
 #
-# Write `perm(n, k)` (ordered selections of k from n, no repeats) and `comb(n, k)`
-# (unordered), with loops or the formulas, without importing a counting function.
+# Write `word_arrangements(word)`: the number of different strings that use exactly the letters
+# of `word` (for example "aab" gives 3: aab, aba, baa). Count with a formula, dividing by the
+# orderings of each repeated letter, not by listing the strings, so that a word of 20 letters
+# returns at once.
 
 # %%
-def perm(n, k):
-    # ✏️ your code
-    raise NotImplementedError
-
-def comb(n, k):
+def word_arrangements(word):
     # ✏️ your code
     raise NotImplementedError
 

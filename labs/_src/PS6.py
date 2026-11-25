@@ -62,13 +62,15 @@ def union_size(sets):
 # *Your answer:*
 
 # %% [markdown]
-# ## 5 [code] · The smallest group
+# ## 5 [code] · Divisible by at least one
 #
-# Write `smallest_group(rows, keys)`: for a list of dictionaries and a list of column names,
-# the number of rows in the smallest group of rows that share all the named values.
+# Write `count_divisible(n, divisors)`: how many of the integers 1 to n are divisible by at
+# least one of the numbers in `divisors`, by inclusion-exclusion over the sub-collections of the
+# divisors (`math.lcm` gives the numbers divisible by all of a sub-collection), not by looping
+# over 1 to n, so that n = 10¹² returns at once.
 
 # %%
-def smallest_group(rows, keys):
+def count_divisible(n, divisors):
     # ✏️ your code
     raise NotImplementedError
 

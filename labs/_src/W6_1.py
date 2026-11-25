@@ -313,9 +313,11 @@ U.check(m.count(1) + sum(1 for x in m if x > 1) == len(sheet), "every sheet row 
 # Because birth date, sex and district together single out most people, so the data makes it
 # indirectly possible to identify them, which the Law's definition covers.</details>
 #
-# <details><summary>2. Why does the product rule predict more unique people than you counted?</summary>
-# It assumes people spread evenly over the combinations. Real people cluster (ages, large
-# districts), so some combinations are crowded and fewer people stand alone.</details>
+# <details><summary>2. Why does the even-spread prediction miss your count, and in which direction?</summary>
+# It assumes people spread evenly over the combinations. Real people do not: crowded combinations
+# (common ages, large districts) hold fewer people alone, while sparse ones (the earliest birth
+# years here) leave more people alone. By birth year the sparse years win: 245 counted against 193
+# predicted. Use the prediction for the order of magnitude, and count.</details>
 #
 # <details><summary>3. Two tables each leave few unique people. Why is releasing both riskier than either?</summary>
 # A person unique in either table can be found: the risk is the union, |A| + |B| − |A ∩ B|, not the

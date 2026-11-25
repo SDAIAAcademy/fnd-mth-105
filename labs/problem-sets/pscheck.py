@@ -26,12 +26,25 @@ WRITTEN = {
 }
 
 
+class _TooSlow(Exception):
+    pass
+
+
+def _in_time(t0, hint, limit=2.0):
+    """Stop a check whose calls, made on growing inputs, have taken more than `limit` seconds."""
+    import time
+    if time.perf_counter() - t0 > limit:
+        raise _TooSlow(hint)
+
+
 def _run(test):
     try:
         ok = bool(test())
         return ok, "" if ok else "wrong on a generated case"
     except NotImplementedError:
         return False, "not written yet"
+    except _TooSlow as e:
+        return False, f"too slow: {e}"
     except Exception as e:  # noqa: BLE001 - a learner's error is a result, not a crash
         return False, f"{type(e).__name__}: {e}"
 
@@ -104,24 +117,28 @@ def _ps3(ns):
         return True
     yield "2 symmetric_closure: contains R, symmetric, nothing extra", _run(sym_ok)
 
-    def wit_ok():
-        f = ns["transitivity_witness"]
+    def max_ok():
+        f = ns["maximal_elements"]
         for _ in range(20):
-            xs = RNG.sample(range(50), 6)
-            le = {(a, b) for a in xs for b in xs if a <= b}
-            if f(le) is not None:
-                return False
-            a, b, c = RNG.sample(range(100, 200), 3)
-            R = {(a, b), (b, c)} | {(RNG.randrange(300, 310), RNG.randrange(300, 310)) for _ in range(3)}
-            R = {p for p in R if p != (a, c)}
-            w = f(R)
-            if w is None:
-                return False
-            x, y, z = w
-            if (x, y) not in R or (y, z) not in R or (x, z) in R:
+            # Disjoint non-empty "top" sets, each with some of its proper subsets below it, ordered
+            # by inclusion: by construction the tops are exactly the maximal elements.
+            pool = RNG.sample(range(100), 30)
+            tops, start = [], 0
+            for _ in range(RNG.randrange(1, 5)):
+                size = RNG.randrange(1, 6)
+                tops.append(frozenset(pool[start:start + size]))
+                start += size
+            X = set(tops)
+            for t in tops:
+                items = sorted(t)
+                for _ in range(RNG.randrange(0, 4)):
+                    sub = frozenset(RNG.sample(items, RNG.randrange(0, len(items))))
+                    X.add(sub)
+            R = {(a, b) for a in X for b in X if a <= b}
+            if set(f(R, set(X))) != set(tops):
                 return False
         return True
-    yield "5 transitivity_witness: None for an order, a real witness otherwise", _run(wit_ok)
+    yield "5 maximal_elements: generated orders whose maximal elements are known", _run(max_ok)
 
 
 # ---------------------------------------------------------------- PS4 induction and invariants
@@ -153,14 +170,23 @@ def _ps4(ns):
 def _ps5(ns):
     import math
 
-    def pc_ok():
-        perm, comb = ns["perm"], ns["comb"]
-        for n in range(0, 12):
-            for k in range(0, n + 1):
-                if perm(n, k) != math.perm(n, k) or comb(n, k) != math.comb(n, k):
-                    return False
+    def words_ok():
+        import time
+        f = ns["word_arrangements"]
+        letters = "abcdefghijklmnopqrst"
+        t0 = time.perf_counter()
+        for n in range(1, 21):
+            # all letters different: n!; one letter n times: 1; k a's and n - k b's: C(n, k)
+            k = RNG.randrange(0, n + 1)
+            word = list("a" * k + "b" * (n - k))
+            RNG.shuffle(word)
+            if f("a" * n) != 1 or f("".join(word)) != math.comb(n, k):
+                return False
+            if f(letters[:n]) != math.factorial(n):
+                return False
+            _in_time(t0, "count with the formula instead of listing the strings", limit=0.3)
         return True
-    yield "2 perm and comb: agree with the library for n up to 11", _run(pc_ok)
+    yield "2 word_arrangements: distinct letters, one letter, two letters, up to 20 letters, fast", _run(words_ok)
 
     def onto_ok():
         f = ns["count_onto"]
@@ -184,16 +210,23 @@ def _ps6(ns):
         return True
     yield "2 union_size: agrees with the size of the union", _run(union_ok)
 
-    def small_ok():
-        f = ns["smallest_group"]
-        from collections import Counter
-        for _ in range(10):
-            rows = [{"a": RNG.choice("xy"), "b": RNG.choice("pqr"), "c": RNG.randrange(3)} for _ in range(40)]
-            for keys in (["a"], ["a", "b"], ["a", "b", "c"]):
-                if f(rows, keys) != min(Counter(tuple(r[k] for k in keys) for r in rows).values()):
-                    return False
+    def div_ok():
+        import time
+        f = ns["count_divisible"]
+        # a divisor and its multiple: the multiple adds nobody
+        if f(1000, [4, 8, 12]) != 1000 // 4:
+            return False
+        # one divisor d: n // d; two different primes p, q: n // p + n // q - n // (p q); 1 divides
+        # all. n grows tenfold each round, so a loop over 1 to n is stopped as too slow.
+        t0 = time.perf_counter()
+        for e in range(2, 13):
+            n = RNG.randrange(10 ** (e - 1), 10 ** e)
+            d, (p, q) = RNG.randrange(1, 50), RNG.sample([2, 3, 5, 7, 11, 13], 2)
+            if f(n, [d]) != n // d or f(n, [p, q]) != n // p + n // q - n // (p * q) or f(n, [1, p]) != n:
+                return False
+            _in_time(t0, "count by inclusion-exclusion instead of looping over 1 to n", limit=0.5)
         return True
-    yield "5 smallest_group: on generated rows and key lists", _run(small_ok)
+    yield "5 count_divisible: cases known by construction, n up to 10^12, fast", _run(div_ok)
 
 
 # ---------------------------------------------------------------- PS7 recurrences and graphs
@@ -214,9 +247,11 @@ def _ps7(ns):
     def stair_ok():
         f = ns["stair_ways"]
         t0 = time.perf_counter()
-        vals = [f(n) for n in range(1, 81)]
-        fast = time.perf_counter() - t0 < 2
-        return vals[0] == 1 and vals[1] == 2 and all(vals[i] == vals[i - 1] + vals[i - 2] for i in range(2, 80)) and fast
+        vals = []
+        for n in range(1, 81):  # one value at a time, so that plain recursion is stopped as too slow
+            vals.append(f(n))
+            _in_time(t0, "store the values already computed")
+        return vals[0] == 1 and vals[1] == 2 and all(vals[i] == vals[i - 1] + vals[i - 2] for i in range(2, 80))
     yield "5 stair_ways: first values, the recurrence up to 80, and fast", _run(stair_ok)
 
 

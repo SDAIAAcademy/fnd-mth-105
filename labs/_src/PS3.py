@@ -62,13 +62,14 @@ def symmetric_closure(R):
 # *Your answer:*
 
 # %% [markdown]
-# ## 5 [code] · A witness against transitivity
+# ## 5 [code] · The maximal elements of an order
 #
-# Write `transitivity_witness(R)`: a triple (x, y, z) with (x, y) and (y, z) in R and (x, z)
-# not in R, or None when R is transitive.
+# R is a partial order on the set X, given as a set of pairs: (x, y) in R means "x is below or
+# equal to y". Write `maximal_elements(R, X)`: the set of elements of X with nothing above them,
+# that is every x for which no y different from x has (x, y) in R.
 
 # %%
-def transitivity_witness(R):
+def maximal_elements(R, X):
     # ✏️ your code
     raise NotImplementedError
 
