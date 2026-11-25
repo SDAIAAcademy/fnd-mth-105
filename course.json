@@ -346,16 +346,16 @@
           "lab": {
             "id": "5.1",
             "title": "Hash collisions and the birthday problem, by formula and by brute force",
-            "summary": "Cut short check-in codes from a hash of the volunteer codes, count collision-free assignments by formula and by enumeration, and choose a code length the centre can live with.",
+            "summary": "Cut check-in codes from a hash, count collisions two ways, and choose a code length.",
             "minutes": 105,
             "href": "W5_1.ipynb",
             "steps": [
               {
-                "text": "Set up; sum and product rules by hand, then by listing",
+                "text": "Set up; sum and product rules",
                 "minutes": 10
               },
               {
-                "text": "Permutations and combinations, formula against enumeration",
+                "text": "Arrangements and selections, two ways",
                 "minutes": 15
               },
               {
@@ -363,7 +363,7 @@
                 "minutes": 10
               },
               {
-                "text": "The collision-free count: formula against brute force",
+                "text": "Collision-free count: formula and brute force",
                 "minutes": 20
               },
               {
@@ -371,7 +371,7 @@
                 "minutes": 15
               },
               {
-                "text": "Expected colliding pairs against the codes issued",
+                "text": "Expected colliding pairs against those issued",
                 "minutes": 15
               },
               {
@@ -383,7 +383,7 @@
                 "minutes": 10
               }
             ],
-            "stretch": "Count the pairs of volunteers who share a birthday in the register and compare with the formula"
+            "stretch": "Count the shared birthdays in the register and compare with the formula"
           },
           "summary": "The sum and product rules, permutations and combinations, the pigeonhole principle and collisions of short codes"
         }

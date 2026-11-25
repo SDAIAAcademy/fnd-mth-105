@@ -552,6 +552,151 @@
       "level": "apply",
       "pool": "practice",
       "weight": 1
+    },
+    {
+      "id": "w5-product",
+      "type": "single",
+      "prompt": "A ticket code is one letter from A to J followed by three digits. How many codes are there?",
+      "options": [
+        "13",
+        "1,000",
+        "10,000",
+        "40"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Product rule: 10 letters times 10 · 10 · 10 digits = 10,000.",
+      "misconceptions": [
+        "Adds the choices instead of multiplying them",
+        "Forgets the letter",
+        "",
+        "Multiplies the number of positions by the letters"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "week5",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w5-arrangement",
+      "type": "single",
+      "prompt": "From 7 drivers, a dispatcher picks a first, a second and a third driver for a route, in that order. How many choices are there?",
+      "options": [
+        "35",
+        "210",
+        "343",
+        "21"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Order matters and no driver repeats: P(7, 3) = 7 · 6 · 5 = 210.",
+      "misconceptions": [
+        "Counts unordered selections, C(7, 3)",
+        "",
+        "Allows a driver to be picked more than once: 7³",
+        "Counts pairs, C(7, 2)"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "week5",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w5-collision-formula",
+      "type": "single",
+      "prompt": "Four guests each get one of 10 table numbers at random. Counting assignments, what is the chance that all four numbers differ?",
+      "options": [
+        "10 · 9 · 8 · 7 / 10⁴",
+        "4 / 10",
+        "1 − 4/10",
+        "C(10, 4) / 10⁴"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "There are 10⁴ assignments, of which P(10, 4) = 10 · 9 · 8 · 7 have no repeat.",
+      "misconceptions": [
+        "",
+        "Treats the chance as guests over tables",
+        "Subtracts a load from one",
+        "Counts unordered sets of tables, but the assignments are ordered by guest"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "week5",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w5-brute",
+      "type": "single",
+      "prompt": "An analyst's formula for collision-free assignments gives 60 for 5 codes and 3 people. Listing all 125 assignments finds 60 with no repeat. What does the agreement show?",
+      "options": [
+        "The formula is proved for all sizes",
+        "The formula is right for this case and worth trusting more; other sizes still need a proof",
+        "Listing is unnecessary once a formula exists",
+        "The listing must be wrong, since formulas are exact"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A brute-force count checks the formula on one case; a counting argument proves it for all.",
+      "misconceptions": [
+        "Treats one agreeing case as a proof",
+        "",
+        "Discards the check that catches formula errors",
+        "Trusts the formula over a count made by definition"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "week5",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w5-pigeonhole",
+      "type": "single",
+      "prompt": "A system cuts every customer number down to a 2-digit code (100 codes). It has 250 customers. What is certain?",
+      "options": [
+        "Some code is shared by at least 3 customers",
+        "Every code is used",
+        "No code is shared by more than 3 customers",
+        "Collisions happen only after 10,000 customers"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "⌈250 / 100⌉ = 3: if each code held at most 2 customers, 100 codes would hold only 200.",
+      "misconceptions": [
+        "",
+        "Assumes an even spread: some codes may be unused",
+        "Confuses a lower bound with an upper bound",
+        "Squares the number of codes, mixing pigeonhole with the birthday threshold"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "week5",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
     }
   ]
 }
