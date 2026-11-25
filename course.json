@@ -410,7 +410,7 @@
           "lab": {
             "id": "6.1",
             "title": "Re-identification risk counted from birth date, sex and postal district in a synthetic register",
-            "summary": "Count how many volunteers share each combination of birth date, sex and postal district, generalise until no one stands alone, check inclusion-exclusion with sets, and link a published sign-in sheet back to the register.",
+            "summary": "Count who shares each combination of birth date, sex and district, generalise, and link a posted sheet back.",
             "minutes": 105,
             "href": "W6_1.ipynb",
             "steps": [
@@ -419,11 +419,11 @@
                 "minutes": 10
               },
               {
-                "text": "Count people per combination of birth date, sex and district",
+                "text": "People per combination of the three columns",
                 "minutes": 15
               },
               {
-                "text": "The product rule: possible combinations and expected unique people",
+                "text": "Product rule: combinations and expected uniques",
                 "minutes": 15
               },
               {
@@ -435,7 +435,7 @@
                 "minutes": 15
               },
               {
-                "text": "Link the published sign-in sheet to the register",
+                "text": "Link the posted sign-in sheet",
                 "minutes": 15
               },
               {
@@ -443,7 +443,7 @@
                 "minutes": 15
               }
             ],
-            "stretch": "Find the most detailed release in which every combination holds at least five people, and what it costs the analysis"
+            "stretch": "Find the most detailed release in which every combination holds five people"
           },
           "summary": "Inclusion-exclusion, the product rule over quasi-identifiers, class sizes in a register, generalisation, and personal versus anonymised data"
         }

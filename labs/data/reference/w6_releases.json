@@ -1,0 +1,47 @@
+{
+ "date, sex, district": {
+  "combinations used": 3978,
+  "unique people": 3956,
+  "share unique": 0.989,
+  "in classes of 2": 44,
+  "in classes of 3-4": 0,
+  "in classes of 5+": 0,
+  "smallest class": 1
+ },
+ "year, sex, district": {
+  "combinations used": 1067,
+  "unique people": 245,
+  "share unique": 0.0612,
+  "in classes of 2": 382,
+  "in classes of 3-4": 1007,
+  "in classes of 5+": 2366,
+  "smallest class": 1
+ },
+ "5-year band, sex, district": {
+  "combinations used": 261,
+  "unique people": 19,
+  "share unique": 0.0047,
+  "in classes of 2": 14,
+  "in classes of 3-4": 83,
+  "in classes of 5+": 3884,
+  "smallest class": 1
+ },
+ "5-year band, sex, district group": {
+  "combinations used": 92,
+  "unique people": 6,
+  "share unique": 0.0015,
+  "in classes of 2": 2,
+  "in classes of 3-4": 6,
+  "in classes of 5+": 3986,
+  "smallest class": 1
+ },
+ "10-year band, sex, district group": {
+  "combinations used": 48,
+  "unique people": 0,
+  "share unique": 0.0,
+  "in classes of 2": 0,
+  "in classes of 3-4": 0,
+  "in classes of 5+": 4000,
+  "smallest class": 8
+ }
+}

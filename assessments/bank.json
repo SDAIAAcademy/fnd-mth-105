@@ -697,6 +697,151 @@
       "level": "apply",
       "pool": "practice",
       "weight": 1
+    },
+    {
+      "id": "w6-ie-three",
+      "type": "single",
+      "prompt": "Of 100 staff, 40 speak French, 30 Spanish and 20 German; 10 speak French and Spanish, 8 French and German, 5 Spanish and German, and 3 all three. How many speak at least one?",
+      "options": [
+        "90",
+        "67",
+        "70",
+        "64"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "40 + 30 + 20 − 10 − 8 − 5 + 3 = 70.",
+      "misconceptions": [
+        "Adds the three sets without removing overlaps",
+        "Forgets to add back the 3 who speak all three",
+        "",
+        "Subtracts the triple overlap instead of adding it back"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "week6",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w6-combinations",
+      "type": "single",
+      "prompt": "A register keeps birth year (50 values), sex and one of 20 districts for 1,000 people. How many combinations are possible, and what does that suggest?",
+      "options": [
+        "72 combinations: everyone shares with many others",
+        "2,000 combinations: about half a person per combination, so many people are alone",
+        "1,000 combinations: exactly one person each",
+        "100,000 combinations: no one can be alone"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "50 · 2 · 20 = 2,000 combinations for 1,000 people: on average half a person each, so many classes hold one person.",
+      "misconceptions": [
+        "Adds the column sizes instead of multiplying",
+        "",
+        "Confuses the number of people with the number of combinations",
+        "Inflates the product, and draws the opposite conclusion: more combinations means more people alone"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "week6",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w6-not-anonymous",
+      "type": "single",
+      "prompt": "A charity drops the member number from a list but keeps date of birth, sex and postcode district. Why is the list still personal data?",
+      "options": [
+        "Because any list about people is personal data",
+        "Because those columns together can indirectly identify most members",
+        "Because the member number can be guessed from the row order",
+        "Because the list was not encrypted"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "The Law's definition covers data that may directly or indirectly make identification possible; unique combinations do that.",
+      "misconceptions": [
+        "Overstates the rule: aggregated counts with large groups need not identify anyone",
+        "",
+        "Names a possible leak, but not the reason the columns themselves identify people",
+        "Confuses protection in transit with whether data identifies people"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "week6",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w6-union-risk",
+      "type": "single",
+      "prompt": "Two tables are released from one register. 40 people are alone in the first, 25 in the second, and 10 of them are alone in both. How many people can be singled out?",
+      "options": [
+        "40",
+        "65",
+        "55",
+        "25"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Anyone alone in either table can be found: 40 + 25 − 10 = 55.",
+      "misconceptions": [
+        "Takes the riskier table alone, ignoring the second",
+        "Counts the 10 people twice",
+        "",
+        "Takes the safer table alone"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "week6",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w6-generalise",
+      "type": "single",
+      "prompt": "Which change to a released table most reduces the number of people who are alone in their combination?",
+      "options": [
+        "Sorting the rows randomly",
+        "Replacing full birth date by a ten-year band",
+        "Renaming the columns",
+        "Removing the first row"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Generalising a quasi-identifier merges combinations, so classes grow and fewer people stand alone.",
+      "misconceptions": [
+        "Thinks row order identifies people: the combinations stay the same",
+        "",
+        "Thinks column names matter: the values still single people out",
+        "Removes one person, not the risk to the others"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "week6",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
     }
   ]
 }
