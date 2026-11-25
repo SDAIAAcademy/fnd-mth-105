@@ -1,0 +1,314 @@
+{
+  "$schema": "https://sdaiaacademy.github.io/engine/schemas/course.schema.json",
+  "engine": "1",
+  "id": "fnd-mth-105",
+  "code": "FND-MTH-105",
+  "version": "2027.1.0",
+  "lang": "en",
+  "title": {
+    "en": "Discrete Mathematics and Logic for Computing",
+    "ar": "الرياضيات المتقطعة والمنطق للحوسبة"
+  },
+  "tagline": "REPLACE: one line under the title: what participants can do after the course",
+  "description": "Participants practise the discrete mathematics and proof that computing degrees assume: sets, relations, logic, proof, counting and graphs. Code tests each claim on generated cases before it is proved, so the gap between testing and proof is visible. Labs link relations to joins, logic to rule checking, counting to collision and re-identification risk, and graphs to pipeline dependencies. Algorithms on graphs follow in FND-PRG-103.",
+  "track": "foundations",
+  "level": 100,
+  "audience": "Beginners. Career changers and non-computing graduates closing bridging gaps before advanced study, and computing graduates refreshing the mathematics behind models; a placement test lets participants skip any course whose content they already command.",
+  "prerequisites": [
+    "School algebra",
+    "Writes short Python programs with lists, loops, functions and recursion (FND-PRG-101 or equivalent)"
+  ],
+  "site": {
+    "url": "https://sdaiaacademy.github.io/fnd-mth-105/",
+    "repo": "SDAIAAcademy/fnd-mth-105"
+  },
+  "outcomes": [
+    {
+      "id": "LO1",
+      "text": "Identify whether a relation is a function, an equivalence or an order, and which properties it has, given twelve relations from data and software",
+      "level": "Awareness",
+      "evidence": "supervised AI-off test, at least 70% correct"
+    },
+    {
+      "id": "LO2",
+      "text": "Distinguish valid from invalid arguments and translate plain-language rules into propositional and predicate logic, given five access and data-quality rules",
+      "level": "Awareness",
+      "evidence": "rules checked by truth table or solver, four of five correct"
+    },
+    {
+      "id": "LO3",
+      "text": "Describe direct, contradiction and induction proofs and identify the gap in a flawed proof, given six short proofs, two with planted errors",
+      "level": "Awareness",
+      "evidence": "marked answers in the supervised test"
+    },
+    {
+      "id": "LO4",
+      "text": "Apply induction and loop invariants to prove simple claims about integers, sets and recursive code, given claims first tested in code",
+      "level": "Applied",
+      "evidence": "rubric-marked proofs, each with its test code"
+    },
+    {
+      "id": "LO5",
+      "text": "Compute counts of arrangements, selections and collisions and verify them by enumeration, given hashing and record-linkage problems",
+      "level": "Applied",
+      "evidence": "a notebook in which formula and brute-force counts agree"
+    },
+    {
+      "id": "LO6",
+      "text": "Use a graph model of dependencies to find cycles and compute a topological order, given a pipeline graph with a planted cycle",
+      "level": "Applied",
+      "evidence": "output naming the cycle and a valid order once it is removed"
+    }
+  ],
+  "case_study": {
+    "name": "REPLACE: the name of the fictional organisation every lab works on",
+    "summary": "REPLACE: two sentences on the case study and its synthetic data"
+  },
+  "format": "extended",
+  "format_note": "Extended: 7 weeks part-time, one session and one lab a week, weekly graded problem sets and a capstone portfolio",
+  "hours": {
+    "instruction": 13,
+    "lab": 12,
+    "guided_self_study": 7,
+    "assessment": 3,
+    "capstone": 5
+  },
+  "unit": "week",
+  "days": [
+    {
+      "id": "week1",
+      "kind": "day",
+      "title": "REPLACE: the theme of this unit, in a few words",
+      "deck": "slides/week1.html",
+      "sessions": [
+        {
+          "title": "REPLACE: the title of Session 1",
+          "outcomes": [
+            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+          ],
+          "lo": [],
+          "minutes": 210,
+          "lab": {
+            "id": "1.1",
+            "title": "REPLACE: what participants build in lab 1.1",
+            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "minutes": 105,
+            "href": "W1_1.ipynb"
+          }
+        }
+      ]
+    },
+    {
+      "id": "week2",
+      "kind": "day",
+      "title": "REPLACE: the theme of this unit, in a few words",
+      "deck": "slides/week2.html",
+      "sessions": [
+        {
+          "title": "REPLACE: the title of Session 1",
+          "outcomes": [
+            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+          ],
+          "lo": [],
+          "minutes": 210,
+          "lab": {
+            "id": "2.1",
+            "title": "REPLACE: what participants build in lab 2.1",
+            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "minutes": 105,
+            "href": "W2_1.ipynb"
+          }
+        }
+      ]
+    },
+    {
+      "id": "week3",
+      "kind": "day",
+      "title": "REPLACE: the theme of this unit, in a few words",
+      "deck": "slides/week3.html",
+      "sessions": [
+        {
+          "title": "REPLACE: the title of Session 1",
+          "outcomes": [
+            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+          ],
+          "lo": [],
+          "minutes": 210,
+          "lab": {
+            "id": "3.1",
+            "title": "REPLACE: what participants build in lab 3.1",
+            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "minutes": 105,
+            "href": "W3_1.ipynb"
+          }
+        }
+      ]
+    },
+    {
+      "id": "week4",
+      "kind": "day",
+      "title": "REPLACE: the theme of this unit, in a few words",
+      "deck": "slides/week4.html",
+      "sessions": [
+        {
+          "title": "REPLACE: the title of Session 1",
+          "outcomes": [
+            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+          ],
+          "lo": [],
+          "minutes": 210,
+          "lab": {
+            "id": "4.1",
+            "title": "REPLACE: what participants build in lab 4.1",
+            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "minutes": 105,
+            "href": "W4_1.ipynb"
+          }
+        }
+      ]
+    },
+    {
+      "id": "week5",
+      "kind": "day",
+      "title": "REPLACE: the theme of this unit, in a few words",
+      "deck": "slides/week5.html",
+      "sessions": [
+        {
+          "title": "REPLACE: the title of Session 1",
+          "outcomes": [
+            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+          ],
+          "lo": [],
+          "minutes": 210,
+          "lab": {
+            "id": "5.1",
+            "title": "REPLACE: what participants build in lab 5.1",
+            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "minutes": 105,
+            "href": "W5_1.ipynb"
+          }
+        }
+      ]
+    },
+    {
+      "id": "week6",
+      "kind": "day",
+      "title": "REPLACE: the theme of this unit, in a few words",
+      "deck": "slides/week6.html",
+      "sessions": [
+        {
+          "title": "REPLACE: the title of Session 1",
+          "outcomes": [
+            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+          ],
+          "lo": [],
+          "minutes": 210,
+          "lab": {
+            "id": "6.1",
+            "title": "REPLACE: what participants build in lab 6.1",
+            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "minutes": 105,
+            "href": "W6_1.ipynb"
+          }
+        }
+      ]
+    },
+    {
+      "id": "week7",
+      "kind": "day",
+      "title": "REPLACE: the theme of this unit, in a few words",
+      "deck": "slides/week7.html",
+      "sessions": [
+        {
+          "title": "REPLACE: the title of Session 1",
+          "outcomes": [
+            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+          ],
+          "lo": [],
+          "minutes": 210,
+          "lab": {
+            "id": "7.1",
+            "title": "REPLACE: what participants build in lab 7.1",
+            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "minutes": 105,
+            "href": "W7_1.ipynb"
+          }
+        }
+      ]
+    },
+    {
+      "id": "capstone",
+      "kind": "capstone",
+      "title": "Capstone project presentations",
+      "deck": "slides/capstone.html",
+      "subtitle": "REPLACE: the catalog gives 10 minutes for each presentation and nothing about questions; decide whether the questions are inside those minutes, set capstone.talk_minutes and capstone.qa_minutes in course.json and the timers of the now-presenting slide, and remove this line"
+    }
+  ],
+  "capstone": {
+    "summary": "A portfolio of three proofs, at least one by induction, each preceded by test code, with a ten-minute oral defence of one proof the assessor selects",
+    "submission": "REPLACE: what participants submit and how: a public repository link, or a shared folder for a course without code",
+    "talk_minutes": 10,
+    "rubric": [
+      {
+        "criterion": "REPLACE: rubric criterion 1 and its weight (the weights add up to 100)",
+        "weight": 25
+      },
+      {
+        "criterion": "REPLACE: rubric criterion 2 and its weight (the weights add up to 100)",
+        "weight": 25
+      },
+      {
+        "criterion": "REPLACE: rubric criterion 3 and its weight (the weights add up to 100)",
+        "weight": 20
+      },
+      {
+        "criterion": "REPLACE: rubric criterion 4 and its weight (the weights add up to 100)",
+        "weight": 20
+      },
+      {
+        "criterion": "REPLACE: rubric criterion 5 and its weight (the weights add up to 100)",
+        "weight": 10
+      }
+    ]
+  },
+  "labs": {
+    "kind": "notebooks",
+    "base": "labs/"
+  },
+  "tools": [
+    {
+      "slot": "Satisfiability solver",
+      "examples": [
+        "PySAT",
+        "Z3"
+      ]
+    },
+    {
+      "slot": "Graph library",
+      "examples": [
+        "NetworkX",
+        "igraph"
+      ]
+    },
+    {
+      "slot": "Notebook environment",
+      "examples": [
+        "JupyterLab",
+        "marimo",
+        "a free hosted notebook service"
+      ]
+    },
+    {
+      "slot": "Hint-only tutor",
+      "examples": [
+        "an open-weight model in tutor mode",
+        "an approved assistant with a tutor instruction"
+      ]
+    }
+  ],
+  "checks": {
+    "sessions_per_day": 1,
+    "session_lab": true,
+    "lab_minutes": 105
+  }
+}
