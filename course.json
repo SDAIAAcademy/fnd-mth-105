@@ -471,12 +471,12 @@
           "lab": {
             "id": "7.1",
             "title": "Cycle detection and topological order in a pipeline graph",
-            "summary": "Load the centre's thirty nightly jobs as a directed graph, find and name the planted cycle, remove the wrong edge, check a topological order edge by edge, and count paths by a recurrence and by enumeration.",
+            "summary": "Find and name the cycle in the centre's thirty nightly jobs, remove the wrong edge, check an order edge by edge, and count paths two ways.",
             "minutes": 105,
             "href": "W7_1.ipynb",
             "steps": [
               {
-                "text": "Set up; a small graph by hand, then load the pipeline",
+                "text": "A small graph by hand; load the pipeline",
                 "minutes": 10
               },
               {
@@ -484,7 +484,7 @@
                 "minutes": 10
               },
               {
-                "text": "Find a cycle: with the library and by peeling off ready jobs",
+                "text": "Find a cycle: library and peeling",
                 "minutes": 20
               },
               {
@@ -496,11 +496,11 @@
                 "minutes": 15
               },
               {
-                "text": "Count paths by a recurrence and by enumeration",
+                "text": "Count paths: recurrence and listing",
                 "minutes": 20
               },
               {
-                "text": "Growth: how path counts and orders grow",
+                "text": "How path counts grow",
                 "minutes": 10
               },
               {
@@ -508,7 +508,7 @@
                 "minutes": 10
               }
             ],
-            "stretch": "Compute the earliest round in which each job can run when every ready job runs at once"
+            "stretch": "Earliest round of each job when every ready job runs at once"
           },
           "summary": "Graphs, trees and directed acyclic graphs, paths and cycles, topological order, and recurrences and the growth of functions"
         }

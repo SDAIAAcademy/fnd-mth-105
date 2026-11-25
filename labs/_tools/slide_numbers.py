@@ -54,15 +54,21 @@ def week6():
 
 def week7():
     print("== week 7")
-    # paths in a ladder: from the top to the bottom of a grid 2 wide, moving right or down
+    # monotone paths in an n by n grid, moving right or down: C(2n, n)
     for n in (5, 10, 20, 30):
         print("grid", n, "x", n, "monotone paths:", f"{math.comb(2 * n, n):,}")
     print("n^2, 2^n, n! at n = 10, 20, 30:", [(n, n * n, f"{2 ** n:,}", f"{math.factorial(n):.2e}") for n in (10, 20, 30)])
-    # a small DAG for the slides, a parallel to the pipeline
+    # a small DAG for the slides, a parallel to the pipeline (not the lab's diamond)
     nodes = list("ABCDE")
-    edges = [("A", "B"), ("A", "C"), ("B", "D"), ("C", "D"), ("D", "E")]
+    edges = [("A", "C"), ("B", "C"), ("C", "D"), ("C", "E")]
     orders = [p for p in itertools.permutations(nodes) if all(p.index(u) < p.index(v) for u, v in edges)]
-    print("small DAG A->B, A->C, B->D, C->D, D->E: topological orders", len(orders), [''.join(o) for o in orders])
+    print("small DAG A->C, B->C, C->D, C->E: topological orders", len(orders), [''.join(o) for o in orders])
+    # paths into each point of a 3 by 3 grid of points by the recurrence P(i, j) = P(i-1, j) + P(i, j-1)
+    P = {}
+    for i in range(3):
+        for j in range(3):
+            P[i, j] = 1 if i == 0 or j == 0 else P[i - 1, j] + P[i, j - 1]
+    print("3 by 3 grid of points, paths into each:", [[P[i, j] for j in range(3)] for i in range(3)])
 
 
 if __name__ == "__main__":

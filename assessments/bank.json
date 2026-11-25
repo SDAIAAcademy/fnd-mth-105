@@ -7,18 +7,18 @@
       "type": "single",
       "prompt": "A clinic lists 6 doctors and 4 consulting rooms. A rota table has one row for every possible doctor and room pair. How many rows does it have?",
       "options": [
-        "10",
         "24",
+        "10",
         "2 to the power 24",
         "4 to the power 6"
       ],
       "correct": [
-        1
+        0
       ],
       "explanation": "The rows are the Cartesian product of the two sets, so there are 6 times 4 = 24 of them.",
       "misconceptions": [
-        "Adds the two sizes: that counts doctors or rooms, not pairs",
         "",
+        "Adds the two sizes: that counts doctors or rooms, not pairs",
         "Counts the relations, every subset of the pairs, not the pairs",
         "Counts the functions from doctors to rooms, not the pairs"
       ],
@@ -38,18 +38,18 @@
       "options": [
         "It is an injective function",
         "It is a function, only not surjective",
-        "It is not a function on the employee codes",
-        "It is a bijection once the duplicates are removed"
+        "It is a bijection once the duplicates are removed",
+        "It is not a function on the employee codes"
       ],
       "correct": [
-        2
+        3
       ],
       "explanation": "A function needs exactly one output for every input: a missing desk and a second desk each break that.",
       "misconceptions": [
         "Thinks injectivity is about inputs having outputs: it is about outputs not being shared",
         "Misses that a missing or second output breaks the function itself",
-        "",
-        "Believes removing rows fixes totality: the two codes without a desk still have no output"
+        "Believes removing rows fixes totality: the two codes without a desk still have no output",
+        ""
       ],
       "lo": [
         "LO1"
@@ -97,7 +97,7 @@
         "Yes, row for row",
         "Its distinct rows are; the join can repeat a pair",
         "No, a join is never related to composition",
-        "Only when every order has one line"
+        "Only when every order has exactly one line in the table, never otherwise"
       ],
       "correct": [
         1
@@ -124,18 +124,18 @@
       "prompt": "Rule: if a request is urgent, the duty officer is paged. The duty officer was paged. A colleague concludes the request was urgent. Is the argument valid?",
       "options": [
         "Valid, by modus ponens",
-        "Valid, by modus tollens",
         "Invalid: a non-urgent request may also page the officer",
+        "Valid, by modus tollens, since the officer was paged and the rule holds",
         "Invalid, because the rule itself may be false"
       ],
       "correct": [
-        2
+        1
       ],
       "explanation": "The row with urgent false and paged true makes both premises true and the conclusion false, so the form is invalid.",
       "misconceptions": [
         "Mistakes the form: modus ponens starts from 'urgent', not from 'paged'",
-        "Mistakes the form: modus tollens starts from 'not paged'",
         "",
+        "Mistakes the form: modus tollens starts from 'not paged'",
         "Confuses validity with truth: validity is about the form, whatever the premises' truth"
       ],
       "lo": [
@@ -152,18 +152,18 @@
       "type": "single",
       "prompt": "'The gate stays locked unless a guard is present.' With l = locked and g = guard present, which formula is equivalent?",
       "options": [
-        "g → l",
         "l ∨ g",
+        "g → l",
         "l ∧ ¬g",
         "l ↔ g"
       ],
       "correct": [
-        1
+        0
       ],
       "explanation": "'p unless q' is ¬q → p, which is equivalent to p ∨ q: when no guard is present, the gate is locked.",
       "misconceptions": [
-        "Reverses the condition: a guard being present does not force the gate locked",
         "",
+        "Reverses the condition: a guard being present does not force the gate locked",
         "Makes it a fact that no guard is ever present",
         "Makes it two-way: the rule does not say a guard locks the gate"
       ],
@@ -183,18 +183,18 @@
       "options": [
         "6",
         "12",
-        "15",
-        "36"
+        "36",
+        "15"
       ],
       "correct": [
-        2
+        3
       ],
       "explanation": "One clause per pair of tasks: 6 · 5 / 2 = 15.",
       "misconceptions": [
         "Counts one clause per task: that encodes 'at least one' style rules, not every pair",
         "Counts ordered pairs once each way without halving correctly",
-        "",
-        "Counts every ordered pair including a task with itself"
+        "Counts every ordered pair including a task with itself",
+        ""
       ],
       "lo": [
         "LO2"
@@ -240,7 +240,7 @@
       "prompt": "A solver returns a shift plan for a clinic. What should the planner do before using it?",
       "options": [
         "Nothing: a solver's model always meets the rules",
-        "Run the solver again and compare the two plans",
+        "Run the solver a second time and compare the two plans it returns, line by line",
         "Check the plan against the rules in words with separate code",
         "Count the clauses to confirm the encoding is complete"
       ],
@@ -269,18 +269,18 @@
       "prompt": "In a sports league, team A relates to team B when A has at least as many points as B. Two teams are level on points. Which kind of relation is it?",
       "options": [
         "An equivalence relation",
-        "A partial order",
         "A preorder that is not a partial order",
+        "A partial order, since the relation is reflexive and transitive",
         "A strict order"
       ],
       "correct": [
-        2
+        1
       ],
       "explanation": "It is reflexive and transitive, but two different level teams relate both ways, so it is not antisymmetric.",
       "misconceptions": [
         "Takes 'relates both ways for level teams' as symmetry: a leader does not relate back to a team below",
-        "Misses that two different level teams break antisymmetry",
         "",
+        "Misses that two different level teams break antisymmetry",
         "Misses that every team has at least as many points as itself, so the relation is reflexive"
       ],
       "lo": [
@@ -297,19 +297,19 @@
       "type": "single",
       "prompt": "Which relation on the people of a town is NOT transitive?",
       "options": [
-        "Was born in the same year as",
-        "Is older than",
         "Lives within 2 km of",
+        "Is older than",
+        "Was born in the same year as",
         "Has the same surname initial as"
       ],
       "correct": [
-        2
+        0
       ],
       "explanation": "A within 2 km of B and B within 2 km of C allows A and C to be up to 4 km apart.",
       "misconceptions": [
-        "Misses that 'same year' is an equivalence: it is transitive",
-        "Misses that 'older than' chains: older than someone older is older still",
         "",
+        "Misses that 'older than' chains: older than someone older is older still",
+        "Misses that 'same year' is an equivalence: it is transitive",
         "Misses that 'same initial' is an equivalence: it is transitive"
       ],
       "lo": [
@@ -327,19 +327,19 @@
       "prompt": "Rule: 'every invoice has an approver'. Which finding shows the rule is broken?",
       "options": [
         "One invoice has two approvers",
-        "One invoice has no approver",
+        "Every invoice has no approver",
         "One approver has no invoice",
-        "Every invoice has no approver"
+        "One invoice has no approver"
       ],
       "correct": [
-        1
+        3
       ],
       "explanation": "The negation of 'for every invoice, some approver' is 'some invoice has no approver': one witness suffices.",
       "misconceptions": [
         "Confuses 'at least one' with 'exactly one'",
-        "",
+        "States a much stronger claim than the negation needs",
         "Reverses the quantified variable: the rule is about invoices",
-        "States a much stronger claim than the negation needs"
+        ""
       ],
       "lo": [
         "LO2"
@@ -356,19 +356,19 @@
       "prompt": "A colleague claims: 'for every positive integer n, 2n + 1 is prime'. Which is the best response?",
       "options": [
         "Test n from 1 to 3: all prime, so accept",
-        "Give n = 4: 2n + 1 = 9 = 3 · 3",
+        "Reject it, because claims about all integers cannot be checked",
         "Ask for a proof by induction before deciding",
-        "Reject it, because claims about all integers cannot be checked"
+        "Give n = 4: 2n + 1 = 9 = 3 · 3"
       ],
       "correct": [
-        1
+        3
       ],
       "explanation": "One counterexample refutes a 'for every' claim.",
       "misconceptions": [
         "Treats a few passing tests as a proof",
-        "",
+        "Thinks universal claims cannot be settled: one counterexample refutes them",
         "Asks for a proof of a false claim: a counterexample settles it at once",
-        "Thinks universal claims cannot be settled: one counterexample refutes them"
+        ""
       ],
       "lo": [
         "LO3"
@@ -416,7 +416,7 @@
         "In the base case, to check n = 1",
         "In the step, to rewrite the part of (k + 1)³ − (k + 1) that equals k³ − k",
         "At the end, to conclude the claim for all n",
-        "Nowhere: the step is pure algebra"
+        "Nowhere: the step is pure algebra on (k + 1)³ − (k + 1), expanded and regrouped term by term"
       ],
       "correct": [
         1
@@ -442,19 +442,19 @@
       "type": "single",
       "prompt": "A claim about every positive integer passes all tests for n up to 10,000. What may the report say?",
       "options": [
-        "The claim is true",
-        "The claim is true for all practical purposes",
         "No counterexample for n from 1 to 10,000; not yet proved",
+        "The claim is true for all practical purposes",
+        "The claim is true",
         "The claim is false beyond 10,000"
       ],
       "correct": [
-        2
+        0
       ],
       "explanation": "Tests show the absence of a counterexample in the range tried; only a proof covers every n.",
       "misconceptions": [
-        "Treats tests as proof: patterns can break after many passes",
-        "Softens the same error: 'practical purposes' still claims more than was checked",
         "",
+        "Softens the same error: 'practical purposes' still claims more than was checked",
+        "Treats tests as proof: patterns can break after many passes",
         "Turns absence of evidence into a refutation"
       ],
       "lo": [
@@ -471,18 +471,18 @@
       "type": "single",
       "prompt": "An analyst shows that an invariant holds before a loop and after every pass. What else does the correctness proof need?",
       "options": [
-        "Nothing more",
         "That the loop terminates, and that the invariant with the exit condition gives the result",
+        "Nothing more",
         "A test on random inputs",
-        "That the invariant also holds in the middle of a pass"
+        "That the invariant also holds in the middle of every pass, between any two statements of the loop body"
       ],
       "correct": [
-        1
+        0
       ],
       "explanation": "Initialisation and maintenance give an invariant; termination and the exit condition turn it into the result.",
       "misconceptions": [
-        "Forgets termination and the link to the result",
         "",
+        "Forgets termination and the link to the result",
         "Treats a test as a substitute for the missing proof steps",
         "Asks for more than an invariant promises: it may be broken inside a pass"
       ],
@@ -501,19 +501,19 @@
       "prompt": "A proof that '2ⁿ ≥ n³ for every n ≥ 1' checks n = 1 and has a step that uses 2k³ ≥ (k + 1)³ without saying so. Testing shows 2² = 4 < 8 = 2³. Where is the gap?",
       "options": [
         "In the base case",
-        "In the step, which is not valid for small k",
+        "Nowhere: a written proof outweighs a failing test, so the test must be wrong",
         "In the identity 2ᵏ⁺¹ = 2 · 2ᵏ",
-        "Nowhere: a proof outweighs a test"
+        "In the step, which is not valid for small k"
       ],
       "correct": [
-        1
+        3
       ],
       "explanation": "2k³ ≥ (k + 1)³ holds only from k = 4 on, so the step from n = 1 to n = 2 is not justified.",
       "misconceptions": [
         "Blames the base case, which was checked and is true",
-        "",
+        "Trusts the argument over a concrete counterexample, which settles the claim",
         "Blames a correct identity",
-        "Trusts the argument over a concrete counterexample, which settles the claim"
+        ""
       ],
       "lo": [
         "LO3"
@@ -530,18 +530,18 @@
       "prompt": "A recursive function counts the files in a folder tree by adding the counts of its subfolders. A proof of its correctness by structural induction assumes:",
       "options": [
         "the function is correct on the whole tree",
-        "the function is correct on every subfolder of the folder",
         "the tree has at most two levels",
+        "the function is correct on every subfolder of the folder",
         "every folder has the same number of files"
       ],
       "correct": [
-        1
+        2
       ],
       "explanation": "The hypothesis is the claim for every immediate part; the step shows it for the folder built from them.",
       "misconceptions": [
         "Assumes the conclusion",
-        "",
         "Restricts the structure for no reason: the induction covers any depth",
+        "",
         "Adds a condition the proof does not need"
       ],
       "lo": [
@@ -559,18 +559,18 @@
       "prompt": "A ticket code is one letter from A to J followed by three digits. How many codes are there?",
       "options": [
         "13",
-        "1,000",
         "10,000",
+        "1,000",
         "40"
       ],
       "correct": [
-        2
+        1
       ],
       "explanation": "Product rule: 10 letters times 10 · 10 · 10 digits = 10,000.",
       "misconceptions": [
         "Adds the choices instead of multiplying them",
-        "Forgets the letter",
         "",
+        "Forgets the letter",
         "Multiplies the number of positions by the letters"
       ],
       "lo": [
@@ -646,19 +646,19 @@
       "prompt": "An analyst's formula for collision-free assignments gives 60 for 5 codes and 3 people. Listing all 125 assignments finds 60 with no repeat. What does the agreement show?",
       "options": [
         "The formula is proved for all sizes",
-        "The formula is right for this case and worth trusting more; other sizes still need a proof",
-        "Listing is unnecessary once a formula exists",
-        "The listing must be wrong, since formulas are exact"
+        "The listing must be wrong, since formulas are exact",
+        "Listing was unnecessary: once a formula exists, enumerating the cases adds no evidence of any kind",
+        "The formula is right for this case and worth trusting more; other sizes still need a proof"
       ],
       "correct": [
-        1
+        3
       ],
       "explanation": "A brute-force count checks the formula on one case; a counting argument proves it for all.",
       "misconceptions": [
         "Treats one agreeing case as a proof",
-        "",
+        "Trusts the formula over a count made by definition",
         "Discards the check that catches formula errors",
-        "Trusts the formula over a count made by definition"
+        ""
       ],
       "lo": [
         "LO5"
@@ -674,19 +674,19 @@
       "type": "single",
       "prompt": "A system cuts every customer number down to a 2-digit code (100 codes). It has 250 customers. What is certain?",
       "options": [
-        "Some code is shared by at least 3 customers",
-        "Every code is used",
         "No code is shared by more than 3 customers",
+        "Every code is used",
+        "Some code is shared by at least 3 customers",
         "Collisions happen only after 10,000 customers"
       ],
       "correct": [
-        0
+        2
       ],
       "explanation": "⌈250 / 100⌉ = 3: if each code held at most 2 customers, 100 codes would hold only 200.",
       "misconceptions": [
-        "",
-        "Assumes an even spread: some codes may be unused",
         "Confuses a lower bound with an upper bound",
+        "Assumes an even spread: some codes may be unused",
+        "",
         "Squares the number of codes, mixing pigeonhole with the birthday threshold"
       ],
       "lo": [
@@ -735,7 +735,7 @@
         "72 combinations: everyone shares with many others",
         "2,000 combinations: about half a person per combination, so many people are alone",
         "1,000 combinations: exactly one person each",
-        "100,000 combinations: no one can be alone"
+        "100,000 combinations: so many that people spread out and no one can be alone"
       ],
       "correct": [
         1
@@ -761,18 +761,18 @@
       "type": "single",
       "prompt": "A charity drops the member number from a list but keeps date of birth, sex and postcode district. Why is the list still personal data?",
       "options": [
-        "Because any list about people is personal data",
         "Because those columns together can indirectly identify most members",
+        "Because any list about people is personal data",
         "Because the member number can be guessed from the row order",
         "Because the list was not encrypted"
       ],
       "correct": [
-        1
+        0
       ],
       "explanation": "The Law's definition covers data that may directly or indirectly make identification possible; unique combinations do that.",
       "misconceptions": [
-        "Overstates the rule: aggregated counts with large groups need not identify anyone",
         "",
+        "Overstates the rule: aggregated counts with large groups need not identify anyone",
         "Names a possible leak, but not the reason the columns themselves identify people",
         "Confuses protection in transit with whether data identifies people"
       ],
@@ -792,18 +792,18 @@
       "options": [
         "40",
         "65",
-        "55",
-        "25"
+        "25",
+        "55"
       ],
       "correct": [
-        2
+        3
       ],
       "explanation": "Anyone alone in either table can be found: 40 + 25 − 10 = 55.",
       "misconceptions": [
         "Takes the riskier table alone, ignoring the second",
         "Counts the 10 people twice",
-        "",
-        "Takes the safer table alone"
+        "Takes the safer table alone",
+        ""
       ],
       "lo": [
         "LO5"
@@ -819,25 +819,229 @@
       "type": "single",
       "prompt": "Which change to a released table most reduces the number of people who are alone in their combination?",
       "options": [
-        "Sorting the rows randomly",
-        "Replacing full birth date by a ten-year band",
+        "Sorting the rows into a random order before the table is released",
+        "Removing the first row",
         "Renaming the columns",
-        "Removing the first row"
+        "Replacing full birth date by a ten-year band"
       ],
       "correct": [
-        1
+        3
       ],
       "explanation": "Generalising a quasi-identifier merges combinations, so classes grow and fewer people stand alone.",
       "misconceptions": [
         "Thinks row order identifies people: the combinations stay the same",
-        "",
+        "Removes one person, not the risk to the others",
         "Thinks column names matter: the values still single people out",
-        "Removes one person, not the risk to the others"
+        ""
       ],
       "lo": [
         "LO5"
       ],
       "day": "week6",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w7-degree-sum",
+      "type": "single",
+      "prompt": "A build file lists 18 dependencies between 11 modules, each as (needed module, module that needs it). What do the in-degrees of the 11 modules add up to?",
+      "options": [
+        "11",
+        "36",
+        "18",
+        "29"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Each dependency arrives at exactly one module, so it adds one to exactly one in-degree: the in-degrees add up to the 18 edges.",
+      "misconceptions": [
+        "Counts the modules, not the edges",
+        "Doubles the edges, as for in-degree plus out-degree together",
+        "",
+        "Adds modules and edges"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "week7",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w7-peel-stops",
+      "type": "single",
+      "prompt": "A warehouse runs its tasks by repeatedly starting every task whose prerequisites are all done. After a while 7 tasks remain and none can start. What must be true?",
+      "options": [
+        "Every one of the 7 tasks is on a cycle",
+        "The 7 remaining tasks contain a cycle of prerequisites",
+        "One of the 7 tasks has no prerequisites",
+        "The prerequisite file has a duplicate line that blocks the tasks listed after it"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "If no remaining task can start, each one waits on another remaining task; walking back through finitely many tasks must repeat one, which is a cycle. Tasks downstream of the cycle wait too, so not all 7 need be on it.",
+      "misconceptions": [
+        "Forgets the tasks downstream of a cycle, which wait without being on it",
+        "",
+        "Contradicts the situation: such a task could start",
+        "A duplicate line repeats an edge and blocks nothing"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "week7",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w7-valid-order",
+      "type": "single",
+      "prompt": "Course modules have prerequisites M1 before M3, M2 before M3, M3 before M5 and M2 before M4. Which study order respects every prerequisite?",
+      "options": [
+        "M2, M4, M1, M3, M5",
+        "M1, M3, M2, M4, M5",
+        "M3, M1, M2, M4, M5",
+        "M1, M2, M5, M3, M4"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Check each prerequisite: M1 and M2 come before M3, M3 before M5, and M2 before M4. Only the second order passes all four.",
+      "misconceptions": [
+        "",
+        "Puts M3 before M2, breaking M2 before M3",
+        "Starts with M3, before both its prerequisites",
+        "Puts M5 before M3, breaking M3 before M5"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "week7",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w7-order-check",
+      "type": "single",
+      "prompt": "A script claims to return a valid running order of 40 jobs. What check proves its output is valid?",
+      "options": [
+        "Every job appears exactly once and, for every dependency (u, v), u appears before v",
+        "The first job has no dependency, the last has nothing depending on it, and no job is missing",
+        "The order matches the one a graph library returns",
+        "Every job appears exactly once"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A topological order is defined edge by edge, so checking every edge and that each job appears once is the whole definition.",
+      "misconceptions": [
+        "",
+        "Checks only the two ends: a middle edge can still point backwards",
+        "Orders are rarely unique: a valid order can differ from the library's",
+        "Checks the jobs and none of the edges"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "week7",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w7-paths-recurrence",
+      "type": "single",
+      "prompt": "In a graph without cycles, node T has three predecessors with 4, 2 and 5 paths into each from the sources. How many paths from the sources reach T?",
+      "options": [
+        "40",
+        "5",
+        "3",
+        "11"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Each path into T arrives by exactly one last edge, so the paths split by predecessor: 4 + 2 + 5 = 11.",
+      "misconceptions": [
+        "Multiplies the counts: that would count choosing one path into each predecessor at once",
+        "Takes the largest predecessor count",
+        "Counts the predecessors, not the paths",
+        ""
+      ],
+      "lo": [
+        "LO4",
+        "LO6"
+      ],
+      "day": "week7",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w7-closed-form",
+      "type": "single",
+      "prompt": "A count satisfies T(0) = 1 and T(n) = 3 · T(n − 1). Which closed form is right, and what does its proof use?",
+      "options": [
+        "T(n) = 3n + 1, proved by checking n = 0 to 5",
+        "T(n) = n³, by induction on n",
+        "T(n) = 3ⁿ, by induction: the step uses T(n − 1) = 3ⁿ⁻¹",
+        "T(n) = 3ⁿ, proved by checking n = 0 to 20"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The values are 1, 3, 9, 27: T(n) = 3ⁿ. Base T(0) = 1 = 3⁰; step T(n) = 3 · 3ⁿ⁻¹ = 3ⁿ uses the hypothesis for n − 1.",
+      "misconceptions": [
+        "Treats repeated multiplying as adding, and a few checks are not a proof",
+        "Confuses 3ⁿ with n³, which gives 0 at n = 0",
+        "",
+        "Checks cases: tests support the claim but prove it only for those 21 values"
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "week7",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w7-growth",
+      "type": "single",
+      "prompt": "Listing every possible order of n independent jobs takes about 1 microsecond per order. Roughly how long for 20 jobs?",
+      "options": [
+        "About a second",
+        "About 77,000 years",
+        "About 20 microseconds",
+        "About 400 microseconds"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "20 independent jobs have 20! ≈ 2.4 × 10¹⁸ orders; at 10⁶ per second that is about 2.4 × 10¹² seconds, roughly 77,000 years.",
+      "misconceptions": [
+        "Thinks the count grows like 2ⁿ, about a million orders",
+        "",
+        "Thinks the count grows like n",
+        "Thinks the count grows like n²"
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "week7",
       "session": 1,
       "level": "apply",
       "pool": "practice",
