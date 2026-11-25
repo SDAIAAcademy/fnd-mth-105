@@ -5,7 +5,7 @@
 # %% [markdown]
 # # Lab 3.1 · Relation properties checked in code
 #
-# Week 3 · Session 1 (Quantifiers, relation properties and first proofs) · 105 min.
+# Week 3 · Session 1 (Quantifiers, relations and first proofs) · 105 min.
 #
 # Each property of a relation is a quantified statement: "for every x, x R x" is reflexivity. On a
 # finite set your code can check every case, which for that set is a proof. You write the four

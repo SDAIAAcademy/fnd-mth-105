@@ -32,11 +32,11 @@ Participants practise the discrete mathematics and proof that computing degrees 
 |---|---|---|---|
 | Week 1 | Sets, functions and relations | Sets, functions and relations | [`slides/week1.html`](slides/week1.html) |
 | Week 2 | Logic: truth tables and satisfiability | Propositional logic, normal forms and SAT | [`slides/week2.html`](slides/week2.html) |
-| Week 3 | Predicates, quantifiers and first proofs | Quantifiers, relation properties and first proofs | [`slides/week3.html`](slides/week3.html) |
-| Week 4 | Induction, invariants and the limits of testing | Induction, loop invariants and testing versus proof | [`slides/week4.html`](slides/week4.html) |
-| Week 5 | Counting, collisions and the birthday problem | Counting arrangements, selections and collisions | [`slides/week5.html`](slides/week5.html) |
-| Week 6 | Counting people: re-identification risk | Inclusion-exclusion and re-identification risk | [`slides/week6.html`](slides/week6.html) |
-| Week 7 | Graphs, topological order and growth | Graphs, cycles, topological order and recurrences | [`slides/week7.html`](slides/week7.html) |
+| Week 3 | Predicates, quantifiers and first proofs | Quantifiers, relations and first proofs | [`slides/week3.html`](slides/week3.html) |
+| Week 4 | Induction, invariants and the limits of testing | Induction, invariants, testing and proof | [`slides/week4.html`](slides/week4.html) |
+| Week 5 | Counting, collisions and the birthday problem | Counting arrangements and collisions | [`slides/week5.html`](slides/week5.html) |
+| Week 6 | Counting people: re-identification risk | Inclusion-exclusion and linkage risk | [`slides/week6.html`](slides/week6.html) |
+| Week 7 | Graphs, topological order and growth | Graphs, cycles, orders and recurrences | [`slides/week7.html`](slides/week7.html) |
 | Capstone | Portfolio oral defences |  | [`slides/capstone.html`](slides/capstone.html) |
 <!-- /academy:units -->
 

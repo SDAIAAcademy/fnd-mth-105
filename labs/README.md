@@ -9,11 +9,11 @@
 |---|---|---|---|
 | Week 1 | Sets, functions and relations | Sets, functions and joins in code (an addition) | [`W1_1.ipynb`](https://colab.research.google.com/github/SDAIAAcademy/fnd-mth-105/blob/main/labs/W1_1.ipynb) |
 | Week 2 | Propositional logic, normal forms and SAT | Truth tables in code, and a scheduling puzzle solved with a SAT solver | [`W2_1.ipynb`](https://colab.research.google.com/github/SDAIAAcademy/fnd-mth-105/blob/main/labs/W2_1.ipynb) |
-| Week 3 | Quantifiers, relation properties and first proofs | Relation properties checked in code | [`W3_1.ipynb`](https://colab.research.google.com/github/SDAIAAcademy/fnd-mth-105/blob/main/labs/W3_1.ipynb) |
-| Week 4 | Induction, loop invariants and testing versus proof | Claims tested in code, then proved (an addition) | [`W4_1.ipynb`](https://colab.research.google.com/github/SDAIAAcademy/fnd-mth-105/blob/main/labs/W4_1.ipynb) |
-| Week 5 | Counting arrangements, selections and collisions | Hash collisions and the birthday problem, by formula and by brute force | [`W5_1.ipynb`](https://colab.research.google.com/github/SDAIAAcademy/fnd-mth-105/blob/main/labs/W5_1.ipynb) |
-| Week 6 | Inclusion-exclusion and re-identification risk | Re-identification risk counted from birth date, sex and postal district in a synthetic register | [`W6_1.ipynb`](https://colab.research.google.com/github/SDAIAAcademy/fnd-mth-105/blob/main/labs/W6_1.ipynb) |
-| Week 7 | Graphs, cycles, topological order and recurrences | Cycle detection and topological order in a pipeline graph | [`W7_1.ipynb`](https://colab.research.google.com/github/SDAIAAcademy/fnd-mth-105/blob/main/labs/W7_1.ipynb) |
+| Week 3 | Quantifiers, relations and first proofs | Relation properties checked in code | [`W3_1.ipynb`](https://colab.research.google.com/github/SDAIAAcademy/fnd-mth-105/blob/main/labs/W3_1.ipynb) |
+| Week 4 | Induction, invariants, testing and proof | Claims tested in code, then proved (an addition) | [`W4_1.ipynb`](https://colab.research.google.com/github/SDAIAAcademy/fnd-mth-105/blob/main/labs/W4_1.ipynb) |
+| Week 5 | Counting arrangements and collisions | Hash collisions and the birthday problem, by formula and by brute force | [`W5_1.ipynb`](https://colab.research.google.com/github/SDAIAAcademy/fnd-mth-105/blob/main/labs/W5_1.ipynb) |
+| Week 6 | Inclusion-exclusion and linkage risk | Re-identification risk counted from birth date, sex and postal district in a synthetic register | [`W6_1.ipynb`](https://colab.research.google.com/github/SDAIAAcademy/fnd-mth-105/blob/main/labs/W6_1.ipynb) |
+| Week 7 | Graphs, cycles, orders and recurrences | Cycle detection and topological order in a pipeline graph | [`W7_1.ipynb`](https://colab.research.google.com/github/SDAIAAcademy/fnd-mth-105/blob/main/labs/W7_1.ipynb) |
 
 Labs 2.1, 3.1, 5.1, 6.1 and 7.1 are the catalog entry's five lab lines, in its order and wording. Labs 1.1 and 4.1 are additions, so that each of the seven weekly sessions has a lab: they practise the entry's topics of sets, functions and joins as relation composition, and of induction, loop invariants and testing a claim versus proving it.
 

@@ -5,7 +5,7 @@
 # %% [markdown]
 # # Lab 4.1 · Claims tested in code, then proved
 #
-# Week 4 · Session 1 (Induction, loop invariants and testing versus proof) · 105 min.
+# Week 4 · Session 1 (Induction, invariants, testing and proof) · 105 min.
 #
 # *An added lab, beyond the catalog entry's five lab lines.*
 #

@@ -5,7 +5,7 @@
 # %% [markdown]
 # # Lab 6.1 · Re-identification risk counted from birth date, sex and postal district in a synthetic register
 #
-# Week 6 · Session 1 (Inclusion-exclusion and re-identification risk) · 105 min.
+# Week 6 · Session 1 (Inclusion-exclusion and linkage risk) · 105 min.
 #
 # A partner asks the volunteer centre for its register "without identifiers". The register holds
 # no names: its direct identifier is the volunteer code, and the plan is to drop that column and

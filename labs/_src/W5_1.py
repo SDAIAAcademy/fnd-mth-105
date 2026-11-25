@@ -5,7 +5,7 @@
 # %% [markdown]
 # # Lab 5.1 · Hash collisions and the birthday problem, by formula and by brute force
 #
-# Week 5 · Session 1 (Counting arrangements, selections and collisions) · 105 min.
+# Week 5 · Session 1 (Counting arrangements and collisions) · 105 min.
 #
 # The volunteer centre wants a short check-in code for each volunteer, cut from a hash of the
 # volunteer code, so that people can type it at an event. Short codes collide. You count codes,

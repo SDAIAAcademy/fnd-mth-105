@@ -5,7 +5,7 @@
 # %% [markdown]
 # # Lab 7.1 · Cycle detection and topological order in a pipeline graph
 #
-# Week 7 · Session 1 (Graphs, cycles, topological order and recurrences) · 105 min.
+# Week 7 · Session 1 (Graphs, cycles, orders and recurrences) · 105 min.
 #
 # Every night the volunteer centre runs thirty jobs, J01 to J30: copies, checks, joins, summaries,
 # reports. A job may start only when every job it depends on has finished. Last night the run

@@ -206,7 +206,7 @@
       "deck": "slides/week3.html",
       "sessions": [
         {
-          "title": "Quantifiers, relation properties and first proofs",
+          "title": "Quantifiers, relations and first proofs",
           "outcomes": [
             "Write a relation property or a data-quality rule with quantifiers and negate it correctly",
             "Classify a relation as a function, an equivalence, a partial order or none, with a counterexample for each property it lacks",
@@ -272,7 +272,7 @@
       "deck": "slides/week4.html",
       "sessions": [
         {
-          "title": "Induction, loop invariants and testing versus proof",
+          "title": "Induction, invariants, testing and proof",
           "outcomes": [
             "Prove a claim about the integers by mathematical induction after testing it in code",
             "Prove a property of a recursive structure by structural induction",
@@ -333,7 +333,7 @@
       "deck": "slides/week5.html",
       "sessions": [
         {
-          "title": "Counting arrangements, selections and collisions",
+          "title": "Counting arrangements and collisions",
           "outcomes": [
             "Count arrangements and selections with the sum and product rules, permutations and combinations",
             "Compute the chance that short codes collide and verify it by exact enumeration",
@@ -397,7 +397,7 @@
       "deck": "slides/week6.html",
       "sessions": [
         {
-          "title": "Inclusion-exclusion and re-identification risk",
+          "title": "Inclusion-exclusion and linkage risk",
           "outcomes": [
             "Count the people who share each combination of quasi-identifiers and find who is unique",
             "Apply inclusion-exclusion to count records that meet at least one of several conditions, and check it with sets",
@@ -457,7 +457,7 @@
       "deck": "slides/week7.html",
       "sessions": [
         {
-          "title": "Graphs, cycles, topological order and recurrences",
+          "title": "Graphs, cycles, orders and recurrences",
           "outcomes": [
             "Model dependencies as a directed graph and decide whether it has a cycle",
             "Compute a topological order and check that every edge points forward",
