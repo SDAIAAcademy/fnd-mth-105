@@ -62,13 +62,13 @@ def union_size(sets):
 # *Your answer:*
 
 # %% [markdown]
-# ## 5 [code] · Class sizes
+# ## 5 [code] · The smallest group
 #
-# Write `class_sizes(rows, keys)`: for a list of dictionaries and a list of column names,
-# return a dictionary from each combination of values (a tuple) to the number of rows that have it.
+# Write `smallest_group(rows, keys)`: for a list of dictionaries and a list of column names,
+# the number of rows in the smallest group of rows that share all the named values.
 
 # %%
-def class_sizes(rows, keys):
+def smallest_group(rows, keys):
     # ✏️ your code
     raise NotImplementedError
 

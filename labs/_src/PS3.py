@@ -33,13 +33,13 @@ sys.path.insert(0, os.getcwd())
 # *Your answer:*
 
 # %% [markdown]
-# ## 2 [code] · Properties of a relation
+# ## 2 [code] · The symmetric closure
 #
-# Write `properties(R, X)` returning a dictionary with the keys "reflexive", "symmetric",
-# "antisymmetric" and "transitive", each True or False, for a relation R (a set of pairs) on the set X.
+# Write `symmetric_closure(R)`: the smallest symmetric relation that contains the relation R
+# (a set of pairs).
 
 # %%
-def properties(R, X):
+def symmetric_closure(R):
     # ✏️ your code
     raise NotImplementedError
 
@@ -62,13 +62,13 @@ def properties(R, X):
 # *Your answer:*
 
 # %% [markdown]
-# ## 5 [code] · Equivalence classes
+# ## 5 [code] · A witness against transitivity
 #
-# Write `classes(R, X)`: for an equivalence relation R on X, return the list of its
-# equivalence classes, each as a `frozenset`.
+# Write `transitivity_witness(R)`: a triple (x, y, z) with (x, y) and (y, z) in R and (x, z)
+# not in R, or None when R is transitive.
 
 # %%
-def classes(R, X):
+def transitivity_witness(R):
     # ✏️ your code
     raise NotImplementedError
 

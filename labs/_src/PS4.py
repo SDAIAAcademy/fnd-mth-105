@@ -63,13 +63,13 @@ def running_max(xs):
 # *Your answer:*
 
 # %% [markdown]
-# ## 5 [code] · Counting leaves
+# ## 5 [code] · The height of a tree
 #
-# A tree is a dictionary `{"code": ..., "children": [...]}`. Write `count_leaves(t)`
-# recursively: a node with no children is a leaf.
+# A tree is a dictionary `{"code": ..., "children": [...]}`. Write `height(t)` recursively:
+# a node with no children has height 0, any other node one more than its tallest child.
 
 # %%
-def count_leaves(t):
+def height(t):
     # ✏️ your code
     raise NotImplementedError
 

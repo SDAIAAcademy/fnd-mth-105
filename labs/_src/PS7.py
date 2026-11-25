@@ -30,14 +30,13 @@ sys.path.insert(0, os.getcwd())
 # *Your answer:*
 
 # %% [markdown]
-# ## 2 [code] · A topological order
+# ## 2 [code] · Counting orders by enumeration
 #
-# Write `topo_order(nodes, edges)`: a list of all nodes in which every edge (u, v) has u
-# before v, by repeatedly taking a node with no remaining incoming edge. Return None when the graph
-# has a cycle.
+# Write `count_orders(nodes, edges)`: the number of orderings of all the nodes in which every
+# edge (u, v) has u before v, by trying every permutation.
 
 # %%
-def topo_order(nodes, edges):
+def count_orders(nodes, edges):
     # ✏️ your code
     raise NotImplementedError
 
@@ -61,13 +60,13 @@ def topo_order(nodes, edges):
 # *Your answer:*
 
 # %% [markdown]
-# ## 5 [code] · Counting paths
+# ## 5 [code] · The staircase by recurrence
 #
-# Write `count_paths(nodes, edges, s, t)` for a graph with no cycle: the number of paths
-# from s to t, using a recurrence over a topological order (not by listing the paths).
+# Write `stair_ways(n)` from item 1's recurrence, storing the values already computed so that
+# `stair_ways(80)` returns at once.
 
 # %%
-def count_paths(nodes, edges, s, t):
+def stair_ways(n):
     # ✏️ your code
     raise NotImplementedError
 

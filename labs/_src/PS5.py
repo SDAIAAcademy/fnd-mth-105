@@ -67,13 +67,13 @@ def comb(n, k):
 # *Your answer:*
 
 # %% [markdown]
-# ## 5 [code] · Collision-free count by enumeration
+# ## 5 [code] · Onto maps by enumeration
 #
-# Write `distinct_count(N, n)`: the number of sequences of length n over {0, …, N − 1} with
-# no repeated value, counted by enumerating every sequence.
+# Write `count_onto(n, k)`: the number of functions from an n-element set onto a k-element
+# set (every element of the second set is reached), counted by enumerating every function.
 
 # %%
-def distinct_count(N, n):
+def count_onto(n, k):
     # ✏️ your code
     raise NotImplementedError
 
