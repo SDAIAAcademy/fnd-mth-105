@@ -37,7 +37,7 @@
     </ul>
     <div class="card c-teal"><h4>A morning of five tasks</h4><p class="small mb0">A and B feed C; C feeds D and E. Sources A, B; sinks D, E. The in-degrees add up to 4, the number of edges.</p></div>
   </div>
-  <aside class="notes"><p>Week 3 met relations as sets of pairs; a directed graph is the same object drawn. Trees were week 4's induction example. Ask why the in-degrees always add up to the number of edges: each edge arrives at exactly one node.</p></aside>
+  <aside class="notes"><p>Week 3 met relations as sets of pairs; a directed graph is the same object drawn. Trees were week 4's induction example. Leave the question of why the in-degrees always add up to the number of edges open: the lab asks it.</p></aside>
 </section>
 
 <section class="slide" id="cycle-blocks" data-lo="LO6">
@@ -76,12 +76,16 @@
       <p>The jobs in the order they are peeled form a <b>topological order</b>: for every edge (u, v), u comes before v.</p>
       <p class="small">The morning of five tasks has 4 of them: ABCDE, ABCED, BACDE, BACED. An order is rarely unique.</p>
     </div>
-    <pre class="code" data-file="python"><code class="language-python">pos = {v: i for i, v in enumerate(order)}
-ok = (len(pos) == len(order) == len(nodes)
-      and all(pos[u] &lt; pos[v] for u, v in edges))</code></pre>
+    <table class="t small">
+      <tr><th>Order A C B D E: edge</th><th>Positions</th><th>Forward?</th></tr>
+      <tr><td>A → C</td><td>1, 2</td><td>yes</td></tr>
+      <tr class="hl"><td>B → C</td><td>3, 2</td><td>no</td></tr>
+      <tr><td>C → D</td><td>2, 4</td><td>yes</td></tr>
+      <tr><td>C → E</td><td>2, 5</td><td>yes</td></tr>
+    </table>
   </div>
-  <div class="callout tip mt"><b>Check, do not trust.</b> The definition is edge by edge, so a check of every edge, plus every node exactly once, proves an order is valid.</div>
-  <aside class="notes"><p>Orders from slide_numbers.py, week 7. The library's order and the peeled order may differ and both pass. The lab writes this check as a function and tries it on a wrong order too.</p></aside>
+  <div class="callout tip mt"><b>Check, do not trust.</b> The definition is edge by edge: one backward edge makes an order invalid, and no backward edge, with every node once, makes it valid.</div>
+  <aside class="notes"><p>Orders from slide_numbers.py, week 7. Check the table aloud: B → C points backwards, so A C B D E is not a running order. The library's order and the peeled order may differ and both pass. The lab writes this check as a function.</p></aside>
 </section>
 
 <section class="slide" id="invariant" data-lo="LO4">

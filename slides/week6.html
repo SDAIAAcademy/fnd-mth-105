@@ -94,13 +94,16 @@ assert ie == len(A | B)</code></pre>
 </section>
 
 <section class="slide" id="class-sizes" data-lo="LO5">
-  <div class="kicker">In code</div>
+  <div class="kicker">By hand first</div>
   <h2>Count the people in each combination, then the people alone</h2>
   <div class="cols cols-2">
-    <pre class="code" data-file="python"><code class="language-python">from collections import Counter
-key = lambda r: (r["birth"], r["sex"], r["area"])
-size = Counter(key(r) for r in rows)
-alone = sum(1 for r in rows if size[key(r)] == 1)</code></pre>
+    <table class="t small">
+      <tr><th>Six members: year, sex, area</th><th class="num">People</th></tr>
+      <tr><td>1990, F, D1</td><td class="num">2</td></tr>
+      <tr class="hl"><td>1990, M, D1</td><td class="num">1</td></tr>
+      <tr><td>1985, F, D2</td><td class="num">2</td></tr>
+      <tr class="hl"><td>1972, M, D3</td><td class="num">1</td></tr>
+    </table>
     <ul class="bullets">
       <li>A combination held by one person is a <b>class of size 1</b></li>
       <li>The smallest class says how alone the most exposed people are</li>

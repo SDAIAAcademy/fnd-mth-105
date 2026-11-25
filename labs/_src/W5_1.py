@@ -312,7 +312,8 @@ U.check(k4000 == 8, "eight symbols for 4,000 volunteers")
 # Eight symbols give a chance of about 0.19% that any two of 4,000 volunteers share a code; seven
 # would give about 3%. Growth to 40,000 needs ten symbols for the same risk. Since a collision
 # stays possible, check-in must look up the code and, when two volunteers match, ask for a second
-# factor (the badge), rather than trusting the code alone.
+# factor (the badge), rather than trusting the code alone. The desk volunteer who resolves a
+# match should not also be the one who approves the override: a second person signs it off.
 # END SOLUTION
 
 # %% [markdown]

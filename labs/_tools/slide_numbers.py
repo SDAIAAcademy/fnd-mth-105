@@ -59,9 +59,9 @@ def week7():
         print("grid", n, "x", n, "monotone paths:", f"{math.comb(2 * n, n):,}")
     print("n^2, 2^n, n! at n = 10, 20, 30:", [(n, n * n, f"{2 ** n:,}", f"{math.factorial(n):.2e}") for n in (10, 20, 30)])
     # a small DAG for the slides, a parallel to the pipeline (not the lab's diamond)
-    nodes = list("ABCDE")
     edges = [("A", "C"), ("B", "C"), ("C", "D"), ("C", "E")]
-    orders = [p for p in itertools.permutations(nodes) if all(p.index(u) < p.index(v) for u, v in edges)]
+    import networkx as nx
+    orders = sorted(nx.all_topological_sorts(nx.DiGraph(edges)))
     print("small DAG A->C, B->C, C->D, C->E: topological orders", len(orders), [''.join(o) for o in orders])
     # paths into each point of a 3 by 3 grid of points by the recurrence P(i, j) = P(i-1, j) + P(i, j-1)
     P = {}

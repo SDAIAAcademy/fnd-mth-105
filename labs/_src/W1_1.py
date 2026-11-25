@@ -250,7 +250,13 @@ db.close()
 # badge before their shift, and how to count volunteers per event without overcounting. (No code.)
 
 # %% [markdown]
-# *Your note:*
+# BEGIN SOLUTION
+# Reissue BD-0059, BD-0420 and BD-0909, each issued to two volunteers, and issue badges to V-00117
+# and V-00242; V-00117 is already on a shift and needs one before it. Count volunteers per event
+# from the distinct volunteer and event pairs (592), not from the 600 rows the join returns, since
+# eight volunteers work two shifts of one event. Whoever issues badges should not also be the one
+# who checks the badge list: a second person confirms each reissue against the register.
+# END SOLUTION
 
 # %% [markdown]
 # ## ✱ Stretch

@@ -42,7 +42,6 @@ else:
         os.chdir("..")  # solutions/ notebooks run from labs/
 sys.path.insert(0, os.getcwd())
 
-import itertools
 import networkx as nx
 import dm as U
 
@@ -60,7 +59,7 @@ hand_orders = None    # ✏️ a list of strings such as ["PQRS", ...]
 
 small = nx.DiGraph([("P", "Q"), ("P", "R"), ("Q", "S"), ("R", "S")])
 print("in-degrees:", dict(small.in_degree()))
-orders = ["".join(p) for p in itertools.permutations("PQRS") if all(p.index(u) < p.index(v) for u, v in small.edges)]
+orders = sorted("".join(o) for o in nx.all_topological_sorts(small))
 print("valid orders:", orders)
 if hand_in is not None:
     U.check(hand_in == dict(small.in_degree()), "hand and code agree on the in-degrees")
@@ -296,6 +295,23 @@ U.check(all(r[3] == 2 ** r[0] for r in rows), "paths double with every diamond: 
 # If every ready job runs at once, a job's earliest round is one more than the latest round of its
 # dependencies (round 1 for a source). Compute every job's round with a recurrence over your order.
 # How many rounds does the night need, and which chain of jobs decides it?
+
+# %%
+def rounds(H, order):
+    # BEGIN SOLUTION
+    r = {}
+    for v in order:
+        r[v] = 1 + max((r[u] for u in H.predecessors(v)), default=0)
+    return r
+    # END SOLUTION
+
+try:
+    r = rounds(H, run)
+    chain = nx.dag_longest_path(H)
+    print("rounds needed:", max(r.values()), "| a longest chain:", " -> ".join(chain))
+    U.check(max(r.values()) == len(chain), "the rounds equal the jobs on a longest chain")
+except NotImplementedError:
+    print("Stretch: write rounds(H, order) to see how many rounds the night needs.")
 
 # %% [markdown]
 # ## Check yourself

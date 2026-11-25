@@ -300,7 +300,8 @@ U.table([[k, v or "(fill in)"] for k, v in status.items()], ["claim", "status"])
 # A proved; B refuted (n = 40); edges = nodes − 1 proved by structural induction; divide proved
 # from its invariant and termination; 2ⁿ ≥ n² refuted at n = 3, and proved for n ≥ 4 after the
 # repair. "Tested only" means no counterexample was found in the range tried: claim B was "tested
-# only" for n up to 39, and false.
+# only" for n up to 39, and false. A status of "proved" should be confirmed by a second reader,
+# not only by the person who wrote the proof.
 # END SOLUTION
 
 # %% [markdown]

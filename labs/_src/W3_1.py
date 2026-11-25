@@ -332,7 +332,14 @@ except NotImplementedError:
 # coordinator should hear about. (No code.)
 
 # %% [markdown]
-# *Your note:*
+# BEGIN SOLUTION
+# The verdicts on the finite relations (same district an equivalence, the release relations
+# orders, and every property refuted with a witness) are proofs, because every case was checked;
+# divides being transitive on 1 to 60 is a test, and the direct proof is what covers every integer.
+# The coordinator should hear two faults: the can-cover table lists TL-04 covering TL-09 but not
+# the reverse, and release tags sorted as text put 10.0.0 first. A lead should not be the one who
+# approves changes to their own cover pairs: a second person reviews each edit to the table.
+# END SOLUTION
 
 # %% [markdown]
 # ## ✱ Stretch

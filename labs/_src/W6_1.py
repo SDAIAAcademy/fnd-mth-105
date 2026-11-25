@@ -295,7 +295,8 @@ U.check(m.count(1) + sum(1 for x in m if x > 1) == len(sheet), "every sheet row 
 # 572 people are unique in at least one of three tables that each look harmless on their own. The
 # sign-in sheet published last year matches every one of its 60 rows to exactly one volunteer,
 # attaching codes, skills and consent flags to shifts: it should be taken down and the practice
-# stopped.
+# stopped. The analyst who prepares a release should not also approve it: the data protection
+# officer signs off before anything leaves the centre.
 # END SOLUTION
 
 # %% [markdown]

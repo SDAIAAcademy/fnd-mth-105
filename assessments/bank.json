@@ -914,7 +914,7 @@
       "correct": [
         0
       ],
-      "explanation": "Check each prerequisite: M1 and M2 come before M3, M3 before M5, and M2 before M4. Only the second order passes all four.",
+      "explanation": "Check each prerequisite: M1 and M2 come before M3, M3 before M5, and M2 before M4. Only M2, M4, M1, M3, M5 passes all four.",
       "misconceptions": [
         "",
         "Puts M3 before M2, breaking M2 before M3",

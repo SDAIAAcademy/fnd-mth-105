@@ -315,7 +315,9 @@ print("first-aiders available for SH-C or SH-D after the change:", sorted(v for 
 # **Look at** the core and the last line: after the change, one first-aider is left who can work
 # SH-C or SH-D, and both shifts need one. Two shifts, one person, one shift each: the pigeonhole
 # principle of week 5, found by the solver without being told. Relaxing first aid on one of the
-# two shifts, or keeping V-00090 available for SH-D, restores a schedule.
+# two shifts, or keeping V-00090 available for SH-D, restores a schedule. Which relaxation to take
+# is for someone other than the person who entered the change: dropping a first-aid rule needs a
+# second sign-off.
 
 # %% [markdown]
 # ## 8 · Brute force against the solver, on a small variant
