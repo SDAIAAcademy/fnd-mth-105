@@ -262,6 +262,151 @@
       "level": "apply",
       "pool": "practice",
       "weight": 1
+    },
+    {
+      "id": "w3-preorder",
+      "type": "single",
+      "prompt": "In a sports league, team A relates to team B when A has at least as many points as B. Two teams are level on points. Which kind of relation is it?",
+      "options": [
+        "An equivalence relation",
+        "A partial order",
+        "A preorder that is not a partial order",
+        "A strict order"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "It is reflexive and transitive, but two different level teams relate both ways, so it is not antisymmetric.",
+      "misconceptions": [
+        "Takes 'relates both ways for level teams' as symmetry: a leader does not relate back to a team below",
+        "Misses that two different level teams break antisymmetry",
+        "",
+        "Misses that every team has at least as many points as itself, so the relation is reflexive"
+      ],
+      "lo": [
+        "LO1"
+      ],
+      "day": "week3",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w3-transitive-test",
+      "type": "single",
+      "prompt": "Which relation on the people of a town is NOT transitive?",
+      "options": [
+        "Was born in the same year as",
+        "Is older than",
+        "Lives within 2 km of",
+        "Has the same surname initial as"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A within 2 km of B and B within 2 km of C allows A and C to be up to 4 km apart.",
+      "misconceptions": [
+        "Misses that 'same year' is an equivalence: it is transitive",
+        "Misses that 'older than' chains: older than someone older is older still",
+        "",
+        "Misses that 'same initial' is an equivalence: it is transitive"
+      ],
+      "lo": [
+        "LO1"
+      ],
+      "day": "week3",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w3-negation",
+      "type": "single",
+      "prompt": "Rule: 'every invoice has an approver'. Which finding shows the rule is broken?",
+      "options": [
+        "One invoice has two approvers",
+        "One invoice has no approver",
+        "One approver has no invoice",
+        "Every invoice has no approver"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "The negation of 'for every invoice, some approver' is 'some invoice has no approver': one witness suffices.",
+      "misconceptions": [
+        "Confuses 'at least one' with 'exactly one'",
+        "",
+        "Reverses the quantified variable: the rule is about invoices",
+        "States a much stronger claim than the negation needs"
+      ],
+      "lo": [
+        "LO2"
+      ],
+      "day": "week3",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w3-counterexample",
+      "type": "single",
+      "prompt": "A colleague claims: 'for every positive integer n, 2n + 1 is prime'. Which is the best response?",
+      "options": [
+        "Test n from 1 to 3: all prime, so accept",
+        "Give n = 4: 2n + 1 = 9 = 3 · 3",
+        "Ask for a proof by induction before deciding",
+        "Reject it, because claims about all integers cannot be checked"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "One counterexample refutes a 'for every' claim.",
+      "misconceptions": [
+        "Treats a few passing tests as a proof",
+        "",
+        "Asks for a proof of a false claim: a counterexample settles it at once",
+        "Thinks universal claims cannot be settled: one counterexample refutes them"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "week3",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w3-contradiction",
+      "type": "single",
+      "prompt": "To prove 'if n² is odd then n is odd' by contradiction, what do you assume first?",
+      "options": [
+        "n² is odd and n is odd",
+        "n² is even and n is even",
+        "n² is odd and n is even",
+        "n is odd"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A proof by contradiction assumes the hypothesis and the negation of the conclusion, then derives something impossible.",
+      "misconceptions": [
+        "Assumes the claim itself, which proves nothing",
+        "Assumes the negation of both parts, which is the converse's contrapositive",
+        "",
+        "Assumes only the conclusion, which is the claim to be shown"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "week3",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
     }
   ]
 }
