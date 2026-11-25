@@ -1,93 +1,103 @@
 <section class="slide title" id="title" data-auto="title">
-  <aside class="notes">Today is theirs: keep your own talking to the opening and the closing. Confirm the running order and the demo setup (screen sharing, accounts, a recorded backup) first.</aside>
+  <aside class="notes"><p>Today is theirs: keep your own talking to the opening and the closing. Confirm the running order, the screen for showing each repository, and that every portfolio link opens. AI was allowed in the portfolio and recorded there; the defence is what shows the proof is the participant's own.</p></aside>
 </section>
 
 <section class="slide" id="agenda" data-label="Agenda">
   <div class="kicker">Capstone</div>
-  <h2>How the presentations run</h2>
+  <h2>How the defences run</h2>
   <div class="agenda">
-    <div class="item now"><div><b>Expectations and final prep</b><small>the rubric, a last rehearsal, then the first presentations</small></div></div>
-    <div class="item"><div><b>Presentations</b><small>each one timed, with questions after it</small></div></div>
-    <div class="item"><div><b>Review and closing</b><small>peer feedback, the trainer's review, what next</small></div></div>
+    <div class="item now"><div><b>Portfolio clinic</b><small>questions on the claims, the tests and the rubric</small></div></div>
+    <div class="item"><div><b>Portfolio work and a peer dry run</b><small>finish the three proofs, then defend one to a partner</small></div></div>
+    <div class="item"><div><b>Oral defences</b><small>one proof each, explained step by step, then a changed hypothesis</small></div></div>
+    <div class="item"><div><b>Feedback and closing</b><small>the assessor's written feedback, what next</small></div></div>
   </div>
 </section>
 
 <section class="slide" id="rubric" data-label="The rubric">
-  <div class="kicker">How presentations are scored</div>
-  <h2>The rubric</h2>
+  <div class="kicker">How the portfolio is scored</div>
+  <h2>The portfolio rubric</h2>
   <div class="bars">
-    <div class="row"><span>REPLACE: rubric criterion 1 and its weight (the weights add up to 100)</span><div class="bar c-teal" style="--w:100%"></div><span class="val">25%</span></div>
-    <div class="row"><span>REPLACE: rubric criterion 2 and its weight (the weights add up to 100)</span><div class="bar c-cyan" style="--w:100%"></div><span class="val">25%</span></div>
-    <div class="row"><span>REPLACE: rubric criterion 3 and its weight (the weights add up to 100)</span><div class="bar c-coral" style="--w:80%"></div><span class="val">20%</span></div>
-    <div class="row"><span>REPLACE: rubric criterion 4 and its weight (the weights add up to 100)</span><div class="bar c-purple" style="--w:80%"></div><span class="val">20%</span></div>
-    <div class="row"><span>REPLACE: rubric criterion 5 and its weight (the weights add up to 100)</span><div class="bar c-amber" style="--w:40%"></div><span class="val">10%</span></div>
+    <div class="row"><span>Each claim stated precisely: domain, quantifiers, hypothesis, conclusion</span><div class="bar c-teal" style="--w:50%"></div><span class="val">15%</span></div>
+    <div class="row"><span>Test code before each proof, with what the tests cannot show</span><div class="bar c-cyan" style="--w:67%"></div><span class="val">20%</span></div>
+    <div class="row"><span>Each proof valid: method named, every step justified, no gap</span><div class="bar c-coral" style="--w:100%"></div><span class="val">30%</span></div>
+    <div class="row"><span>The induction proof complete: base, hypothesis, a step that uses it</span><div class="bar c-purple" style="--w:67%"></div><span class="val">20%</span></div>
+    <div class="row"><span>Readable and reproducible: code runs, AI use recorded, sources named</span><div class="bar c-amber" style="--w:50%"></div><span class="val">15%</span></div>
   </div>
-  <div class="callout tip mt"><b>Show results from at least two measured runs.</b> A claim without a number is a plan, not a result.</div>
-  <aside class="notes">Walk through each criterion with one example of what full marks look like.</aside>
+  <div class="callout tip mt"><b>Test first, then prove.</b> A passing test is evidence for the cases it ran; only the proof covers the rest.</div>
+  <aside class="notes"><p>The full criteria are in the README; the bars shorten them. An invariant proof with initialisation, maintenance and termination counts as the induction proof. The portfolio is 30% of the course and the defence 10%, scored separately, so nothing counts twice. Full marks on validity: a reader could check every line without asking the author.</p></aside>
 </section>
 
 <section class="slide" id="format" data-label="Format">
   <div class="kicker">Format</div>
-  <h2>10 minutes for each presentation</h2>
+  <h2>10 minutes for each defence</h2>
   <div class="cols cols-3">
-    <div class="card c-teal"><h4>1 · The problem</h4><p class="small mb0">Who, what, why now. One slide.</p></div>
-    <div class="card c-cyan"><h4>2 · What you built</h4><p class="small mb0">Design, decisions, trade-offs. Then the live demo.</p></div>
-    <div class="card c-coral"><h4>3 · What you measured</h4><p class="small mb0">Baseline, improvement, failures found, what comes next.</p></div>
+    <div class="card c-teal"><h4>1 · The claim</h4><p class="small mb0">The assessor picks one of your three proofs. State the claim and the method you chose. About one minute.</p></div>
+    <div class="card c-cyan"><h4>2 · Step by step</h4><p class="small mb0">Walk through the proof and say why each step holds, then what your tests showed. About six minutes.</p></div>
+    <div class="card c-coral"><h4>3 · A changed hypothesis</h4><p class="small mb0">The assessor changes one assumption. Say whether the proof survives and which step breaks. About three minutes.</p></div>
   </div>
-  <div class="callout note mt"><b>Peer feedback.</b> After each talk, everyone writes one strength, one question and one suggestion.</div>
+  <div class="callout note mt"><b>Peer dry run.</b> Pairs defend one proof to each other and change one hypothesis for each other. The partner writes one strength, one question and one suggestion.</div>
+  <aside class="notes"><p>Take the changed hypotheses from the trainer pack, prepared per claim. Typical changes: a weaker base case, a domain that now includes 0 or negative numbers, a strict inequality made non-strict. A good answer names the step that uses the assumption.</p></aside>
 </section>
 
 <section class="slide order" id="running-order" data-label="Running order">
   <div class="kicker">Running order</div>
-  <h2>Who presents when</h2>
+  <h2>Who defends when</h2>
   <table class="t small">
-    <tr><th>#</th><th>Presenter</th><th>Project</th></tr>
-    <tr><td>1</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
-    <tr><td>2</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
-    <tr><td>3</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
-    <tr><td>4</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
-    <tr><td>5</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
-    <tr><td>6</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
-    <tr><td>7</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
-    <tr><td>8</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
+    <tr><th>#</th><th>Participant code</th><th>Proof selected</th></tr>
+    <tr><td>1</td><td><input placeholder="code"></td><td><input placeholder="proof"></td></tr>
+    <tr><td>2</td><td><input placeholder="code"></td><td><input placeholder="proof"></td></tr>
+    <tr><td>3</td><td><input placeholder="code"></td><td><input placeholder="proof"></td></tr>
+    <tr><td>4</td><td><input placeholder="code"></td><td><input placeholder="proof"></td></tr>
+    <tr><td>5</td><td><input placeholder="code"></td><td><input placeholder="proof"></td></tr>
+    <tr><td>6</td><td><input placeholder="code"></td><td><input placeholder="proof"></td></tr>
+    <tr><td>7</td><td><input placeholder="code"></td><td><input placeholder="proof"></td></tr>
+    <tr><td>8</td><td><input placeholder="code"></td><td><input placeholder="proof"></td></tr>
   </table>
-  <aside class="notes">Type the names in at the start; the fields can be edited live and are not saved, so keep the list in your notes too.</aside>
+  <aside class="notes"><p>Type the codes in at the start; the fields can be edited live and are not saved, so keep the list in your notes too. Choose the proof to defend at the start of each defence, not in advance.</p></aside>
 </section>
 
-<section class="slide dark" id="final-prep" data-label="Before the first presentation">
-  <div class="kicker">Before the first presentation</div>
-  <h1>Final prep · 20 minutes</h1>
+<section class="slide dark" id="final-prep" data-label="Portfolio clinic">
+  <div class="kicker">Before the work starts</div>
+  <h1>Portfolio clinic · 20 minutes</h1>
   <div class="timer" data-minutes="20"></div>
-  <p class="lead">Rehearse once, record a backup, try the demo on this screen.</p>
-  <aside class="notes">Press T to start the timer. Breaks are not slides: press B when the room needs one.</aside>
+  <p class="lead">Bring one question about a claim, a test or the rubric.</p>
+  <aside class="notes"><p>Press T to start the timer. Check that each portfolio repository exists and is public. Breaks are not slides: press B when the room needs one.</p></aside>
 </section>
 
-<section class="slide dark presenting" id="now-presenting" data-label="Now presenting">
-  <div class="kicker center">Now presenting</div>
-  <div class="center"><input placeholder="Presenter · project"></div>
+<section class="slide dark" id="dry-run" data-label="Peer dry run">
+  <div class="kicker">Before the defences</div>
+  <h1>Peer dry run · 25 minutes</h1>
+  <div class="timer" data-minutes="25"></div>
+  <p class="lead">Defend one proof to your partner, then swap. Change one hypothesis for each other.</p>
+  <aside class="notes"><p>Press T to start the timer. Walk the room; listen for steps explained as "it is obvious".</p></aside>
+</section>
+
+<section class="slide dark presenting" id="now-presenting" data-label="Now defending">
+  <div class="kicker center">Now defending</div>
+  <div class="center"><input placeholder="Participant code · proof"></div>
   <div class="timers mt">
-    <div><h3>Talk and demo</h3><div class="timer" data-minutes="10"></div></div>
+    <div><h3>Defence</h3><div class="timer" data-minutes="10"></div></div>
   </div>
-  <aside class="notes">Type the presenter's name and press T to start the timer. Reuse this slide for every presenter.</aside>
+  <aside class="notes"><p>Type the code and press T to start the timer. Reuse this slide for every participant. Score the defence on its own sheet; the portfolio rubric is scored separately from the repository.</p></aside>
 </section>
 
-<section class="slide" id="review" data-label="Trainer review">
-  <div class="kicker">Trainer review</div>
-  <h2>What the presentations showed</h2>
+<section class="slide" id="review" data-label="Assessor review">
+  <div class="kicker">Assessor review</div>
+  <h2>What the defences showed</h2>
   <div class="cols cols-3">
-    <div class="card c-teal"><h4>Strongest patterns</h4><p class="small mb0">What several projects got right.</p></div>
-    <div class="card c-coral"><h4>Common gaps</h4><p class="small mb0">What most projects would fix next.</p></div>
-    <div class="card c-purple"><h4>One surprise</h4><p class="small mb0">Something nobody expected.</p></div>
+    <div class="card c-teal"><h4>Strongest patterns</h4><p class="small mb0">What several portfolios got right.</p></div>
+    <div class="card c-coral"><h4>Common gaps</h4><p class="small mb0">The steps most often left unjustified.</p></div>
+    <div class="card c-purple"><h4>One surprise</h4><p class="small mb0">A test or a changed hypothesis nobody expected.</p></div>
   </div>
-  <aside class="notes">Fill these in from your scoring notes during the last break. Name projects for strengths; keep gaps anonymous.</aside>
+  <aside class="notes"><p>Fill these in from your scoring notes during the feedback time. Name portfolios for strengths only; keep gaps anonymous. Written feedback goes to each participant individually.</p></aside>
 </section>
 
 <section class="slide" id="what-next" data-label="After the course">
   <div class="kicker">After the course</div>
   <h2>Keep going</h2>
   <ul class="bullets">
-    <li><b>Your project stays yours:</b> keep it reproducible and add the next improvement you named today</li>
-    <li><b>Next Academy course:</b> REPLACE: the course that follows this one</li>
+    <li><b>Your portfolio stays yours:</b> add a fourth claim, tested first, then proved</li>
+    <li><b>Next Academy course:</b> FND-PRG-103 takes graphs further, with search and shortest paths</li>
   </ul>
 </section>
 
