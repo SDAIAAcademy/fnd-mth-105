@@ -1,56 +1,258 @@
 <section class="slide title" id="title" data-auto="title">
-  <aside class="notes">REPLACE: welcome; introduce yourself; one question to the room that calibrates the pace; the rhythm of the day</aside>
+  <aside class="notes"><p>Collect PS1 difficulties first: usually item 1 (the identity holds only for disjoint sets) and the difference between "not a function" and "not injective". This week moves from sets to the statements we make about them.</p></aside>
 </section>
 
 <section class="slide" id="agenda" data-auto="agenda"></section>
+
+<section class="slide" id="review-week1" data-lo="LO1">
+  <div class="kicker">Review · week 1</div>
+  <h2>Can the code be swapped back?</h2>
+  <div class="quiz" data-type="single" data-lo="LO1">
+    <p class="lead">A school replaces each of its 500 pupil numbers with a random code from 1,000 possible codes, never giving one code twice. As a map from pupils to the 1,000 codes, what is it?</p>
+    <div class="opts">
+      <div class="opt" data-why="Thinks 'no repeats' is enough for a bijection: 500 unused codes mean it is not surjective">A bijection</div>
+      <div class="opt" data-ok>Injective, not surjective</div>
+      <div class="opt" data-why="Confuses the two properties: it is the absence of shared codes that holds here">Surjective, not injective</div>
+      <div class="opt" data-why="Thinks a random choice is not a function: each pupil still gets exactly one code">Not a function</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> No two pupils share a code (injective), but half the codes are never used (not surjective). On its 500 pupils and the codes used, it can still be inverted.</div>
+  </div>
+  <aside class="notes"><p>Answer B. Point out the last sentence: injective is what makes a code reversible. Week 6 shows that reversibility is not the only route back to a person.</p></aside>
+</section>
 
 <!-- Session 1 -->
 
 <section class="slide section" id="s1" data-auto="section" data-session="1"></section>
 
-<section class="slide" id="s1-idea">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
-  <div class="cols cols-2">
-    <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
-    </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
-  </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+<section class="slide" id="propositions" data-lo="LO2">
+  <div class="kicker">Block A · propositions</div>
+  <h2>A proposition is true or false, and connectives build bigger ones</h2>
+  <table class="t small">
+    <tr><th>Symbol</th><th>Reads</th><th>True when</th></tr>
+    <tr><td>¬p</td><td>not p</td><td>p is false</td></tr>
+    <tr><td>p ∧ q</td><td>p and q</td><td>both are true</td></tr>
+    <tr><td>p ∨ q</td><td>p or q</td><td>at least one is true</td></tr>
+    <tr class="hl"><td>p → q</td><td>if p then q</td><td>p is false, or q is true</td></tr>
+    <tr><td>p ↔ q</td><td>p if and only if q</td><td>both have the same value</td></tr>
+  </table>
+  <aside class="notes"><p>"Or" is inclusive: both true counts. The exclusive or of everyday speech ("tea or coffee") is a different connective. "The parcel is heavy" is a proposition; "lift the parcel" is not, as it is neither true nor false.</p></aside>
 </section>
 
-<section class="slide" id="s1-steps">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="implication" data-lo="LO2">
+  <div class="kicker">Implication</div>
+  <h2>"If p then q" is broken only by p true and q false</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>p: over 20 kg</th><th>q: two lifters</th><th>p → q</th></tr>
+      <tr><td>F</td><td>F</td><td>T</td></tr>
+      <tr><td>F</td><td>T</td><td>T</td></tr>
+      <tr class="hl"><td>T</td><td>F</td><td>F</td></tr>
+      <tr><td>T</td><td>T</td><td>T</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>A light parcel lifted by two people does not break the rule</li>
+      <li>A light parcel makes the rule true whatever happens: <b>vacuously</b></li>
+      <li>Only a heavy parcel lifted alone breaks it</li>
+    </ul>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <aside class="notes"><p>Ask the room to find the only row that breaks the rule before revealing the column. The two rows where p is false surprise people: the rule says nothing about light parcels, and a rule that says nothing is not broken.</p></aside>
+</section>
+
+<section class="slide" id="truth-table-code" data-lo="LO2">
+  <div class="kicker">In code</div>
+  <h2>A truth table is a loop over every row of truth values</h2>
+  <div class="cols cols-2">
+    <pre class="code" data-file="python"><code class="language-python">import itertools
+
+def implies(a, b):
+    return (not a) or b
+
+for p, q in itertools.product([False, True], repeat=2):
+    print(p, q, implies(p, q))</code></pre>
+    <ul class="bullets">
+      <li>n variables give <b>2ⁿ rows</b>: 4 for two, 1,024 for ten</li>
+      <li>Checking every row is a proof for a finite claim</li>
+      <li>For 50 variables, 2⁵⁰ rows is out of reach: that is where a solver comes in</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The first lab task writes this as a function. Stress the second bullet: when the cases are finite and few, testing every one of them is a proof, not merely a test.</p></aside>
+</section>
+
+<section class="slide" id="equivalence-laws" data-lo="LO2">
+  <div class="kicker">Equivalence</div>
+  <h2>Two formulas are equivalent when they agree on every row</h2>
+  <table class="t small">
+    <tr><th>Law</th><th>Equivalent pair</th></tr>
+    <tr><td>De Morgan</td><td>¬(p ∧ q) and ¬p ∨ ¬q; ¬(p ∨ q) and ¬p ∧ ¬q</td></tr>
+    <tr><td>Contrapositive</td><td>p → q and ¬q → ¬p</td></tr>
+    <tr><td>Implication as or</td><td>p → q and ¬p ∨ q</td></tr>
+    <tr><td>Distribution</td><td>p ∧ (q ∨ r) and (p ∧ q) ∨ (p ∧ r)</td></tr>
+  </table>
+  <div class="callout warn mt"><b>Not a law.</b> The converse q → p is a different rule: a parcel lifted by two people need not be heavy.</div>
+  <aside class="notes"><p>Each line can be checked by a four- or eight-row table, which the lab does in code. The converse is the most common error in reading rules: watch for it in the checkpoint.</p></aside>
+</section>
+
+<section class="slide" id="check-converse" data-lo="LO2">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which sentence says the same thing?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2">
+    <p class="lead">A warehouse rule: "If a box is fragile, it is packed with foam." Which sentence is equivalent to it?</p>
+    <div class="opts">
+      <div class="opt" data-why="Takes the converse for the rule: foam on a sturdy box does not break it">If a box is packed with foam, it is fragile</div>
+      <div class="opt" data-why="Takes the inverse for the rule: the rule says nothing about sturdy boxes">If a box is not fragile, it is not packed with foam</div>
+      <div class="opt" data-why="Turns the condition into a conjunction: that forces every box to be fragile">Every box is fragile and packed with foam</div>
+      <div class="opt" data-ok>If a box is not packed with foam, it is not fragile</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The contrapositive ¬q → ¬p agrees with p → q on all four rows.</div>
+  </div>
+  <aside class="notes"><p>Answer D. If the room splits between A and B, write the four rows and let them find the row where each fails.</p></aside>
+</section>
+
+<section class="slide" id="validity" data-lo="LO2">
+  <div class="kicker">Block B · arguments</div>
+  <h2>An argument is valid when no row makes the premises true and the conclusion false</h2>
+  <table class="t small">
+    <tr><th>Form</th><th>Premises</th><th>Conclusion</th><th>Verdict</th></tr>
+    <tr><td>Modus ponens</td><td>p → q, p</td><td>q</td><td>valid</td></tr>
+    <tr><td>Modus tollens</td><td>p → q, ¬q</td><td>¬p</td><td>valid</td></tr>
+    <tr class="hl"><td>Affirming the consequent</td><td>p → q, q</td><td>p</td><td>invalid: row p F, q T</td></tr>
+    <tr class="hl"><td>Denying the antecedent</td><td>p → q, ¬p</td><td>¬q</td><td>invalid: row p F, q T</td></tr>
+  </table>
+  <p class="small mt">Validity is about form, not truth: a valid argument from a false premise can reach a false conclusion.</p>
+  <aside class="notes"><p>The search for a counterexample row is the whole method, and it is the same idea as a counterexample to a claim in week 3. The lab writes it as a function and runs it on the centre's consent rule.</p></aside>
+</section>
+
+<section class="slide" id="translating-rules" data-lo="LO2">
+  <div class="kicker">Rules in words</div>
+  <h2>Words like "only if" and "unless" fix the direction of the arrow</h2>
+  <table class="t small">
+    <tr><th>Words</th><th>Formula</th></tr>
+    <tr><td>p if q</td><td>q → p</td></tr>
+    <tr><td>p only if q</td><td>p → q</td></tr>
+    <tr><td>p unless q</td><td>¬q → p, the same as p ∨ q</td></tr>
+    <tr class="hl"><td>A or B and C</td><td>ambiguous: (A ∨ B) ∧ C, or A ∨ (B ∧ C)</td></tr>
+  </table>
+  <div class="callout tip mt"><b>Habit.</b> Name each variable in one line, write the formula with brackets, then read it back in words.</div>
+  <aside class="notes"><p>Example to work aloud: "A member may borrow a laptop only if they have signed the agreement" is borrow → signed; signing does not entitle anyone to a laptop. The bracket line is where access rules go wrong, and the lab has one.</p></aside>
+</section>
+
+<section class="slide" id="check-only-if" data-lo="LO2">
+  <div class="kicker">Checkpoint</div>
+  <h2>Translate the rule</h2>
+  <div class="quiz" data-type="single" data-lo="LO2">
+    <p class="lead">A laboratory: "A visitor may enter only if they wear goggles." With p = "the visitor enters" and s = "the visitor wears goggles", which formula is the rule?</p>
+    <div class="opts">
+      <div class="opt" data-why="Reads 'only if' as 'if': that makes goggles a promise of entry">s → p</div>
+      <div class="opt" data-ok>p → s</div>
+      <div class="opt" data-why="Turns a condition into a fact: every visitor would have to enter">p ∧ s</div>
+      <div class="opt" data-why="Makes the condition two-way: wearing goggles would oblige the visitor to enter">p ↔ s</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> "p only if q" is p → q: entering requires goggles, and goggles require nothing.</div>
+  </div>
+  <aside class="notes"><p>Answer B. Ask for the one situation the rule forbids: a visitor inside without goggles.</p></aside>
+</section>
+
+<section class="slide" id="cnf" data-lo="LO2">
+  <div class="kicker">Block C · normal form</div>
+  <h2>Conjunctive normal form is an "and" of clauses, each an "or" of literals</h2>
+  <div class="cols cols-2">
+    <div>
+      <p>(a ∨ b) ∧ (¬a ∨ c) ∧ (¬b ∨ ¬c)</p>
+      <ul class="bullets">
+        <li>A <b>literal</b> is a variable or its negation</li>
+        <li>A <b>clause</b> is an or of literals: at least one must hold</li>
+        <li>Every formula has an equivalent CNF: one clause per row it must exclude</li>
+      </ul>
+    </div>
+    <div class="card c-purple"><h4>For a solver</h4><p class="small mb0">Variables are numbers and a clause is a list: [1, 2], [-1, 3], [-2, -3]. A minus sign is "not".</p></div>
+  </div>
+  <aside class="notes"><p>Build the CNF of p → q on the board from its table: the only false row is p T, q F; excluding it gives the clause ¬p ∨ q. That is how "every formula has a CNF" is proved, one excluded row at a time.</p></aside>
+</section>
+
+<section class="slide" id="sat" data-lo="LO2">
+  <div class="kicker">Satisfiability</div>
+  <h2>A SAT solver finds a row that makes every clause true, or proves there is none</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>Encode</b>one variable per yes-or-no decision; one clause per rule</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>Solve</b>a model: a value for every variable, or "unsatisfiable"</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>Check</b>the model against the rules in words, with separate code</div>
+  </div>
+  <ul class="bullets mt">
+    <li>Checking a proposed assignment is quick; finding one can take exponential time in the worst case with every known method</li>
+    <li>"Unsatisfiable" is a proof that no assignment works; a solver can name a small set of rules that already conflict</li>
+  </ul>
+  <aside class="notes"><p>Tools are examples: the lab uses PySAT; Z3 fills the same slot. The third step is the course's habit: a solver satisfies the clauses you gave it, not the rules you meant.</p></aside>
+</section>
+
+<section class="slide" id="encoding-counts" data-lo="LO2">
+  <div class="kicker">Encoding</div>
+  <h2>"Exactly one" and "at most two" become many small clauses</h2>
+  <table class="t small">
+    <tr><th>Rule over n yes-or-no variables</th><th>Clauses</th><th>For n = 8</th></tr>
+    <tr><td>At least one</td><td>1 clause of n literals</td><td>1</td></tr>
+    <tr><td>At most one: no two together</td><td>one per pair, n(n − 1)/2</td><td>28</td></tr>
+    <tr><td>At most two: no three together</td><td>one per triple, n(n − 1)(n − 2)/6</td><td>56</td></tr>
+    <tr class="hl"><td>At least two: someone besides each one</td><td>n clauses of n − 1 literals</td><td>8</td></tr>
+  </table>
+  <aside class="notes"><p>Numbers for eight variables, a parallel to the lab's ten volunteers. The counts are combinations, which week 5 derives. Libraries offer shorter encodings of cardinality rules; the lab writes the direct ones so that each clause can be read aloud.</p></aside>
+</section>
+
+<section class="slide" id="check-unsat" data-lo="LO2">
+  <div class="kicker">Checkpoint</div>
+  <h2>What does "unsatisfiable" tell the planner?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2">
+    <p class="lead">A clinic encodes its nurse rota and the solver answers "unsatisfiable". What has been established?</p>
+    <div class="opts">
+      <div class="opt" data-why="Blames the tool: an unsatisfiable answer is a proof about the clauses, not a crash">The solver failed and should be run again with more time</div>
+      <div class="opt" data-why="Thinks the solver tried only some rotas: it rules out every assignment">No rota was found among those the solver tried</div>
+      <div class="opt" data-ok>No rota meets all the clauses as written</div>
+      <div class="opt" data-why="Forgets the encoding can be wrong: the rules meant may differ from the clauses written">No rota meets the clinic's real rules</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The answer covers every assignment of the encoded clauses. Whether the clauses say what the clinic meant is a separate check.</div>
+  </div>
+  <aside class="notes"><p>Answer C. D is the subtle one: it would be true only if the encoding is right. That is why the lab checks the solver's schedule with code written from the rules in words.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-2-1" data-auto="lab" data-lab="2.1">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>AI-tutor: it may point at a gap, never write the answer. Watch for: <code>officer_rule</code> written without brackets, which reproduces the handbook's error; "exactly two per shift" encoded as "at most two" only (the solver then leaves shifts empty); the schedule check written by reusing the clauses. If PySAT fails to install, the hosted notebook route works.</p></aside>
+</section>
+
+<section class="slide" id="debrief-rules" data-lo="LO2">
+  <div class="kicker">Debrief · lab 2.1</div>
+  <h2>The handbook opens contact details to anyone, for consenting volunteers</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Result</th><th>Value</th></tr>
+      <tr><td>Rows where the two phrasings differ</td><td>2 of 16: o F, c F, s T</td></tr>
+      <tr><td>Shift puzzle</td><td>50 variables, 800 clauses, a schedule found and checked</td></tr>
+      <tr class="hl"><td>After the late change</td><td>unsatisfiable: one first-aider for SH-C and SH-D</td></tr>
+      <tr><td>Small variant</td><td>36 schedules by brute force, by solver and by 3! · 3!</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>Fix the handbook with brackets: o ∨ (c ∧ (d ∨ s))</li>
+      <li>The solver's core named the two first-aid rules</li>
+      <li>Keeping V-00090 on SH-D, or dropping first aid on one shift, restores a schedule</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>From the solution run of lab 2.1. The core is the pigeonhole principle of week 5 in disguise: two shifts each need one of the first-aiders who can work them, and only V-00048 can. Both repairs in the last bullet were checked with the solver.</p></aside>
 </section>
 
 <section class="slide" id="wrap-up">
   <div class="kicker">Week 2 · wrap-up</div>
   <h2>Three things to keep</h2>
   <div class="cols cols-3">
-    <div class="card c-teal"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
-    <div class="card c-coral"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
-    <div class="card c-purple"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
+    <div class="card c-teal"><h4>Only one row breaks "if"</h4><p class="small mb0">p true and q false. The converse is a different rule.</p></div>
+    <div class="card c-coral"><h4>Validity is a row search</h4><p class="small mb0">Look for premises true and conclusion false. None found in every row: valid.</p></div>
+    <div class="card c-purple"><h4>Encode, solve, check</h4><p class="small mb0">A solver meets the clauses you wrote. Check its answer against the words.</p></div>
   </div>
+  <aside class="notes"><p>Ask for one rule from their own workplace that hides an "only if" or a missing bracket.</p></aside>
 </section>
 
 <section class="slide dark" id="next" data-label="Next">
   <div class="kicker">Next</div>
-  <h2>Week 3: REPLACE: the theme of this unit, in a few words</h2>
-  <p class="lead">REPLACE: what participants prepare before then; unfinished labs can be finished at home</p>
-  <aside class="notes">REPLACE: accounts, installs or reading participants need before the next unit</aside>
+  <h2>Week 3: Predicates, quantifiers and first proofs</h2>
+  <p class="lead">Problem set 2 (60 minutes, AI off for the first attempt): labs/problem-sets/PS2.ipynb.</p>
+  <aside class="notes"><p>Week 3 adds "for every" and "there is" to these formulas, and writes the first proofs.</p></aside>
 </section>

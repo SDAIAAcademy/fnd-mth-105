@@ -117,6 +117,151 @@
       "level": "apply",
       "pool": "practice",
       "weight": 1
+    },
+    {
+      "id": "w2-affirming",
+      "type": "single",
+      "prompt": "Rule: if a request is urgent, the duty officer is paged. The duty officer was paged. A colleague concludes the request was urgent. Is the argument valid?",
+      "options": [
+        "Valid, by modus ponens",
+        "Valid, by modus tollens",
+        "Invalid: a non-urgent request may also page the officer",
+        "Invalid, because the rule itself may be false"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The row with urgent false and paged true makes both premises true and the conclusion false, so the form is invalid.",
+      "misconceptions": [
+        "Mistakes the form: modus ponens starts from 'urgent', not from 'paged'",
+        "Mistakes the form: modus tollens starts from 'not paged'",
+        "",
+        "Confuses validity with truth: validity is about the form, whatever the premises' truth"
+      ],
+      "lo": [
+        "LO2"
+      ],
+      "day": "week2",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w2-unless",
+      "type": "single",
+      "prompt": "'The gate stays locked unless a guard is present.' With l = locked and g = guard present, which formula is equivalent?",
+      "options": [
+        "g → l",
+        "l ∨ g",
+        "l ∧ ¬g",
+        "l ↔ g"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "'p unless q' is ¬q → p, which is equivalent to p ∨ q: when no guard is present, the gate is locked.",
+      "misconceptions": [
+        "Reverses the condition: a guard being present does not force the gate locked",
+        "",
+        "Makes it a fact that no guard is ever present",
+        "Makes it two-way: the rule does not say a guard locks the gate"
+      ],
+      "lo": [
+        "LO2"
+      ],
+      "day": "week2",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w2-cnf-clauses",
+      "type": "single",
+      "prompt": "Six tasks are yes-or-no variables. Encoding 'at most one task runs' by forbidding every pair, how many clauses are needed?",
+      "options": [
+        "6",
+        "12",
+        "15",
+        "36"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "One clause per pair of tasks: 6 · 5 / 2 = 15.",
+      "misconceptions": [
+        "Counts one clause per task: that encodes 'at least one' style rules, not every pair",
+        "Counts ordered pairs once each way without halving correctly",
+        "",
+        "Counts every ordered pair including a task with itself"
+      ],
+      "lo": [
+        "LO2"
+      ],
+      "day": "week2",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w2-equivalent",
+      "type": "single",
+      "prompt": "Which pair of formulas is equivalent on every row of the truth table?",
+      "options": [
+        "p → q and q → p",
+        "¬(p ∨ q) and ¬p ∨ ¬q",
+        "p → q and ¬p ∨ q",
+        "p ∧ (q ∨ r) and (p ∧ q) ∨ r"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "p → q is false only when p is true and q false, exactly when ¬p ∨ q is false.",
+      "misconceptions": [
+        "Takes the converse for an equivalent: they differ when p is false and q true",
+        "Misapplies De Morgan: the negation of an or is the and of the negations",
+        "",
+        "Distributes only half way: with r true and p false the two differ"
+      ],
+      "lo": [
+        "LO2"
+      ],
+      "day": "week2",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "w2-sat-check",
+      "type": "single",
+      "prompt": "A solver returns a shift plan for a clinic. What should the planner do before using it?",
+      "options": [
+        "Nothing: a solver's model always meets the rules",
+        "Run the solver again and compare the two plans",
+        "Check the plan against the rules in words with separate code",
+        "Count the clauses to confirm the encoding is complete"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The model meets the clauses written; only an independent check against the rules catches an encoding mistake.",
+      "misconceptions": [
+        "Forgets that a wrong clause produces a wrong plan that still satisfies the clauses",
+        "Thinks agreement between two runs shows correctness: both satisfy the same wrong clauses",
+        "",
+        "Treats the number of clauses as evidence of their meaning"
+      ],
+      "lo": [
+        "LO2"
+      ],
+      "day": "week2",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
     }
   ]
 }

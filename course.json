@@ -155,16 +155,16 @@
           "lab": {
             "id": "2.1",
             "title": "Truth tables in code, and a scheduling puzzle solved with a SAT solver",
-            "summary": "Check laws and arguments by truth table, find the row where two phrasings of an access rule differ, and schedule ten volunteers on five shifts with a SAT solver.",
+            "summary": "Check laws and arguments by truth table, repair an access rule, and schedule ten volunteers with a solver.",
             "minutes": 105,
             "href": "W2_1.ipynb",
             "steps": [
               {
-                "text": "Set up; a truth table by hand, then in code",
+                "text": "Set up; a truth table by hand and in code",
                 "minutes": 15
               },
               {
-                "text": "Equivalent or not: laws checked by truth table",
+                "text": "Equivalent or not: laws by truth table",
                 "minutes": 15
               },
               {
@@ -172,27 +172,27 @@
                 "minutes": 15
               },
               {
-                "text": "Two phrasings of an access rule: find the row where they differ",
+                "text": "Two phrasings of an access rule",
                 "minutes": 15
               },
               {
-                "text": "Encode the shift puzzle in conjunctive normal form",
+                "text": "Encode the shift puzzle in CNF",
                 "minutes": 20
               },
               {
-                "text": "Solve it, then check the schedule against every rule",
+                "text": "Solve, then check against every rule",
                 "minutes": 10
               },
               {
-                "text": "The late change: unsatisfiable, and which rule to relax",
+                "text": "The late change: unsatisfiable, and why",
                 "minutes": 10
               },
               {
-                "text": "Count schedules on a small variant: brute force against the solver",
+                "text": "Small variant: brute force against solver",
                 "minutes": 5
               }
             ],
-            "stretch": "Count every schedule of the full puzzle by blocking each solution the solver finds"
+            "stretch": "Count every schedule of the full puzzle by blocking each one found"
           },
           "summary": "Propositional logic and truth tables, valid and invalid arguments, conjunctive normal form and Boolean satisfiability with a solver"
         }

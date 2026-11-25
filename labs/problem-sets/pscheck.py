@@ -64,6 +64,162 @@ def _ps1(ns):
     yield "3 compose_maps: f then g on generated maps", _run(compose_ok)
 
 
+# ---------------------------------------------------------------- PS2 truth tables
+def _imp(a, b):
+    return (not a) or b
+
+
+def _ps2(ns):
+    def taut_ok():
+        f = ns["is_tautology"]
+        yes = [(lambda p: p or not p, 1), (lambda p, q: _imp(p and q, p), 2),
+               (lambda p, q, r: _imp(_imp(p, q) and _imp(q, r), _imp(p, r)), 3)]
+        no = [(lambda p, q: _imp(p, q), 2), (lambda p: p and not p, 1), (lambda p, q: _imp(p or q, p), 2)]
+        return all(f(g, n) is True or f(g, n) == True for g, n in yes) and all(not f(g, n) for g, n in no)  # noqa: E712
+    yield "2 is_tautology: three tautologies and three formulas that are not", _run(taut_ok)
+
+    def models_ok():
+        f = ns["count_models"]
+        for n in range(1, 7):
+            if f(lambda *r: any(r), n) != 2 ** n - 1 or f(lambda *r: all(r), n) != 1:
+                return False
+            if f(lambda *r: sum(r) % 2 == 1, n) != 2 ** (n - 1) or f(lambda *r: False, n) != 0:
+                return False
+        return True
+    yield "4 count_models: or, and, odd parity and false on one to six variables", _run(models_ok)
+
+
+# ---------------------------------------------------------------- PS3 relations
+def _ps3(ns):
+    def sym_ok():
+        f = ns["symmetric_closure"]
+        for _ in range(20):
+            X = range(6)
+            R = {(RNG.choice(X), RNG.choice(X)) for _ in range(RNG.randrange(0, 12))}
+            S = set(f(R))
+            if not R <= S or any((y, x) not in S for x, y in S):
+                return False
+            if any((x, y) not in R and (y, x) not in R for x, y in S):
+                return False
+        return True
+    yield "2 symmetric_closure: contains R, symmetric, nothing extra", _run(sym_ok)
+
+    def wit_ok():
+        f = ns["transitivity_witness"]
+        for _ in range(20):
+            xs = RNG.sample(range(50), 6)
+            le = {(a, b) for a in xs for b in xs if a <= b}
+            if f(le) is not None:
+                return False
+            a, b, c = RNG.sample(range(100, 200), 3)
+            R = {(a, b), (b, c)} | {(RNG.randrange(300, 310), RNG.randrange(300, 310)) for _ in range(3)}
+            R = {p for p in R if p != (a, c)}
+            w = f(R)
+            if w is None:
+                return False
+            x, y, z = w
+            if (x, y) not in R or (y, z) not in R or (x, z) in R:
+                return False
+        return True
+    yield "5 transitivity_witness: None for an order, a real witness otherwise", _run(wit_ok)
+
+
+# ---------------------------------------------------------------- PS4 induction and invariants
+def _ps4(ns):
+    def max_ok():
+        f = ns["running_max"]
+        for n in (1, 2, 7, 30):
+            xs = [RNG.randrange(-100, 100) for _ in range(n)]
+            if f(list(xs)) != max(xs):
+                return False
+        return True
+    yield "2 running_max: the largest element, on generated lists", _run(max_ok)
+
+    def tree(h):
+        """A tree of height exactly h, with random extra branches that are not taller."""
+        if h == 0:
+            return {"code": "leaf", "children": []}
+        kids = [tree(h - 1)] + [tree(RNG.randrange(0, h)) for _ in range(RNG.randrange(0, 3))]
+        RNG.shuffle(kids)
+        return {"code": "node", "children": kids}
+
+    def height_ok():
+        f = ns["height"]
+        return all(f(tree(h)) == h for h in (0, 1, 2, 4, 6))
+    yield "5 height: trees built with a known height", _run(height_ok)
+
+
+# ---------------------------------------------------------------- PS5 counting
+def _ps5(ns):
+    import math
+
+    def pc_ok():
+        perm, comb = ns["perm"], ns["comb"]
+        for n in range(0, 12):
+            for k in range(0, n + 1):
+                if perm(n, k) != math.perm(n, k) or comb(n, k) != math.comb(n, k):
+                    return False
+        return True
+    yield "2 perm and comb: agree with the library for n up to 11", _run(pc_ok)
+
+    def onto_ok():
+        f = ns["count_onto"]
+        for n in range(1, 7):
+            for k in range(1, 5):
+                expect = sum((-1) ** i * math.comb(k, i) * (k - i) ** n for i in range(k + 1))
+                if f(n, k) != expect:
+                    return False
+        return True
+    yield "5 count_onto: agrees with inclusion-exclusion for small sizes", _run(onto_ok)
+
+
+# ---------------------------------------------------------------- PS6 inclusion-exclusion
+def _ps6(ns):
+    def union_ok():
+        f = ns["union_size"]
+        for k in range(1, 6):
+            sets = [set(RNG.sample(range(30), RNG.randrange(0, 15))) for _ in range(k)]
+            if f(sets) != len(set().union(*sets)):
+                return False
+        return True
+    yield "2 union_size: agrees with the size of the union", _run(union_ok)
+
+    def small_ok():
+        f = ns["smallest_group"]
+        from collections import Counter
+        for _ in range(10):
+            rows = [{"a": RNG.choice("xy"), "b": RNG.choice("pqr"), "c": RNG.randrange(3)} for _ in range(40)]
+            for keys in (["a"], ["a", "b"], ["a", "b", "c"]):
+                if f(rows, keys) != min(Counter(tuple(r[k] for k in keys) for r in rows).values()):
+                    return False
+        return True
+    yield "5 smallest_group: on generated rows and key lists", _run(small_ok)
+
+
+# ---------------------------------------------------------------- PS7 recurrences and graphs
+def _ps7(ns):
+    import math
+    import time
+
+    def orders_ok():
+        f = ns["count_orders"]
+        if f(list("abcde"), []) != 120:
+            return False
+        if f(list("abcd"), [("a", "b"), ("b", "c"), ("c", "d")]) != 1:
+            return False
+        nodes = ["p1", "p2", "p3", "q1", "q2"]
+        return f(nodes, [("p1", "p2"), ("p2", "p3"), ("q1", "q2")]) == math.comb(5, 2)
+    yield "2 count_orders: no edges, a chain, and two chains side by side", _run(orders_ok)
+
+    def stair_ok():
+        f = ns["stair_ways"]
+        t0 = time.perf_counter()
+        vals = [f(n) for n in range(1, 81)]
+        fast = time.perf_counter() - t0 < 2
+        return vals[0] == 1 and vals[1] == 2 and all(vals[i] == vals[i - 1] + vals[i - 2] for i in range(2, 80)) and fast
+    yield "5 stair_ways: first values, the recurrence up to 80, and fast", _run(stair_ok)
+
+
 def check(n: int, ns: dict) -> None:
     items = list(globals()[f"_ps{n}"](ns))
     score = 0
