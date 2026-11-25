@@ -1,0 +1,44 @@
+# Discrete Mathematics and Logic for Computing
+
+> Test a claim in code, then prove it: sets, relations, logic, induction, counting and graphs, applied to joins, rules, collisions, re-identification and pipelines. SDAIA Academy course FND-MTH-105, version 2027.1.0, in English.
+
+Each slide is a heading such as "#### [day1#slide-id] Title": cite slides by that id, and each citation is a link (slides/day1.html#slide-id). These files are what a trainee sees: no speaker notes and no answer keys.
+
+## Course
+
+- [Course page](https://sdaiaacademy.github.io/fnd-mth-105/index.md): overview, outcomes, schedule and labs; the page itself is https://sdaiaacademy.github.io/fnd-mth-105/index.html
+- [The whole course](https://sdaiaacademy.github.io/fnd-mth-105/llms-full.txt): every unit, session and slide in one file, about 16,419 tokens
+- [Practice questions](https://sdaiaacademy.github.io/fnd-mth-105/practice.html): questions to check yourself, with feedback after each answer
+
+## Slides
+
+- [Week 1: Sets, functions and relations](https://sdaiaacademy.github.io/fnd-mth-105/slides/week1.md): Data as sets of tuples, maps that are or are not functions, and joins as composition; sessions: Sets, functions and relations; page: https://sdaiaacademy.github.io/fnd-mth-105/slides/week1.html; about 2,611 tokens
+- [Week 2: Logic: truth tables and satisfiability](https://sdaiaacademy.github.io/fnd-mth-105/slides/week2.md): Rules as formulas, arguments checked row by row, and a schedule found by a solver; sessions: Propositional logic, normal forms and SAT; page: https://sdaiaacademy.github.io/fnd-mth-105/slides/week2.html; about 2,209 tokens
+- [Week 3: Predicates, quantifiers and first proofs](https://sdaiaacademy.github.io/fnd-mth-105/slides/week3.md): Properties of relations stated with quantifiers, checked on data, then proved or refuted; sessions: Quantifiers, relations and first proofs; page: https://sdaiaacademy.github.io/fnd-mth-105/slides/week3.html; about 2,392 tokens
+- [Week 4: Induction, invariants and the limits of testing](https://sdaiaacademy.github.io/fnd-mth-105/slides/week4.md): Claims that pass every test you ran, and the proofs that cover the cases you did not; sessions: Induction, invariants, testing and proof; page: https://sdaiaacademy.github.io/fnd-mth-105/slides/week4.html; about 2,204 tokens
+- [Week 5: Counting, collisions and the birthday problem](https://sdaiaacademy.github.io/fnd-mth-105/slides/week5.md): Sum and product rules, arrangements and selections, and when two codes must collide; sessions: Counting arrangements and collisions; page: https://sdaiaacademy.github.io/fnd-mth-105/slides/week5.html; about 1,897 tokens
+- [Week 6: Counting people: re-identification risk](https://sdaiaacademy.github.io/fnd-mth-105/slides/week6.md): Why removing the identifier column does not anonymise a register; sessions: Inclusion-exclusion and linkage risk; page: https://sdaiaacademy.github.io/fnd-mth-105/slides/week6.html; about 2,103 tokens
+- [Week 7: Graphs, topological order and growth](https://sdaiaacademy.github.io/fnd-mth-105/slides/week7.md): Dependencies as a directed graph, the cycle that blocks a run, and how counts grow; sessions: Graphs, cycles, orders and recurrences; page: https://sdaiaacademy.github.io/fnd-mth-105/slides/week7.html; about 2,056 tokens
+- [Capstone: Portfolio oral defences](https://sdaiaacademy.github.io/fnd-mth-105/slides/capstone.md): Ten minutes each: one proof the assessor selects, explained step by step, then a changed hypothesis; page: https://sdaiaacademy.github.io/fnd-mth-105/slides/capstone.html; about 837 tokens
+
+## Labs
+
+- [Lab 1.1: Sets, functions and joins in code](https://sdaiaacademy.github.io/fnd-mth-105/labs/W1_1.ipynb): Week 1, Session 1, 90 min
+- [Lab 2.1: Truth tables in code, and a scheduling puzzle solved with a SAT solver](https://sdaiaacademy.github.io/fnd-mth-105/labs/W2_1.ipynb): Week 2, Session 1, 105 min
+- [Lab 3.1: Relation properties checked in code](https://sdaiaacademy.github.io/fnd-mth-105/labs/W3_1.ipynb): Week 3, Session 1, 105 min
+- [Lab 4.1: Claims tested in code, then proved](https://sdaiaacademy.github.io/fnd-mth-105/labs/W4_1.ipynb): Week 4, Session 1, 105 min
+- [Lab 5.1: Hash collisions and the birthday problem, by formula and by brute force](https://sdaiaacademy.github.io/fnd-mth-105/labs/W5_1.ipynb): Week 5, Session 1, 105 min
+- [Lab 6.1: Re-identification risk counted from birth date, sex and postal district in a synthetic register](https://sdaiaacademy.github.io/fnd-mth-105/labs/W6_1.ipynb): Week 6, Session 1, 105 min
+- [Lab 7.1: Cycle detection and topological order in a pipeline graph](https://sdaiaacademy.github.io/fnd-mth-105/labs/W7_1.ipynb): Week 7, Session 1, 105 min
+
+## Context files
+
+- [context/course.md](https://sdaiaacademy.github.io/fnd-mth-105/context/course.md): the whole course, for an assistant that takes a file, about 16,419 tokens
+- [context/week1.md](https://sdaiaacademy.github.io/fnd-mth-105/context/week1.md): Week 1, about 2,611 tokens
+- [context/week2.md](https://sdaiaacademy.github.io/fnd-mth-105/context/week2.md): Week 2, about 2,209 tokens
+- [context/week3.md](https://sdaiaacademy.github.io/fnd-mth-105/context/week3.md): Week 3, about 2,392 tokens
+- [context/week4.md](https://sdaiaacademy.github.io/fnd-mth-105/context/week4.md): Week 4, about 2,204 tokens
+- [context/week5.md](https://sdaiaacademy.github.io/fnd-mth-105/context/week5.md): Week 5, about 1,897 tokens
+- [context/week6.md](https://sdaiaacademy.github.io/fnd-mth-105/context/week6.md): Week 6, about 2,103 tokens
+- [context/week7.md](https://sdaiaacademy.github.io/fnd-mth-105/context/week7.md): Week 7, about 2,056 tokens
+- [context/capstone.md](https://sdaiaacademy.github.io/fnd-mth-105/context/capstone.md): Capstone, about 837 tokens

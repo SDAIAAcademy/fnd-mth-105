@@ -1,0 +1,708 @@
+{
+  "v": 1,
+  "engine": "1.0.0",
+  "build": {
+    "at": "2026-11-25T09:03:20Z",
+    "version": "2027.1.0",
+    "commit": "9b66171"
+  },
+  "lang": "en",
+  "dir": "ltr",
+  "langs": [
+    "en"
+  ],
+  "alt": {},
+  "course": {
+    "id": "fnd-mth-105",
+    "code": "FND-MTH-105",
+    "version": "2027.1.0",
+    "title": "Discrete Mathematics and Logic for Computing",
+    "tagline": "Test a claim in code, then prove it: sets, relations, logic, induction, counting and graphs, applied to joins, rules, collisions, re-identification and pipelines",
+    "description": "Participants practise the discrete mathematics and proof that computing degrees assume: sets, relations, logic, proof, counting and graphs. Code tests each claim on generated cases before it is proved, so the gap between testing and proof is visible. Labs link relations to joins, logic to rule checking, counting to collision and re-identification risk, and graphs to pipeline dependencies. Algorithms on graphs follow in FND-PRG-103.",
+    "track": "foundations",
+    "track_name": "Data & AI Foundations Track",
+    "level": 100,
+    "badge": null,
+    "audience": "Beginners. Career changers and non-computing graduates closing bridging gaps before advanced study, and computing graduates refreshing the mathematics behind models; a placement test lets participants skip any course whose content they already command.",
+    "prerequisites": [
+      "School algebra",
+      "Writes short Python programs with lists, loops, functions and recursion (FND-PRG-101 or equivalent)"
+    ],
+    "url": "https://sdaiaacademy.github.io/fnd-mth-105/",
+    "repo": "SDAIAAcademy/fnd-mth-105",
+    "home": "../index.html",
+    "format": "extended",
+    "format_note": "Extended: 7 weeks part-time, one session and one lab a week, weekly graded problem sets and a capstone portfolio",
+    "shape": "7 weeks + capstone",
+    "hours": {
+      "instruction": 13,
+      "lab": 12,
+      "guided_self_study": 7,
+      "assessment": 3,
+      "capstone": 5,
+      "total": 40
+    },
+    "unit": "week",
+    "outcomes": [
+      {
+        "id": "LO1",
+        "text": "Identify whether a relation is a function, an equivalence or an order, and which properties it has, given twelve relations from data and software",
+        "level": "Awareness",
+        "evidence": "supervised AI-off test, at least 70% correct"
+      },
+      {
+        "id": "LO2",
+        "text": "Distinguish valid from invalid arguments and translate plain-language rules into propositional and predicate logic, given five access and data-quality rules",
+        "level": "Awareness",
+        "evidence": "rules checked by truth table or solver, four of five correct"
+      },
+      {
+        "id": "LO3",
+        "text": "Describe direct, contradiction and induction proofs and identify the gap in a flawed proof, given six short proofs, two with planted errors",
+        "level": "Awareness",
+        "evidence": "marked answers in the supervised test"
+      },
+      {
+        "id": "LO4",
+        "text": "Apply induction and loop invariants to prove simple claims about integers, sets and recursive code, given claims first tested in code",
+        "level": "Applied",
+        "evidence": "rubric-marked proofs, each with its test code"
+      },
+      {
+        "id": "LO5",
+        "text": "Compute counts of arrangements, selections and collisions and verify them by enumeration, given hashing and record-linkage problems",
+        "level": "Applied",
+        "evidence": "a notebook in which formula and brute-force counts agree"
+      },
+      {
+        "id": "LO6",
+        "text": "Use a graph model of dependencies to find cycles and compute a topological order, given a pipeline graph with a planted cycle",
+        "level": "Applied",
+        "evidence": "output naming the cycle and a valid order once it is removed"
+      }
+    ],
+    "case_study": {
+      "name": "The community volunteer centre (fictional)",
+      "summary": "An unnamed non-profit in one unnamed city registers 4,000 volunteers, trains them and staffs community events in twelve postal districts; its analyst checks joins, access rules, a shift schedule, check-in codes, a de-identified extract and a nightly pipeline. All data is synthetic, generated with a fixed seed; people appear only as codes such as V-00412, never by name."
+    },
+    "days": [
+      {
+        "id": "week1",
+        "kind": "day",
+        "n": 1,
+        "number": 1,
+        "label": "Week 1",
+        "title": "Sets, functions and relations",
+        "subtitle": "Data as sets of tuples, maps that are or are not functions, and joins as composition",
+        "shape": "1 session · 1 lab",
+        "deck": "../slides/week1.html",
+        "md": "../slides/week1.md",
+        "url": "https://sdaiaacademy.github.io/fnd-mth-105/slides/week1.html",
+        "sessions": [
+          {
+            "n": 1,
+            "label": "Session 1",
+            "title": "Sets, functions and relations",
+            "summary": "Sets and Cartesian products, injective, surjective and bijective functions, relations and their first properties, and joins as relation composition",
+            "outcomes": [
+              "Compute set operations and the size of a Cartesian product, and check them in code",
+              "Decide whether a map from the data is a function and whether it is injective, surjective or bijective",
+              "Compose two relations and explain how a database join differs from the composition"
+            ],
+            "lo": [
+              "LO1"
+            ],
+            "minutes": 210,
+            "lab": {
+              "id": "1.1",
+              "title": "Sets, functions and joins in code",
+              "summary": "An added lab, beyond the entry's five: test the badge map for the properties of a function, and compare composing two tables with joining them in SQL.",
+              "minutes": 90,
+              "href": "../labs/W1_1.ipynb",
+              "steps": [
+                {
+                  "text": "Set up and load the centre's tables",
+                  "minutes": 10
+                },
+                {
+                  "text": "Set operations and Cartesian products, by hand and in code",
+                  "minutes": 10
+                },
+                {
+                  "text": "Is the badge map a function? Total, injective, surjective",
+                  "minutes": 20
+                },
+                {
+                  "text": "Shift to event: a function onto the events?",
+                  "minutes": 10
+                },
+                {
+                  "text": "Inverse and composition of relations",
+                  "minutes": 15
+                },
+                {
+                  "text": "Compose assignments with shifts, then join them in SQL",
+                  "minutes": 20
+                },
+                {
+                  "text": "Record what the coordinator should fix",
+                  "minutes": 5
+                }
+              ],
+              "stretch": "Show on the three tables that composing relations is associative"
+            }
+          }
+        ]
+      },
+      {
+        "id": "week2",
+        "kind": "day",
+        "n": 2,
+        "number": 2,
+        "label": "Week 2",
+        "title": "Logic: truth tables and satisfiability",
+        "subtitle": "Rules as formulas, arguments checked row by row, and a schedule found by a solver",
+        "shape": "1 session · 1 lab",
+        "deck": "../slides/week2.html",
+        "md": "../slides/week2.md",
+        "url": "https://sdaiaacademy.github.io/fnd-mth-105/slides/week2.html",
+        "sessions": [
+          {
+            "n": 1,
+            "label": "Session 1",
+            "title": "Propositional logic, normal forms and SAT",
+            "summary": "Propositional logic and truth tables, valid and invalid arguments, conjunctive normal form and Boolean satisfiability with a solver",
+            "outcomes": [
+              "Translate a plain-language rule into a propositional formula and check it by truth table",
+              "Distinguish a valid argument from an invalid one by searching for a counterexample row",
+              "Encode a small scheduling problem in conjunctive normal form and solve it with a SAT solver"
+            ],
+            "lo": [
+              "LO2"
+            ],
+            "minutes": 215,
+            "lab": {
+              "id": "2.1",
+              "title": "Truth tables in code, and a scheduling puzzle solved with a SAT solver",
+              "summary": "Check laws and arguments by truth table, repair an access rule, and schedule ten volunteers with a solver.",
+              "minutes": 105,
+              "href": "../labs/W2_1.ipynb",
+              "steps": [
+                {
+                  "text": "Set up; a truth table by hand and in code",
+                  "minutes": 15
+                },
+                {
+                  "text": "Equivalent or not: laws by truth table",
+                  "minutes": 15
+                },
+                {
+                  "text": "Valid and invalid arguments",
+                  "minutes": 15
+                },
+                {
+                  "text": "Two phrasings of an access rule",
+                  "minutes": 15
+                },
+                {
+                  "text": "Encode the shift puzzle in CNF",
+                  "minutes": 20
+                },
+                {
+                  "text": "Solve, then check against every rule",
+                  "minutes": 10
+                },
+                {
+                  "text": "The late change: unsatisfiable, and why",
+                  "minutes": 10
+                },
+                {
+                  "text": "Small variant: brute force against solver",
+                  "minutes": 5
+                }
+              ],
+              "stretch": "Count every schedule of the full puzzle by blocking each one found"
+            }
+          }
+        ]
+      },
+      {
+        "id": "week3",
+        "kind": "day",
+        "n": 3,
+        "number": 3,
+        "label": "Week 3",
+        "title": "Predicates, quantifiers and first proofs",
+        "subtitle": "Properties of relations stated with quantifiers, checked on data, then proved or refuted",
+        "shape": "1 session · 1 lab",
+        "deck": "../slides/week3.html",
+        "md": "../slides/week3.md",
+        "url": "https://sdaiaacademy.github.io/fnd-mth-105/slides/week3.html",
+        "sessions": [
+          {
+            "n": 1,
+            "label": "Session 1",
+            "title": "Quantifiers, relations and first proofs",
+            "summary": "Predicates and quantifiers, the properties of relations, equivalence relations and orders, and direct proof, counterexample and contradiction",
+            "outcomes": [
+              "Write a relation property or a data-quality rule with quantifiers and negate it correctly",
+              "Classify a relation as a function, an equivalence, a partial order or none, with a counterexample for each property it lacks",
+              "Prove a short claim directly or by contradiction, and refute a false one with a counterexample"
+            ],
+            "lo": [
+              "LO1",
+              "LO2",
+              "LO3"
+            ],
+            "minutes": 215,
+            "lab": {
+              "id": "3.1",
+              "title": "Relation properties checked in code",
+              "summary": "Write checkers for reflexive, symmetric, antisymmetric and transitive, classify nine relations from the centre's data and software, find the planted faults, and close the training prerequisites.",
+              "minutes": 105,
+              "href": "../labs/W3_1.ipynb",
+              "steps": [
+                {
+                  "text": "Set up; properties as quantified statements",
+                  "minutes": 10
+                },
+                {
+                  "text": "Write the property checkers",
+                  "minutes": 20
+                },
+                {
+                  "text": "Classify nine relations",
+                  "minutes": 20
+                },
+                {
+                  "text": "Counterexamples: the planted faults",
+                  "minutes": 15
+                },
+                {
+                  "text": "Equivalence classes and the partition",
+                  "minutes": 10
+                },
+                {
+                  "text": "Transitive closure of the training prerequisites",
+                  "minutes": 15
+                },
+                {
+                  "text": "A claim over all integers: test, then prove",
+                  "minutes": 10
+                },
+                {
+                  "text": "Record what the checks prove and what they only test",
+                  "minutes": 5
+                }
+              ],
+              "stretch": "Count, among the 512 relations on a three-element set, how many are equivalence relations"
+            }
+          }
+        ]
+      },
+      {
+        "id": "week4",
+        "kind": "day",
+        "n": 4,
+        "number": 4,
+        "label": "Week 4",
+        "title": "Induction, invariants and the limits of testing",
+        "subtitle": "Claims that pass every test you ran, and the proofs that cover the cases you did not",
+        "shape": "1 session · 1 lab",
+        "deck": "../slides/week4.html",
+        "md": "../slides/week4.md",
+        "url": "https://sdaiaacademy.github.io/fnd-mth-105/slides/week4.html",
+        "sessions": [
+          {
+            "n": 1,
+            "label": "Session 1",
+            "title": "Induction, invariants, testing and proof",
+            "summary": "Mathematical and structural induction, loop invariants, and why a claim tested on many cases is not proved",
+            "outcomes": [
+              "Prove a claim about the integers by mathematical induction after testing it in code",
+              "Prove a property of a recursive structure by structural induction",
+              "State and check a loop invariant, and use it to prove a loop correct"
+            ],
+            "lo": [
+              "LO3",
+              "LO4"
+            ],
+            "minutes": 215,
+            "lab": {
+              "id": "4.1",
+              "title": "Claims tested in code, then proved",
+              "summary": "An added lab: test claims on generated cases, prove them by induction and invariants, and find the gap in a flawed proof.",
+              "minutes": 105,
+              "href": "../labs/W4_1.ipynb",
+              "steps": [
+                {
+                  "text": "Set up; test a sum formula on many cases",
+                  "minutes": 10
+                },
+                {
+                  "text": "Prove it by induction",
+                  "minutes": 15
+                },
+                {
+                  "text": "True for forty cases, false on the next",
+                  "minutes": 10
+                },
+                {
+                  "text": "Structural induction on the team tree",
+                  "minutes": 20
+                },
+                {
+                  "text": "Loop invariants asserted in code",
+                  "minutes": 20
+                },
+                {
+                  "text": "Find the gap in a flawed proof",
+                  "minutes": 15
+                },
+                {
+                  "text": "Record which claims are proved",
+                  "minutes": 15
+                }
+              ],
+              "stretch": "Prove an invariant for binary search over the volunteer codes"
+            }
+          }
+        ]
+      },
+      {
+        "id": "week5",
+        "kind": "day",
+        "n": 5,
+        "number": 5,
+        "label": "Week 5",
+        "title": "Counting, collisions and the birthday problem",
+        "subtitle": "Sum and product rules, arrangements and selections, and when two codes must collide",
+        "shape": "1 session · 1 lab",
+        "deck": "../slides/week5.html",
+        "md": "../slides/week5.md",
+        "url": "https://sdaiaacademy.github.io/fnd-mth-105/slides/week5.html",
+        "sessions": [
+          {
+            "n": 1,
+            "label": "Session 1",
+            "title": "Counting arrangements and collisions",
+            "summary": "The sum and product rules, permutations and combinations, the pigeonhole principle and collisions of short codes",
+            "outcomes": [
+              "Count arrangements and selections with the sum and product rules, permutations and combinations",
+              "Compute the chance that short codes collide and verify it by exact enumeration",
+              "Use the pigeonhole principle to show when a collision is certain"
+            ],
+            "lo": [
+              "LO5"
+            ],
+            "minutes": 215,
+            "lab": {
+              "id": "5.1",
+              "title": "Hash collisions and the birthday problem, by formula and by brute force",
+              "summary": "Cut check-in codes from a hash, count collisions two ways, and choose a code length.",
+              "minutes": 105,
+              "href": "../labs/W5_1.ipynb",
+              "steps": [
+                {
+                  "text": "Set up; sum and product rules",
+                  "minutes": 10
+                },
+                {
+                  "text": "Arrangements and selections, two ways",
+                  "minutes": 15
+                },
+                {
+                  "text": "Short check-in codes from a hash",
+                  "minutes": 10
+                },
+                {
+                  "text": "Collision-free count: formula and brute force",
+                  "minutes": 20
+                },
+                {
+                  "text": "The birthday problem exactly, with fractions",
+                  "minutes": 15
+                },
+                {
+                  "text": "Expected colliding pairs against those issued",
+                  "minutes": 15
+                },
+                {
+                  "text": "Pigeonhole: when a collision is certain",
+                  "minutes": 10
+                },
+                {
+                  "text": "Choose the code length and record it",
+                  "minutes": 10
+                }
+              ],
+              "stretch": "Count the shared birthdays in the register and compare with the formula"
+            }
+          }
+        ]
+      },
+      {
+        "id": "week6",
+        "kind": "day",
+        "n": 6,
+        "number": 6,
+        "label": "Week 6",
+        "title": "Counting people: re-identification risk",
+        "subtitle": "Why removing the identifier column does not anonymise a register",
+        "shape": "1 session · 1 lab",
+        "deck": "../slides/week6.html",
+        "md": "../slides/week6.md",
+        "url": "https://sdaiaacademy.github.io/fnd-mth-105/slides/week6.html",
+        "sessions": [
+          {
+            "n": 1,
+            "label": "Session 1",
+            "title": "Inclusion-exclusion and linkage risk",
+            "summary": "Inclusion-exclusion, the product rule over quasi-identifiers, class sizes in a register, generalisation, and personal versus anonymised data",
+            "outcomes": [
+              "Count the people who share each combination of quasi-identifiers and find who is unique",
+              "Apply inclusion-exclusion to count records that meet at least one of several conditions, and check it with sets",
+              "Explain why removing the direct identifier does not anonymise data, and what generalisation changes"
+            ],
+            "lo": [
+              "LO5"
+            ],
+            "minutes": 215,
+            "lab": {
+              "id": "6.1",
+              "title": "Re-identification risk counted from birth date, sex and postal district in a synthetic register",
+              "summary": "Count who shares each combination of birth date, sex and district, generalise, and link a posted sheet back.",
+              "minutes": 105,
+              "href": "../labs/W6_1.ipynb",
+              "steps": [
+                {
+                  "text": "Set up; the extract without the volunteer code",
+                  "minutes": 10
+                },
+                {
+                  "text": "People per combination of the three columns",
+                  "minutes": 15
+                },
+                {
+                  "text": "Product rule: combinations and expected uniques",
+                  "minutes": 15
+                },
+                {
+                  "text": "Generalise: birth year, five-year bands, district groups",
+                  "minutes": 20
+                },
+                {
+                  "text": "Inclusion-exclusion, checked with sets",
+                  "minutes": 15
+                },
+                {
+                  "text": "Link the posted sign-in sheet",
+                  "minutes": 15
+                },
+                {
+                  "text": "Record for the data protection officer",
+                  "minutes": 15
+                }
+              ],
+              "stretch": "Find the most detailed release in which every combination holds five people"
+            }
+          }
+        ]
+      },
+      {
+        "id": "week7",
+        "kind": "day",
+        "n": 7,
+        "number": 7,
+        "label": "Week 7",
+        "title": "Graphs, topological order and growth",
+        "subtitle": "Dependencies as a directed graph, the cycle that blocks a run, and how counts grow",
+        "shape": "1 session · 1 lab",
+        "deck": "../slides/week7.html",
+        "md": "../slides/week7.md",
+        "url": "https://sdaiaacademy.github.io/fnd-mth-105/slides/week7.html",
+        "sessions": [
+          {
+            "n": 1,
+            "label": "Session 1",
+            "title": "Graphs, cycles, orders and recurrences",
+            "summary": "Graphs, trees and directed acyclic graphs, paths and cycles, topological order, and recurrences and the growth of functions",
+            "outcomes": [
+              "Model dependencies as a directed graph and decide whether it has a cycle",
+              "Compute a topological order and check that every edge points forward",
+              "Set up a recurrence for a count, solve it, and compare how fast functions grow"
+            ],
+            "lo": [
+              "LO4",
+              "LO6"
+            ],
+            "minutes": 215,
+            "lab": {
+              "id": "7.1",
+              "title": "Cycle detection and topological order in a pipeline graph",
+              "summary": "Find and name the cycle in the centre's thirty nightly jobs, remove the wrong edge, check an order edge by edge, and count paths two ways.",
+              "minutes": 105,
+              "href": "../labs/W7_1.ipynb",
+              "steps": [
+                {
+                  "text": "A small graph by hand; load the pipeline",
+                  "minutes": 10
+                },
+                {
+                  "text": "Degrees, sources and sinks",
+                  "minutes": 10
+                },
+                {
+                  "text": "Find a cycle: library and peeling",
+                  "minutes": 20
+                },
+                {
+                  "text": "Name the cycle and remove the wrong edge",
+                  "minutes": 10
+                },
+                {
+                  "text": "A topological order, checked edge by edge",
+                  "minutes": 15
+                },
+                {
+                  "text": "Count paths: recurrence and listing",
+                  "minutes": 20
+                },
+                {
+                  "text": "How path counts grow",
+                  "minutes": 10
+                },
+                {
+                  "text": "Record for the operations lead",
+                  "minutes": 10
+                }
+              ],
+              "stretch": "Earliest round of each job when every ready job runs at once"
+            }
+          }
+        ]
+      },
+      {
+        "id": "capstone",
+        "kind": "capstone",
+        "n": 8,
+        "number": null,
+        "label": "Capstone",
+        "title": "Portfolio oral defences",
+        "subtitle": "Ten minutes each: one proof the assessor selects, explained step by step, then a changed hypothesis",
+        "shape": "",
+        "deck": "../slides/capstone.html",
+        "md": "../slides/capstone.md",
+        "url": "https://sdaiaacademy.github.io/fnd-mth-105/slides/capstone.html",
+        "sessions": []
+      }
+    ],
+    "capstone": {
+      "summary": "A portfolio of three proofs, at least one by induction, each preceded by test code, with a ten-minute oral defence of one proof the assessor selects",
+      "submission": "A link to a public GitHub repository holding the portfolio: three proofs, at least one by induction, each preceded by its test code and that code's output, with a record of any AI use; then a ten-minute oral defence of one proof the assessor selects, explained step by step, with a changed hypothesis to handle",
+      "talk_minutes": 10,
+      "qa_minutes": null,
+      "rubric": [
+        {
+          "criterion": "Each claim stated precisely: domain, quantifiers, hypothesis and conclusion",
+          "weight": 15
+        },
+        {
+          "criterion": "Test code before each proof: generated or exhaustive cases, edge cases, and an honest note of what the tests cannot show",
+          "weight": 20
+        },
+        {
+          "criterion": "Each proof valid: method named, every step justified, no gap",
+          "weight": 30
+        },
+        {
+          "criterion": "The induction proof complete: base case, hypothesis stated, an inductive step that uses it (or an invariant with initialisation, maintenance and termination)",
+          "weight": 20
+        },
+        {
+          "criterion": "Portfolio readable and reproducible: code runs, AI use recorded, sources named",
+          "weight": 15
+        }
+      ]
+    },
+    "labs": {
+      "kind": "notebooks",
+      "base": "labs/"
+    },
+    "tools": [
+      {
+        "slot": "Satisfiability solver",
+        "examples": [
+          "PySAT",
+          "Z3"
+        ]
+      },
+      {
+        "slot": "Graph library",
+        "examples": [
+          "NetworkX",
+          "igraph"
+        ]
+      },
+      {
+        "slot": "Notebook environment",
+        "examples": [
+          "JupyterLab",
+          "marimo",
+          "a free hosted notebook service"
+        ]
+      },
+      {
+        "slot": "Hint-only tutor",
+        "examples": [
+          "an open-weight model in tutor mode",
+          "an approved assistant with a tutor instruction"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "group": "National references",
+        "items": [
+          {
+            "title": "SDAIA: Data & AI Academic Programs Standards Framework (2026), section 3.6, the common prerequisite and bridging knowledge units",
+            "url": "https://sdaia.gov.sa/en/MediaCenter/KnowledgeCenter/ResearchLibrary/Academic-Programs-Standards-Framework-Q3.pdf"
+          },
+          {
+            "title": "SDAIA: Personal Data Protection Law, Article 1, the definition of personal data (English text)",
+            "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/PersonalDataProtectionLaw.pdf"
+          },
+          {
+            "title": "SDAIA: Personal Data Destruction, Anonymization and Pseudonymisation Guideline, version 1.0",
+            "url": "https://sdaia.gov.sa/Documents/PersonalDataDestructionAnonymizationAndEncryptionGuideline.pdf"
+          }
+        ]
+      },
+      {
+        "group": "Tools",
+        "items": [
+          {
+            "title": "PySAT: the SAT solver toolkit for Python (documentation)",
+            "url": "https://pysathq.github.io/"
+          },
+          {
+            "title": "NetworkX: directed acyclic graph algorithms, topological sort and cycles",
+            "url": "https://networkx.org/documentation/stable/reference/algorithms/dag.html"
+          },
+          {
+            "title": "Python standard library: hashlib, secure hashes and message digests",
+            "url": "https://docs.python.org/3/library/hashlib.html"
+          },
+          {
+            "title": "Python standard library: sqlite3, the database used for the join in lab 1.1",
+            "url": "https://docs.python.org/3/library/sqlite3.html"
+          },
+          {
+            "title": "Python standard library: fractions, exact rational arithmetic",
+            "url": "https://docs.python.org/3/library/fractions.html"
+          }
+        ]
+      }
+    ]
+  }
+}

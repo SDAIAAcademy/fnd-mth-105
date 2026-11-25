@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-ax="deck" data-track="foundations">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 4 · Induction, invariants and the limits of testing · Discrete Mathematics and Logic for Computing</title>
+<meta name="generator" content="SDAIA Academy engine 1.0.0">
+<link rel="icon" href="../_engine/icon.svg">
+<link rel="alternate" type="text/markdown" href="week4.md">
+<link rel="describedby" href="../llms.txt">
+<link rel="stylesheet" href="../_engine/academy.css">
+</head>
+<body>
+<div class="deck" data-course="Discrete Mathematics and Logic for Computing" data-track="foundations" data-day="Week 4">
+<section class="slide title" id="title" data-auto="title" data-label="Welcome" data-n="1">
+  <div class="kicker">SDAIA Academy · Discrete Mathematics and Logic for Computing</div>
+  <h1>Induction, invariants and the limits of testing</h1>
+  <p class="lead mt">Week 4: Claims that pass every test you ran, and the proofs that cover the cases you did not</p>
+  <div class="meta"><span class="track">Data &amp; AI Foundations Track</span><span>7 weeks + capstone</span><span>1 session · 1 lab</span><span>FND-MTH-105</span></div>
+  <aside class="notes"><p>Collect PS3 difficulties first: usually the negation with two quantifiers and the contradiction's first line. This week is the heart of the course: induction proves a claim for infinitely many cases, and the lab shows why testing alone cannot.</p></aside>
+</section>
+
+<section class="slide" id="agenda" data-auto="agenda" data-label="Agenda" data-n="2">
+  <div class="kicker">This week</div>
+  <h2>Induction, invariants and the limits of testing</h2>
+  <div class="agenda"><div class="item"><div><b>Session 1 · Induction, invariants, testing and proof</b><small>Mathematical and structural induction, loop invariants, and why a claim tested on many cases is not proved</small></div></div></div>
+</section>
+
+<section class="slide" id="review-week3" data-lo="LO1" data-n="3">
+  <div class="kicker">Review · week 3</div>
+  <h2>Which property fails?</h2>
+  <div class="quiz" data-type="single" data-lo="LO1" data-id="review-week3-q1">
+    <p class="lead">On the files of a shared drive, "file A is in the same folder as file B or in one of its subfolders" relates A to B. Which property does it lack?</p>
+    <div class="opts">
+      <div class="opt" data-why="Misses that every file is in its own folder, so each relates to itself" data-k="A">Reflexivity</div>
+      <div class="opt" data-why="Misses that nesting chains: a subfolder of a subfolder is still a subfolder" data-k="B">Transitivity</div>
+      <div class="opt" data-why="Thinks the property holds by name only: a file deep inside relates to one above, not back" data-k="C">It has all four, so it is an equivalence</div>
+      <div class="opt" data-ok data-k="D">Symmetry</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> A file in a subfolder relates to a file in the parent folder, but not the other way round.</div>
+  </div>
+  <aside class="notes"><p>Answer D. It is also not antisymmetric, since two different files in the same folder relate both ways: a preorder.</p></aside>
+</section>
+
+<!-- Session 1 -->
+
+<section class="slide section" id="s1" data-auto="section" data-session="1" data-n="4">
+  <div class="kicker">Session 1</div>
+  <h1>Induction, invariants, testing and proof</h1>
+  <ul class="bullets outcomes"><li>Prove a claim about the integers by mathematical induction after testing it in code</li><li>Prove a property of a recursive structure by structural induction</li><li>State and check a loop invariant, and use it to prove a loop correct</li></ul>
+  <div class="sess-no">01</div>
+</section>
+
+<section class="slide" id="induction-shape" data-lo="LO3 LO4" data-n="5" data-session="1">
+  <div class="kicker">Block A · induction</div>
+  <h2>Induction proves a claim for every n with two finite pieces of work</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>Base</b>show P(1), or P of the first value</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>Hypothesis</b>assume P(k) for one k ≥ 1</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>Step</b>show P(k + 1), using P(k)</div>
+  </div>
+  <ul class="bullets mt">
+    <li>Base and step together reach every n: P(1), so P(2), so P(3), and so on</li>
+    <li>Without the base, the step proves nothing; without the step, the base proves one case</li>
+  </ul>
+  <aside class="notes"><p>The dominoes picture works: the step says each domino knocks the next, the base pushes the first. Insist that the hypothesis is assumed for one k, not for all n, which would assume what is to be proved.</p></aside>
+</section>
+
+<section class="slide" id="induction-example" data-lo="LO4" data-n="6" data-session="1">
+  <div class="kicker">Worked example</div>
+  <h2>Test it, then prove it: 1 + 2 + … + n = n(n + 1) / 2</h2>
+  <div class="cols cols-2">
+    <pre class="code" data-file="python"><code class="language-python"><span class="hljs-built_in">all</span>(<span class="hljs-built_in">sum</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>)) == n * (n + <span class="hljs-number">1</span>) // <span class="hljs-number">2</span>
+    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">5001</span>))   <span class="hljs-comment"># True</span></code></pre>
+    <ol class="bullets tight">
+      <li><b>Base.</b> n = 1: 1 = 1 · 2 / 2</li>
+      <li><b>Hypothesis.</b> 1 + … + k = k(k + 1) / 2</li>
+      <li><b>Step.</b> 1 + … + k + (k + 1) = k(k + 1) / 2 + (k + 1) = (k + 1)(k + 2) / 2, using the hypothesis for the first k terms ∎</li>
+    </ol>
+  </div>
+  <aside class="notes"><p>A parallel to the lab's first claim, with different numbers. Point at where the hypothesis is used: the rubric looks for that sentence. Then ask what the test of 5,000 cases added: confidence before the effort of proof, and a check on the formula's exact form (n(n + 1)/2, not n²/2).</p></aside>
+</section>
+
+<section class="slide" id="strong-induction" data-lo="LO3 LO4" data-n="7" data-session="1">
+  <div class="kicker">Strong induction</div>
+  <h2>Strong induction may assume the claim for every value below k + 1</h2>
+  <div class="cols cols-2">
+    <div>
+      <p><b>Claim.</b> Every integer n ≥ 2 is a product of primes.</p>
+      <ul class="bullets tight">
+        <li>If n is prime, it is a product of one prime</li>
+        <li>Otherwise n = a · b with 2 ≤ a, b &lt; n</li>
+        <li>By the hypothesis for a and for b, both are products of primes, so n is too ∎</li>
+      </ul>
+    </div>
+    <div class="card c-purple"><h4>When to use it</h4><p class="small mb0">When the step needs a smaller case that is not k itself: a factor, half of n, a subtree. Recursive code that splits its input is proved this way.</p></div>
+  </div>
+  <aside class="notes"><p>The hypothesis here is "the claim holds for every m with 2 ≤ m ≤ k". The base is hidden in the first bullet: a prime needs no smaller case. PS7's staircase bound uses strong induction.</p></aside>
+</section>
+
+<section class="slide" id="check-induction-parts" data-lo="LO3" data-n="8" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>What is missing?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3" data-id="check-induction-parts-q1">
+    <p class="lead">A proof that "n + 1 &lt; n for every n ≥ 1" assumes k + 1 &lt; k and adds 1 to both sides to get k + 2 &lt; k + 1. What is wrong with it?</p>
+    <div class="opts">
+      <div class="opt" data-ok data-k="A">It has no base case, and the base case is false</div>
+      <div class="opt" data-why="Blames the algebra: adding 1 to both sides of an inequality is valid" data-k="B">Adding 1 to both sides is not allowed</div>
+      <div class="opt" data-why="Thinks the hypothesis is the flaw: assuming P(k) is how every induction step works" data-k="C">The hypothesis assumes what it wants to prove</div>
+      <div class="opt" data-why="Thinks strong induction would rescue it: no form of induction proves a false claim" data-k="D">It needs strong induction instead</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The step is valid on its own; with no true starting case it proves nothing. For n = 1, 2 &lt; 1 is false.</div>
+  </div>
+  <aside class="notes"><p>Answer A. A valid step from a false start is the classic way a "proof" of a false claim looks complete.</p></aside>
+</section>
+
+<section class="slide" id="structural" data-lo="LO4" data-n="9" data-session="1">
+  <div class="kicker">Block B · structural induction</div>
+  <h2>Structural induction follows the way a structure is built</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>A recursive definition</h4><p class="small mb0">A nested list is either a number, or a list of nested lists. A tree is a node with a list of subtrees.</p></div>
+    <div class="card c-cyan"><h4>Its induction</h4><p class="small mb0">Prove the claim for the smallest pieces, then show that building from pieces that satisfy it gives a whole that satisfies it.</p></div>
+  </div>
+  <div class="callout note mt"><b>No n needed.</b> The induction is on the structure itself; each recursive call works on a smaller part.</div>
+  <aside class="notes"><p>Ask the room to write the recursive definition of a list (empty, or an element followed by a list): ordinary induction on n is structural induction on that definition.</p></aside>
+</section>
+
+<section class="slide" id="structural-example" data-lo="LO4" data-n="10" data-session="1">
+  <div class="kicker">Worked example</div>
+  <h2>In a tree where every node has 0 or 2 children, leaves = inner nodes + 1</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li><b>Base.</b> A single node: 1 leaf, 0 inner nodes</li>
+      <li><b>Step.</b> A root with subtrees L and R that satisfy it: leaves = (inner(L) + 1) + (inner(R) + 1) = (inner(L) + inner(R) + 1) + 1</li>
+      <li>The root is the one new inner node, so leaves = inner + 1 ∎</li>
+    </ul>
+    <pre class="code" data-file="python"><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">leaves</span>(<span class="hljs-params">t</span>):
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> t[<span class="hljs-string">&quot;children&quot;</span>]:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(leaves(c) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> t[<span class="hljs-string">&quot;children&quot;</span>])</code></pre>
+  </div>
+  <aside class="notes"><p>A parallel to the lab's tree claim, which is about edges and nodes in any tree. Test first: generate random trees whose nodes have 0 or 2 children and compare the counts. The proof's two cases are the two branches of the recursive function.</p></aside>
+</section>
+
+<section class="slide" id="recursion-correct" data-lo="LO4" data-n="11" data-session="1">
+  <div class="kicker">Recursive code</div>
+  <h2>A recursive function is proved correct by induction on the size of its input</h2>
+  <div class="cols cols-2">
+    <pre class="code" data-file="python"><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">total</span>(<span class="hljs-params">xs</span>):
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> xs:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    <span class="hljs-keyword">return</span> xs[<span class="hljs-number">0</span>] + total(xs[<span class="hljs-number">1</span>:])</code></pre>
+    <ol class="bullets tight">
+      <li><b>Base.</b> The empty list returns 0, its sum</li>
+      <li><b>Hypothesis.</b> total is right on lists of length k</li>
+      <li><b>Step.</b> On length k + 1 it returns xs[0] plus the sum of the rest, by the hypothesis: the sum ∎</li>
+    </ol>
+  </div>
+  <aside class="notes"><p>Ask what else must hold: termination, since each call is on a shorter list. A recursive call on a list that does not shrink is where such proofs, and programs, fail.</p></aside>
+</section>
+
+<section class="slide" id="check-structural" data-lo="LO4" data-n="12" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>What may the step assume?</h2>
+  <div class="quiz" data-type="single" data-lo="LO4" data-id="check-structural-q1">
+    <p class="lead">To prove by structural induction that a recursive depth function on nested lists is correct, the step for a list [a, b, c] may assume:</p>
+    <div class="opts">
+      <div class="opt" data-why="Assumes the claim for the whole structure, which is what the step must show" data-k="A">that the function is correct on [a, b, c]</div>
+      <div class="opt" data-why="Thinks only one part may be assumed: the hypothesis covers every smaller part" data-k="B">that it is correct on a only</div>
+      <div class="opt" data-ok data-k="C">that it is correct on each of a, b and c</div>
+      <div class="opt" data-why="Thinks structural induction needs a numeric n: it inducts on the structure" data-k="D">that it is correct on every list of length 2</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The hypothesis is the claim for every immediate part of the structure; the step builds the whole from them.</div>
+  </div>
+  <aside class="notes"><p>Answer C. D is not wrong as a fact but is the wrong hypothesis: a, b and c may be nested lists of any length.</p></aside>
+</section>
+
+<section class="slide" id="invariants" data-lo="LO4" data-n="13" data-session="1">
+  <div class="kicker">Block C · loop invariants</div>
+  <h2>An invariant is true before the loop and after every pass</h2>
+  <div class="cols cols-2">
+    <pre class="code" data-file="python"><code class="language-python">total, i = <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+<span class="hljs-keyword">while</span> i &lt; <span class="hljs-built_in">len</span>(xs):
+    <span class="hljs-comment"># invariant: total == sum(xs[:i])</span>
+    total += xs[i]
+    i += <span class="hljs-number">1</span></code></pre>
+    <table class="t small">
+      <tr><th>Part</th><th>Show</th></tr>
+      <tr><td>Initialisation</td><td>true before the first pass</td></tr>
+      <tr><td>Maintenance</td><td>a pass keeps it true</td></tr>
+      <tr><td>Termination</td><td>the loop stops</td></tr>
+      <tr class="hl"><td>At exit</td><td>invariant and exit condition give the result</td></tr>
+    </table>
+  </div>
+  <aside class="notes"><p>Here: initially total = 0 = sum of no elements; a pass adds xs[i] and moves i on; i grows to len(xs); at exit i = len(xs) and total is the whole sum. It is induction on the number of passes. In code, write the invariant as an <code>assert</code> while testing.</p></aside>
+</section>
+
+<section class="slide" id="testing-vs-proof" data-lo="LO3 LO4" data-n="14" data-session="1">
+  <div class="kicker">The gap</div>
+  <h2>A pattern can hold for every case you tried and still break</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Points on a circle</th><th class="num">Regions</th></tr>
+      <tr><td>1</td><td class="num">1</td></tr>
+      <tr><td>2</td><td class="num">2</td></tr>
+      <tr><td>3</td><td class="num">4</td></tr>
+      <tr><td>4</td><td class="num">8</td></tr>
+      <tr><td>5</td><td class="num">16</td></tr>
+      <tr class="hl"><td>6</td><td class="num">31</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>Join every pair of points with a chord, no three chords meeting inside</li>
+      <li>The first five suggest 2ⁿ⁻¹; the sixth gives <b>31</b>, not 32</li>
+      <li>A test can refute a pattern; only a proof can confirm it</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The regions are 1 + C(n, 2) + C(n, 4), which week 5 can explain: each chord and each crossing adds one region. Draw n = 4 on the board if time allows.</p></aside>
+</section>
+
+<section class="slide" id="what-tests-give" data-lo="LO4" data-n="15" data-session="1">
+  <div class="kicker">Using tests well</div>
+  <h2>Generated tests find counterexamples cheaply, so run them before you prove</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Many cases</h4><p class="small mb0">Every n up to a bound, or random inputs. Cheap evidence and a fast way to find a false claim.</p></div>
+    <div class="card c-amber"><h4>Edge cases</h4><p class="small mb0">Zero, one, the empty list, equal values, the first case where a pattern could change.</p></div>
+    <div class="card c-coral"><h4>Their limit</h4><p class="small mb0">Write what the tests cover: "n from 1 to 1,000, no counterexample". Never write "true".</p></div>
+  </div>
+  <aside class="notes"><p>The portfolio rubric gives 20 points to test code before each proof, including "an honest note of what the tests cannot show". That note is the third card.</p></aside>
+</section>
+
+<section class="slide" id="check-invariant" data-lo="LO4" data-n="16" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which statement is an invariant?</h2>
+  <div class="quiz" data-type="single" data-lo="LO4" data-id="check-invariant-q1">
+    <p class="lead">A loop counts the even numbers in a list: count starts at 0, i at 0; each pass adds 1 to count if xs[i] is even, then adds 1 to i. Which invariant proves it correct?</p>
+    <div class="opts">
+      <div class="opt" data-why="Picks a true but weak statement: it holds and proves nothing about the result" data-k="A">count ≥ 0</div>
+      <div class="opt" data-why="Describes the final result, which is false before the loop has finished" data-k="B">count equals the number of evens in the whole list</div>
+      <div class="opt" data-why="Ties count to i, which only holds when every element so far was even" data-k="C">count = i</div>
+      <div class="opt" data-ok data-k="D">count equals the number of evens in xs[:i]</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> It holds at the start (0 evens in an empty prefix), each pass keeps it, and at exit i = len(xs) gives the result.</div>
+  </div>
+  <aside class="notes"><p>Answer D. B is the goal, not an invariant; A is an invariant too weak to prove anything.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-4-1" data-auto="lab" data-lab="4.1" data-label="Lab 4.1" data-n="17" data-session="1">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 4.1 · 105 min</div><h2>Claims tested in code, then proved</h2><p class="lead small">An added lab: test claims on generated cases, prove them by induction and invariants, and find the gap in a flawed proof.</p><a class="nb" href="../labs/W4_1.ipynb">W4_1.ipynb</a></div><ul class="checklist"><li>Set up; test a sum formula on many cases <span class="min">10 min</span></li><li>Prove it by induction <span class="min">15 min</span></li><li>True for forty cases, false on the next <span class="min">10 min</span></li><li>Structural induction on the team tree <span class="min">20 min</span></li><li>Loop invariants asserted in code <span class="min">20 min</span></li><li>Find the gap in a flawed proof <span class="min">15 min</span></li><li>Record which claims are proved <span class="min">15 min</span></li><li class="stretch">✱ Stretch: Prove an invariant for binary search over the volunteer codes</li></ul></div>
+  <aside class="notes"><p>AI-tutor: it may point at a gap, never write the proof; proofs are AI-off for the first attempt. Watch for: an induction step that never uses the hypothesis; <code>count_edges</code> that counts nodes; the invariant asserted only after the loop. This lab is an addition to the entry's five; its model proofs are in the solution notebook, to be opened after the attempt.</p></aside>
+</section>
+
+<section class="slide" id="debrief-claims" data-lo="LO3 LO4" data-n="18" data-session="1">
+  <div class="kicker">Debrief · lab 4.1</div>
+  <h2>Forty passes did not make claim B true, and one hidden assumption broke a proof</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Claim</th><th>Status</th></tr>
+      <tr><td>Sum of first n odd numbers is n²</td><td>tested to 1,000, proved</td></tr>
+      <tr class="hl"><td>n² + n + 41 is prime</td><td>passes n = 0 to 39; at 40: 1,681 = 41 · 41</td></tr>
+      <tr><td>Edges = nodes − 1</td><td>team tree 25 and 24; 500 trees; proved</td></tr>
+      <tr><td>divide(a, b)</td><td>2,000 pairs; proved from its invariant</td></tr>
+      <tr class="hl"><td>2ⁿ ≥ n² for n ≥ 1</td><td>fails at n = 3; step needs k ≥ 3</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>The flawed step used k² ≥ 2k + 1, false for k = 1 and 2</li>
+      <li>Repaired: 2ⁿ ≥ n² for every n ≥ 4</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>From the solution run of lab 4.1. Ask who found the gap by reading and who by testing first: the test pointed at n = 3, which pointed at the step from 2 to 3.</p></aside>
+</section>
+
+<section class="slide" id="wrap-up" data-n="19" data-session="1">
+  <div class="kicker">Week 4 · wrap-up</div>
+  <h2>Three things to keep</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Base, hypothesis, step</h4><p class="small mb0">Say where the step uses the hypothesis. A step alone proves nothing.</p></div>
+    <div class="card c-coral"><h4>Induction follows structure</h4><p class="small mb0">Integers, lists, trees and loops: the proof follows the way the thing is built.</p></div>
+    <div class="card c-purple"><h4>Tests refute, proofs confirm</h4><p class="small mb0">Write what your tests cover, never "true", until the proof exists.</p></div>
+  </div>
+  <aside class="notes"><p>The first supervised test follows: 90 minutes, AI off, on weeks 1 to 4. The test's items are in the trainer pack.</p></aside>
+</section>
+
+<section class="slide dark" id="next" data-label="Next" data-n="20" data-session="1">
+  <div class="kicker">Next</div>
+  <h2>Week 5: Counting, collisions and the birthday problem</h2>
+  <p class="lead">Problem set 4 (60 minutes, AI off for the first attempt): labs/problem-sets/PS4.ipynb. Then the first supervised test, on weeks 1 to 4.</p>
+  <aside class="notes"><p>The test is proctored and AI-off: proofs and short problems, 90 minutes. Participants need at least 50% on each test, and 60% overall, to pass the course.</p></aside>
+</section>
+</div>
+<script type="application/json" id="academy-data">{"v":1,"engine":"1.0.0","build":{"at":"2026-11-25T09:03:20Z","version":"2027.1.0","commit":"9b66171"},"course":{"id":"fnd-mth-105","code":"FND-MTH-105","title":"Discrete Mathematics and Logic for Computing","track":"foundations","lang":"en","dir":"ltr","url":"https://sdaiaacademy.github.io/fnd-mth-105/","repo":"SDAIAAcademy/fnd-mth-105","home":"../index.html"},"deck":{"id":"week4","kind":"day","day":4,"label":"Week 4","title":"Induction, invariants and the limits of testing","prev":"week3.html","next":"week5.html","md":"week4.md","alt":{}},"sessions":[{"n":1,"label":"Session 1","title":"Induction, invariants, testing and proof","slide":"s1","outcomes":["Prove a claim about the integers by mathematical induction after testing it in code","Prove a property of a recursive structure by structural induction","State and check a loop invariant, and use it to prove a loop correct"],"minutes":215,"lab":{"id":"4.1","title":"Claims tested in code, then proved","minutes":105,"href":"../labs/W4_1.ipynb"}}],"slides":[{"id":"title","n":1,"title":"Induction, invariants and the limits of testing","kind":"title","session":0,"hash":"37c6f688","md":"#### [week4#title] Induction, invariants and the limits of testing\n\n*SDAIA Academy · Discrete Mathematics and Logic for Computing*\n\nWeek 4: Claims that pass every test you ran, and the proofs that cover the cases you did not\n\nData & AI Foundations Track · 7 weeks + capstone · 1 session · 1 lab · FND-MTH-105","notes":"Collect PS3 difficulties first: usually the negation with two quantifiers and the contradiction's first line. This week is the heart of the course: induction proves a claim for infinitely many cases, and the lab shows why testing alone cannot.","minutes":null,"lo":[]},{"id":"agenda","n":2,"title":"Induction, invariants and the limits of testing","kind":"content","session":0,"hash":"159eaf40","md":"#### [week4#agenda] Induction, invariants and the limits of testing\n\n*This week*\n\n- **Session 1 · Induction, invariants, testing and proof**: Mathematical and structural induction, loop invariants, and why a claim tested on many cases is not proved","notes":"","minutes":null,"lo":[]},{"id":"review-week3","n":3,"title":"Which property fails?","kind":"quiz","session":0,"hash":"fbceeece","md":"#### [week4#review-week3] Which property fails?\n\n*Review · week 3*\n\n**Question:** On the files of a shared drive, \"file A is in the same folder as file B or in one of its subfolders\" relates A to B. Which property does it lack?\n\n- A. Reflexivity\n- B. Transitivity\n- C. It has all four, so it is an equivalence\n- D. Symmetry","notes":"Answer D. It is also not antisymmetric, since two different files in the same folder relate both ways: a preorder.","minutes":null,"lo":["LO1"]},{"id":"s1","n":4,"title":"Induction, invariants, testing and proof","kind":"section","session":1,"hash":"d7e99981","md":"#### [week4#s1] Induction, invariants, testing and proof\n\n*Session 1*\n\n- Prove a claim about the integers by mathematical induction after testing it in code\n- Prove a property of a recursive structure by structural induction\n- State and check a loop invariant, and use it to prove a loop correct","notes":"","minutes":null,"lo":["LO3","LO4"]},{"id":"induction-shape","n":5,"title":"Induction proves a claim for every n with two finite pieces of work","kind":"content","session":1,"hash":"f48d7e44","md":"#### [week4#induction-shape] Induction proves a claim for every n with two finite pieces of work\n\n*Block A · induction*\n\n1. **Base** show P(1), or P of the first value\n2. **Hypothesis** assume P(k) for one k ≥ 1\n3. **Step** show P(k + 1), using P(k)\n\n- Base and step together reach every n: P(1), so P(2), so P(3), and so on\n- Without the base, the step proves nothing; without the step, the base proves one case","notes":"The dominoes picture works: the step says each domino knocks the next, the base pushes the first. Insist that the hypothesis is assumed for one k, not for all n, which would assume what is to be proved.","minutes":null,"lo":["LO3","LO4"]},{"id":"induction-example","n":6,"title":"Test it, then prove it: 1 + 2 + … + n = n(n + 1) / 2","kind":"content","session":1,"hash":"48b06a91","md":"#### [week4#induction-example] Test it, then prove it: 1 + 2 + … + n = n(n + 1) / 2\n\n*Worked example*\n\n```python\n# file: python\nall(sum(range(1, n + 1)) == n * (n + 1) // 2\n    for n in range(1, 5001))   # True\n```\n\n1. **Base.** n = 1: 1 = 1 · 2 / 2\n2. **Hypothesis.** 1 + … + k = k(k + 1) / 2\n3. **Step.** 1 + … + k + (k + 1) = k(k + 1) / 2 + (k + 1) = (k + 1)(k + 2) / 2, using the hypothesis for the first k terms ∎","notes":"A parallel to the lab's first claim, with different numbers. Point at where the hypothesis is used: the rubric looks for that sentence. Then ask what the test of 5,000 cases added: confidence before the effort of proof, and a check on the formula's exact form (n(n + 1)/2, not n²/2).","minutes":null,"lo":["LO4"]},{"id":"strong-induction","n":7,"title":"Strong induction may assume the claim for every value below k + 1","kind":"content","session":1,"hash":"c6b5afef","md":"#### [week4#strong-induction] Strong induction may assume the claim for every value below k + 1\n\n*Strong induction*\n\n**Claim.** Every integer n ≥ 2 is a product of primes.\n\n- If n is prime, it is a product of one prime\n- Otherwise n = a · b with 2 ≤ a, b \u003c n\n- By the hypothesis for a and for b, both are products of primes, so n is too ∎\n\n- **When to use it.** When the step needs a smaller case that is not k itself: a factor, half of n, a subtree. Recursive code that splits its input is proved this way.","notes":"The hypothesis here is \"the claim holds for every m with 2 ≤ m ≤ k\". The base is hidden in the first bullet: a prime needs no smaller case. PS7's staircase bound uses strong induction.","minutes":null,"lo":["LO3","LO4"]},{"id":"check-induction-parts","n":8,"title":"What is missing?","kind":"quiz","session":1,"hash":"c6dea703","md":"#### [week4#check-induction-parts] What is missing?\n\n*Checkpoint*\n\n**Question:** A proof that \"n + 1 \u003c n for every n ≥ 1\" assumes k + 1 \u003c k and adds 1 to both sides to get k + 2 \u003c k + 1. What is wrong with it?\n\n- A. It has no base case, and the base case is false\n- B. Adding 1 to both sides is not allowed\n- C. The hypothesis assumes what it wants to prove\n- D. It needs strong induction instead","notes":"Answer A. A valid step from a false start is the classic way a \"proof\" of a false claim looks complete.","minutes":null,"lo":["LO3"]},{"id":"structural","n":9,"title":"Structural induction follows the way a structure is built","kind":"content","session":1,"hash":"b6dd24cd","md":"#### [week4#structural] Structural induction follows the way a structure is built\n\n*Block B · structural induction*\n\n- **A recursive definition.** A nested list is either a number, or a list of nested lists. A tree is a node with a list of subtrees.\n- **Its induction.** Prove the claim for the smallest pieces, then show that building from pieces that satisfy it gives a whole that satisfies it.\n\n> **No n needed.** The induction is on the structure itself; each recursive call works on a smaller part.","notes":"Ask the room to write the recursive definition of a list (empty, or an element followed by a list): ordinary induction on n is structural induction on that definition.","minutes":null,"lo":["LO4"]},{"id":"structural-example","n":10,"title":"In a tree where every node has 0 or 2 children, leaves = inner nodes + 1","kind":"content","session":1,"hash":"6c9feda5","md":"#### [week4#structural-example] In a tree where every node has 0 or 2 children, leaves = inner nodes + 1\n\n*Worked example*\n\n- **Base.** A single node: 1 leaf, 0 inner nodes\n- **Step.** A root with subtrees L and R that satisfy it: leaves = (inner(L) + 1) + (inner(R) + 1) = (inner(L) + inner(R) + 1) + 1\n- The root is the one new inner node, so leaves = inner + 1 ∎\n\n```python\n# file: python\ndef leaves(t):\n    if not t[\"children\"]:\n        return 1\n    return sum(leaves(c) for c in t[\"children\"])\n```","notes":"A parallel to the lab's tree claim, which is about edges and nodes in any tree. Test first: generate random trees whose nodes have 0 or 2 children and compare the counts. The proof's two cases are the two branches of the recursive function.","minutes":null,"lo":["LO4"]},{"id":"recursion-correct","n":11,"title":"A recursive function is proved correct by induction on the size of its input","kind":"content","session":1,"hash":"3ad61c8c","md":"#### [week4#recursion-correct] A recursive function is proved correct by induction on the size of its input\n\n*Recursive code*\n\n```python\n# file: python\ndef total(xs):\n    if not xs:\n        return 0\n    return xs[0] + total(xs[1:])\n```\n\n1. **Base.** The empty list returns 0, its sum\n2. **Hypothesis.** total is right on lists of length k\n3. **Step.** On length k + 1 it returns xs[0] plus the sum of the rest, by the hypothesis: the sum ∎","notes":"Ask what else must hold: termination, since each call is on a shorter list. A recursive call on a list that does not shrink is where such proofs, and programs, fail.","minutes":null,"lo":["LO4"]},{"id":"check-structural","n":12,"title":"What may the step assume?","kind":"quiz","session":1,"hash":"7d8e69fa","md":"#### [week4#check-structural] What may the step assume?\n\n*Checkpoint*\n\n**Question:** To prove by structural induction that a recursive depth function on nested lists is correct, the step for a list [a, b, c] may assume:\n\n- A. that the function is correct on [a, b, c]\n- B. that it is correct on a only\n- C. that it is correct on each of a, b and c\n- D. that it is correct on every list of length 2","notes":"Answer C. D is not wrong as a fact but is the wrong hypothesis: a, b and c may be nested lists of any length.","minutes":null,"lo":["LO4"]},{"id":"invariants","n":13,"title":"An invariant is true before the loop and after every pass","kind":"content","session":1,"hash":"5380aa9b","md":"#### [week4#invariants] An invariant is true before the loop and after every pass\n\n*Block C · loop invariants*\n\n```python\n# file: python\ntotal, i = 0, 0\nwhile i \u003c len(xs):\n    # invariant: total == sum(xs[:i])\n    total += xs[i]\n    i += 1\n```\n\n| Part | Show |\n| --- | --- |\n| Initialisation | true before the first pass |\n| Maintenance | a pass keeps it true |\n| Termination | the loop stops |\n| At exit | invariant and exit condition give the result |","notes":"Here: initially total = 0 = sum of no elements; a pass adds xs[i] and moves i on; i grows to len(xs); at exit i = len(xs) and total is the whole sum. It is induction on the number of passes. In code, write the invariant as an `assert` while testing.","minutes":null,"lo":["LO4"]},{"id":"testing-vs-proof","n":14,"title":"A pattern can hold for every case you tried and still break","kind":"content","session":1,"hash":"9478e831","md":"#### [week4#testing-vs-proof] A pattern can hold for every case you tried and still break\n\n*The gap*\n\n| Points on a circle | Regions |\n| --- | --- |\n| 1 | 1 |\n| 2 | 2 |\n| 3 | 4 |\n| 4 | 8 |\n| 5 | 16 |\n| 6 | 31 |\n\n- Join every pair of points with a chord, no three chords meeting inside\n- The first five suggest 2ⁿ⁻¹; the sixth gives **31**, not 32\n- A test can refute a pattern; only a proof can confirm it","notes":"The regions are 1 + C(n, 2) + C(n, 4), which week 5 can explain: each chord and each crossing adds one region. Draw n = 4 on the board if time allows.","minutes":null,"lo":["LO3","LO4"]},{"id":"what-tests-give","n":15,"title":"Generated tests find counterexamples cheaply, so run them before you prove","kind":"content","session":1,"hash":"bc04eb49","md":"#### [week4#what-tests-give] Generated tests find counterexamples cheaply, so run them before you prove\n\n*Using tests well*\n\n- **Many cases.** Every n up to a bound, or random inputs. Cheap evidence and a fast way to find a false claim.\n- **Edge cases.** Zero, one, the empty list, equal values, the first case where a pattern could change.\n- **Their limit.** Write what the tests cover: \"n from 1 to 1,000, no counterexample\". Never write \"true\".","notes":"The portfolio rubric gives 20 points to test code before each proof, including \"an honest note of what the tests cannot show\". That note is the third card.","minutes":null,"lo":["LO4"]},{"id":"check-invariant","n":16,"title":"Which statement is an invariant?","kind":"quiz","session":1,"hash":"3e884dd0","md":"#### [week4#check-invariant] Which statement is an invariant?\n\n*Checkpoint*\n\n**Question:** A loop counts the even numbers in a list: count starts at 0, i at 0; each pass adds 1 to count if xs[i] is even, then adds 1 to i. Which invariant proves it correct?\n\n- A. count ≥ 0\n- B. count equals the number of evens in the whole list\n- C. count = i\n- D. count equals the number of evens in xs[:i]","notes":"Answer D. B is the goal, not an invariant; A is an invariant too weak to prove anything.","minutes":null,"lo":["LO4"]},{"id":"lab-4-1","n":17,"title":"Claims tested in code, then proved","kind":"lab","session":1,"hash":"f70dfdbf","md":"#### [week4#lab-4-1] Claims tested in code, then proved\n\nLab 4.1 · 105 min\n\nAn added lab: test claims on generated cases, prove them by induction and invariants, and find the gap in a flawed proof.\n\n[W4_1.ipynb](https://sdaiaacademy.github.io/fnd-mth-105/labs/W4_1.ipynb)\n\n- [ ] Set up; test a sum formula on many cases (10 min)\n- [ ] Prove it by induction (15 min)\n- [ ] True for forty cases, false on the next (10 min)\n- [ ] Structural induction on the team tree (20 min)\n- [ ] Loop invariants asserted in code (20 min)\n- [ ] Find the gap in a flawed proof (15 min)\n- [ ] Record which claims are proved (15 min)\n- [ ] ✱ Stretch: Prove an invariant for binary search over the volunteer codes","notes":"AI-tutor: it may point at a gap, never write the proof; proofs are AI-off for the first attempt. Watch for: an induction step that never uses the hypothesis; `count_edges` that counts nodes; the invariant asserted only after the loop. This lab is an addition to the entry's five; its model proofs are in the solution notebook, to be opened after the attempt.","minutes":null,"lo":[]},{"id":"debrief-claims","n":18,"title":"Forty passes did not make claim B true, and one hidden assumption broke a proof","kind":"content","session":1,"hash":"d4556701","md":"#### [week4#debrief-claims] Forty passes did not make claim B true, and one hidden assumption broke a proof\n\n*Debrief · lab 4.1*\n\n| Claim | Status |\n| --- | --- |\n| Sum of first n odd numbers is n² | tested to 1,000, proved |\n| n² + n + 41 is prime | passes n = 0 to 39; at 40: 1,681 = 41 · 41 |\n| Edges = nodes − 1 | team tree 25 and 24; 500 trees; proved |\n| divide(a, b) | 2,000 pairs; proved from its invariant |\n| 2ⁿ ≥ n² for n ≥ 1 | fails at n = 3; step needs k ≥ 3 |\n\n- The flawed step used k² ≥ 2k + 1, false for k = 1 and 2\n- Repaired: 2ⁿ ≥ n² for every n ≥ 4","notes":"From the solution run of lab 4.1. Ask who found the gap by reading and who by testing first: the test pointed at n = 3, which pointed at the step from 2 to 3.","minutes":null,"lo":["LO3","LO4"]},{"id":"wrap-up","n":19,"title":"Three things to keep","kind":"content","session":1,"hash":"07b3a769","md":"#### [week4#wrap-up] Three things to keep\n\n*Week 4 · wrap-up*\n\n- **Base, hypothesis, step.** Say where the step uses the hypothesis. A step alone proves nothing.\n- **Induction follows structure.** Integers, lists, trees and loops: the proof follows the way the thing is built.\n- **Tests refute, proofs confirm.** Write what your tests cover, never \"true\", until the proof exists.","notes":"The first supervised test follows: 90 minutes, AI off, on weeks 1 to 4. The test's items are in the trainer pack.","minutes":null,"lo":[]},{"id":"next","n":20,"title":"Week 5: Counting, collisions and the birthday problem","kind":"content","session":1,"hash":"d0e99ee8","md":"#### [week4#next] Week 5: Counting, collisions and the birthday problem\n\n*Next*\n\nProblem set 4 (60 minutes, AI off for the first attempt): labs/problem-sets/PS4.ipynb. Then the first supervised test, on weeks 1 to 4.","notes":"The test is proctored and AI-off: proofs and short problems, 90 minutes. Participants need at least 50% on each test, and 60% overall, to pass the course.","minutes":null,"lo":[]}],"activities":[{"id":"review-week3-q1","slide":"review-week3","type":"single","prompt":"On the files of a shared drive, \"file A is in the same folder as file B or in one of its subfolders\" relates A to B. Which property does it lack?","options":[{"key":"A","text":"Reflexivity"},{"key":"B","text":"Transitivity"},{"key":"C","text":"It has all four, so it is an equivalence"},{"key":"D","text":"Symmetry"}],"correct":[3],"explanation":"A file in a subfolder relates to a file in the parent folder, but not the other way round.","misconceptions":["Misses that every file is in its own folder, so each relates to itself","Misses that nesting chains: a subfolder of a subfolder is still a subfolder","Thinks the property holds by name only: a file deep inside relates to one above, not back",""],"lo":["LO1"]},{"id":"check-induction-parts-q1","slide":"check-induction-parts","type":"single","prompt":"A proof that \"n + 1 \u003c n for every n ≥ 1\" assumes k + 1 \u003c k and adds 1 to both sides to get k + 2 \u003c k + 1. What is wrong with it?","options":[{"key":"A","text":"It has no base case, and the base case is false"},{"key":"B","text":"Adding 1 to both sides is not allowed"},{"key":"C","text":"The hypothesis assumes what it wants to prove"},{"key":"D","text":"It needs strong induction instead"}],"correct":[0],"explanation":"The step is valid on its own; with no true starting case it proves nothing. For n = 1, 2 \u003c 1 is false.","misconceptions":["","Blames the algebra: adding 1 to both sides of an inequality is valid","Thinks the hypothesis is the flaw: assuming P(k) is how every induction step works","Thinks strong induction would rescue it: no form of induction proves a false claim"],"lo":["LO3"]},{"id":"check-structural-q1","slide":"check-structural","type":"single","prompt":"To prove by structural induction that a recursive depth function on nested lists is correct, the step for a list [a, b, c] may assume:","options":[{"key":"A","text":"that the function is correct on [a, b, c]"},{"key":"B","text":"that it is correct on a only"},{"key":"C","text":"that it is correct on each of a, b and c"},{"key":"D","text":"that it is correct on every list of length 2"}],"correct":[2],"explanation":"The hypothesis is the claim for every immediate part of the structure; the step builds the whole from them.","misconceptions":["Assumes the claim for the whole structure, which is what the step must show","Thinks only one part may be assumed: the hypothesis covers every smaller part","","Thinks structural induction needs a numeric n: it inducts on the structure"],"lo":["LO4"]},{"id":"check-invariant-q1","slide":"check-invariant","type":"single","prompt":"A loop counts the even numbers in a list: count starts at 0, i at 0; each pass adds 1 to count if xs[i] is even, then adds 1 to i. Which invariant proves it correct?","options":[{"key":"A","text":"count ≥ 0"},{"key":"B","text":"count equals the number of evens in the whole list"},{"key":"C","text":"count = i"},{"key":"D","text":"count equals the number of evens in xs[:i]"}],"correct":[3],"explanation":"It holds at the start (0 evens in an empty prefix), each pass keeps it, and at exit i = len(xs) gives the result.","misconceptions":["Picks a true but weak statement: it holds and proves nothing about the result","Describes the final result, which is false before the loop has finished","Ties count to i, which only holds when every element so far was even",""],"lo":["LO4"]}],"ai":{"context":{"course":"../context/course.md","courseJs":"../context/course.js","day":"week4.md","llms":"../llms.txt"},"tasks":[],"tools":[]},"bridge":{"allowedOrigins":[]},"features":{},"strings":{}}</script>
+<script src="../_engine/academy.js"></script>
+</body>
+</html>

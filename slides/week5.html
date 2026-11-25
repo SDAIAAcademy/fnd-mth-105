@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-ax="deck" data-track="foundations">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 5 · Counting, collisions and the birthday problem · Discrete Mathematics and Logic for Computing</title>
+<meta name="generator" content="SDAIA Academy engine 1.0.0">
+<link rel="icon" href="../_engine/icon.svg">
+<link rel="alternate" type="text/markdown" href="week5.md">
+<link rel="describedby" href="../llms.txt">
+<link rel="stylesheet" href="../_engine/academy.css">
+</head>
+<body>
+<div class="deck" data-course="Discrete Mathematics and Logic for Computing" data-track="foundations" data-day="Week 5">
+<section class="slide title" id="title" data-auto="title" data-label="Welcome" data-n="1">
+  <div class="kicker">SDAIA Academy · Discrete Mathematics and Logic for Computing</div>
+  <h1>Counting, collisions and the birthday problem</h1>
+  <p class="lead mt">Week 5: Sum and product rules, arrangements and selections, and when two codes must collide</p>
+  <div class="meta"><span class="track">Data &amp; AI Foundations Track</span><span>7 weeks + capstone</span><span>1 session · 1 lab</span><span>FND-MTH-105</span></div>
+  <aside class="notes"><p>Return the first supervised test if it is marked, and collect PS4 difficulties: usually the gap in the district proof (the step fails from one volunteer to two, where the two groups do not overlap). This week counts, and checks every count by listing.</p></aside>
+</section>
+
+<section class="slide" id="agenda" data-auto="agenda" data-label="Agenda" data-n="2">
+  <div class="kicker">This week</div>
+  <h2>Counting, collisions and the birthday problem</h2>
+  <div class="agenda"><div class="item"><div><b>Session 1 · Counting arrangements and collisions</b><small>The sum and product rules, permutations and combinations, the pigeonhole principle and collisions of short codes</small></div></div></div>
+</section>
+
+<section class="slide" id="review-week4" data-lo="LO4" data-n="3">
+  <div class="kicker">Review · week 4</div>
+  <h2>Where is the hypothesis used?</h2>
+  <div class="quiz" data-type="single" data-lo="LO4" data-id="review-week4-q1">
+    <p class="lead">To prove 1 + 3 + 9 + … + 3ⁿ⁻¹ = (3ⁿ − 1) / 2 by induction, the step for k + 1 must:</p>
+    <div class="opts">
+      <div class="opt" data-why="Checks a single case again: the base case does that, the step must reach every next case" data-k="A">check the formula for n = k + 1 by computing both sides for k = 5</div>
+      <div class="opt" data-why="Assumes the result for k + 1, which is what the step must show" data-k="B">assume the formula for k + 1 and simplify</div>
+      <div class="opt" data-ok data-k="C">replace the first k terms by (3ᵏ − 1) / 2, add 3ᵏ, and simplify to (3ᵏ⁺¹ − 1) / 2</div>
+      <div class="opt" data-why="Replaces the proof with a test: many cases are evidence, not a proof" data-k="D">test the formula for n up to 1,000</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> (3ᵏ − 1) / 2 + 3ᵏ = (3 · 3ᵏ − 1) / 2: the hypothesis supplies the first k terms.</div>
+  </div>
+  <aside class="notes"><p>Answer C. Ask a participant to say aloud where the hypothesis enters: the rubric's "an inductive step that uses it".</p></aside>
+</section>
+
+<!-- Session 1 -->
+
+<section class="slide section" id="s1" data-auto="section" data-session="1" data-n="4">
+  <div class="kicker">Session 1</div>
+  <h1>Counting arrangements and collisions</h1>
+  <ul class="bullets outcomes"><li>Count arrangements and selections with the sum and product rules, permutations and combinations</li><li>Compute the chance that short codes collide and verify it by exact enumeration</li><li>Use the pigeonhole principle to show when a collision is certain</li></ul>
+  <div class="sess-no">01</div>
+</section>
+
+<section class="slide" id="sum-product" data-lo="LO5" data-n="5" data-session="1">
+  <div class="kicker">Block A · two rules</div>
+  <h2>Multiply for "and then", add for "either, or"</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Product rule</h4><p class="small mb0">A plate of 3 letters then 4 digits: 26 · 26 · 26 · 10 · 10 · 10 · 10 = 175,760,000 plates.</p></div>
+    <div class="card c-cyan"><h4>Sum rule</h4><p class="small mb0">A PIN of 4, 5 or 6 digits: 10⁴ + 10⁵ + 10⁶ = 1,110,000 PINs. The three lengths never overlap.</p></div>
+  </div>
+  <div class="callout warn mt"><b>The sum rule needs disjoint cases.</b> When cases overlap, subtract what was counted twice: inclusion-exclusion, week 6.</div>
+  <aside class="notes"><p>Numbers from slide_numbers.py, week 5. In code, the product rule is the length of <code>itertools.product</code>, which the lab uses to check its counts by listing.</p></aside>
+</section>
+
+<section class="slide" id="perm-comb" data-lo="LO5" data-n="6" data-session="1">
+  <div class="kicker">Arrangements and selections</div>
+  <h2>Order matters in an arrangement, not in a selection</h2>
+  <table class="t small">
+    <tr><th>Question, from 8 people</th><th>Formula</th><th class="num">Count</th></tr>
+    <tr><td>Chair, deputy and secretary</td><td>P(8, 3) = 8 · 7 · 6</td><td class="num">336</td></tr>
+    <tr><td>A committee of 3</td><td>C(8, 3) = P(8, 3) / 3!</td><td class="num">56</td></tr>
+    <tr class="hl"><td>Why divide by 3!</td><td colspan="2">each committee can be ordered in 3! = 6 ways</td></tr>
+  </table>
+  <p class="small mt">P(n, k) = n! / (n − k)! and C(n, k) = n! / (k! (n − k)!).</p>
+  <aside class="notes"><p>The last row is a counting proof: count the arrangements two ways, directly and as "choose the committee, then order it", and divide. The lab checks both formulas against <code>itertools.permutations</code> and <code>combinations</code>.</p></aside>
+</section>
+
+<section class="slide" id="check-counting" data-lo="LO5" data-n="7" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>Arrangement or selection?</h2>
+  <div class="quiz" data-type="single" data-lo="LO5" data-id="check-counting-q1">
+    <p class="lead">A tasting panel of 4 judges is chosen from 9 cooks; the judges have no roles. How many panels are possible?</p>
+    <div class="opts">
+      <div class="opt" data-why="Counts ordered choices: the panel has no roles, so order must not count" data-k="A">3,024</div>
+      <div class="opt" data-ok data-k="B">126</div>
+      <div class="opt" data-why="Counts every sequence with repeats: a cook cannot sit twice" data-k="C">6,561</div>
+      <div class="opt" data-why="Chooses 2 judges instead of 4: that is C(9, 2)" data-k="D">36</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> C(9, 4) = 9 · 8 · 7 · 6 / 4! = 3,024 / 24 = 126.</div>
+  </div>
+  <aside class="notes"><p>Answer B. 36 is C(9, 2) or C(9, 7): ask what question it would answer.</p></aside>
+</section>
+
+<section class="slide" id="collision-count" data-lo="LO5" data-n="8" data-session="1">
+  <div class="kicker">Block B · collisions</div>
+  <h2>All-different assignments are an arrangement count</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>n people, each given one of N codes: <b>Nⁿ</b> assignments</li>
+      <li>All codes different: <b>N (N − 1) … (N − n + 1)</b> = P(N, n)</li>
+      <li>Chance all different = P(N, n) / Nⁿ, a count divided by a count</li>
+    </ul>
+    <div class="card c-purple"><h4>Checked by listing</h4><p class="small mb0">6 codes, 3 people: listing all 216 assignments finds 120 with no repeat, and 6 · 5 · 4 = 120. The chance is 120 / 216 = 5/9.</p></div>
+  </div>
+  <aside class="notes"><p>Numbers from slide_numbers.py. The chance assumes every assignment is equally likely, which a good hash makes nearly true. The lab compares formula and brute force for every N up to 7.</p></aside>
+</section>
+
+<section class="slide" id="birthday-curve" data-lo="LO5" data-n="9" data-session="1">
+  <div class="kicker">The birthday effect</div>
+  <h2>With 100 codes, 13 people already share one more often than not</h2>
+  <div class="bars">
+    <div class="row"><span>5 people</span><div class="bar c-teal" style="--w:10%"></div><span class="val">9.65%</span></div>
+    <div class="row"><span>10 people</span><div class="bar c-cyan" style="--w:37%"></div><span class="val">37.18%</span></div>
+    <div class="row"><span>13 people</span><div class="bar c-amber" style="--w:56%"></div><span class="val">55.72%</span></div>
+    <div class="row"><span>20 people</span><div class="bar c-coral" style="--w:87%"></div><span class="val">86.96%</span></div>
+  </div>
+  <p class="small mt">Exact chance of a shared code among n people with 100 equally likely codes.</p>
+  <aside class="notes"><p>From slide_numbers.py, computed with exact fractions. The threshold sits near 1.18 times the square root of N, here about 11.8: what matters is the number of pairs, about n²/2. The lab does the same for birthdays and for the centre's codes.</p></aside>
+</section>
+
+<section class="slide" id="expected-pairs" data-lo="LO5" data-n="10" data-session="1">
+  <div class="kicker">Pairs</div>
+  <h2>The average number of colliding pairs is C(n, 2) / N</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>Each of the C(n, 2) pairs shares a code in N · Nⁿ⁻² of the Nⁿ assignments</li>
+      <li>So, averaged over all assignments, a pair collides 1/N of the time</li>
+      <li>30 people, 100 codes: C(30, 2) / 100 = <b>4.35</b> colliding pairs on average</li>
+    </ul>
+    <div class="card c-navy tint"><h4>A count, not a simulation</h4><p class="small mb0">The average is a total over every assignment divided by their number. Brute force on small cases checks it exactly.</p></div>
+  </div>
+  <aside class="notes"><p>This is a counting argument, swapping the order of a double sum: count (assignment, colliding pair) pairs by pair first. Simulation with error bars is a different method, taught in the probability course.</p></aside>
+</section>
+
+<section class="slide" id="check-collision" data-lo="LO5" data-n="11" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>How many colliding pairs to expect?</h2>
+  <div class="quiz" data-type="single" data-lo="LO5" data-id="check-collision-q1">
+    <p class="lead">A shop gives each of 50 loyalty cards a random 3-digit code (1,000 codes). On average over all assignments, how many pairs of cards share a code?</p>
+    <div class="opts">
+      <div class="opt" data-why="Divides people by codes: that is a load, not a count of pairs" data-k="A">0.05</div>
+      <div class="opt" data-why="Counts ordered pairs: each pair is counted twice" data-k="B">2.45</div>
+      <div class="opt" data-why="Treats any collision as certain beyond a threshold: it is an average, not a guarantee" data-k="C">50</div>
+      <div class="opt" data-ok data-k="D">1.225</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> C(50, 2) / 1,000 = 1,225 / 1,000 = 1.225 pairs on average.</div>
+  </div>
+  <aside class="notes"><p>Answer D. B is 50 · 49 / 1,000, ordered pairs: ask why each pair would be counted twice.</p></aside>
+</section>
+
+<section class="slide" id="pigeonhole" data-lo="LO5" data-n="12" data-session="1">
+  <div class="kicker">Block C · pigeonhole</div>
+  <h2>More items than boxes means some box holds two, and ⌈n / N⌉ is guaranteed</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>1,000 people and 366 possible birthdays: some day holds at least ⌈1000 / 366⌉ = <b>3</b> people</li>
+      <li>Proof by contradiction: if every box held at most ⌈n / N⌉ − 1, the boxes would hold fewer than n items</li>
+      <li>Below n = N, nothing is guaranteed, though collisions may be likely</li>
+    </ul>
+    <div class="card c-amber"><h4>In hashing</h4><p class="small mb0">Any map from long codes to short codes squeezes many inputs into each output: collisions are certain, only their rate is in question.</p></div>
+  </div>
+  <aside class="notes"><p>Week 2's unsatisfiable schedule was a pigeonhole case: two shifts each needing one of the first-aiders who can work them, and only one such person. Ask who remembers.</p></aside>
+</section>
+
+<section class="slide" id="choosing-length" data-lo="LO5" data-n="13" data-session="1">
+  <div class="kicker">Design</div>
+  <h2>Choose a code length from the risk you accept, not from the number of people</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>State the risk</b>"at most 1 in 100 that any two share a code"</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>Compute exactly</b>the chance for each length, with the formula</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>Plan for the rest</b>a second check when a collision still happens</div>
+  </div>
+  <div class="callout warn mt"><b>What goes wrong.</b> "We have 4,000 people and 65,536 codes, so codes are plenty" ignores the pairs. The lab measures how wrong that is.</div>
+  <aside class="notes"><p>Do not quote the lab's answer before the lab. The third step matters as much as the length: a collision has a cost at check-in, and the process must handle it.</p></aside>
+</section>
+
+<section class="slide" id="check-pigeonhole" data-lo="LO5" data-n="14" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>What is guaranteed?</h2>
+  <div class="quiz" data-type="single" data-lo="LO5" data-id="check-pigeonhole-q1">
+    <p class="lead">A depot sorts 830 parcels into 100 bays by the last two digits of the parcel number. What does the pigeonhole principle guarantee?</p>
+    <div class="opts">
+      <div class="opt" data-ok data-k="A">Some bay receives at least 9 parcels</div>
+      <div class="opt" data-why="Assumes an even spread: the principle only bounds the fullest bay from below" data-k="B">Every bay receives 8 or 9 parcels</div>
+      <div class="opt" data-why="Rounds down instead of up: 100 bays of 8 hold only 800 parcels" data-k="C">Some bay receives at least 8 parcels, and no more is guaranteed</div>
+      <div class="opt" data-why="Thinks collisions need more parcels than bays squared" data-k="D">Nothing, since 830 is less than 100 · 100</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> ⌈830 / 100⌉ = 9: if every bay held at most 8, the bays would hold at most 800 parcels.</div>
+  </div>
+  <aside class="notes"><p>Answer A. C starts with a true statement but then denies the stronger guarantee of 9: rounding down is the error.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-5-1" data-auto="lab" data-lab="5.1" data-label="Lab 5.1" data-n="15" data-session="1">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 5.1 · 105 min</div><h2>Hash collisions and the birthday problem, by formula and by brute force</h2><p class="lead small">Cut check-in codes from a hash, count collisions two ways, and choose a code length.</p><a class="nb" href="../labs/W5_1.ipynb">W5_1.ipynb</a></div><ul class="checklist"><li>Set up; sum and product rules <span class="min">10 min</span></li><li>Arrangements and selections, two ways <span class="min">15 min</span></li><li>Short check-in codes from a hash <span class="min">10 min</span></li><li>Collision-free count: formula and brute force <span class="min">20 min</span></li><li>The birthday problem exactly, with fractions <span class="min">15 min</span></li><li>Expected colliding pairs against those issued <span class="min">15 min</span></li><li>Pigeonhole: when a collision is certain <span class="min">10 min</span></li><li>Choose the code length and record it <span class="min">10 min</span></li><li class="stretch">✱ Stretch: Count the shared birthdays in the register and compare with the formula</li></ul></div>
+  <aside class="notes"><p>AI-tutor: it may point at a gap, never write the answer. Watch for: the birthday product computed in floats with an early stop (fine) or as huge integers printed in full (slow and unreadable: print the float); a brute force with n larger than 7 (it will not finish); ⌈n / N⌉ written as n // N. Remind them that the expected pairs and the counted pairs are not supposed to be equal.</p></aside>
+</section>
+
+<section class="slide" id="debrief-codes" data-lo="LO5" data-n="16" data-session="1">
+  <div class="kicker">Debrief · lab 5.1</div>
+  <h2>Four symbols leave 125 colliding pairs; the centre needs eight</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th class="num">k</th><th class="num">Codes</th><th class="num">Expected pairs</th><th class="num">Counted</th></tr>
+      <tr><td class="num">3</td><td class="num">4,096</td><td class="num">1,952.6</td><td class="num">2,026</td></tr>
+      <tr class="hl"><td class="num">4</td><td class="num">65,536</td><td class="num">122.0</td><td class="num">125</td></tr>
+      <tr><td class="num">5</td><td class="num">1,048,576</td><td class="num">7.6</td><td class="num">6</td></tr>
+      <tr><td class="num">6</td><td class="num">16,777,216</td><td class="num">0.5</td><td class="num">1</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>Birthdays: 23 people pass one half; four symbols: 302 codes</li>
+      <li>k = 2: at least 16 share a code; the largest group found is 27</li>
+      <li>1% risk: k = 8 for 4,000 (0.19%), k = 10 for 40,000</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>From the solution run of lab 5.1. Formula and brute force agreed on every small case. Seven symbols would leave about 2.9% for 4,000 volunteers: show why eight is the answer to the operations lead's risk, and why check-in still needs a second factor.</p></aside>
+</section>
+
+<section class="slide" id="wrap-up" data-n="17" data-session="1">
+  <div class="kicker">Week 5 · wrap-up</div>
+  <h2>Three things to keep</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Multiply, add, divide</h4><p class="small mb0">Product for steps, sum for disjoint cases, divide by the orderings you do not want.</p></div>
+    <div class="card c-coral"><h4>Pairs drive collisions</h4><p class="small mb0">C(n, 2) / N pairs on average; trouble starts near the square root of N.</p></div>
+    <div class="card c-purple"><h4>Check counts by listing</h4><p class="small mb0">Brute force on small cases catches the errors a formula hides.</p></div>
+  </div>
+  <aside class="notes"><p>Ask for one identifier in their own work that is shorter than the square root argument would allow.</p></aside>
+</section>
+
+<section class="slide dark" id="next" data-label="Next" data-n="18" data-session="1">
+  <div class="kicker">Next</div>
+  <h2>Week 6: Counting people: re-identification risk</h2>
+  <p class="lead">Problem set 5 (60 minutes, AI off for the first attempt): labs/problem-sets/PS5.ipynb.</p>
+  <aside class="notes"><p>Week 6 turns the same counting on people: how many share each combination of birth date, sex and district.</p></aside>
+</section>
+</div>
+<script type="application/json" id="academy-data">{"v":1,"engine":"1.0.0","build":{"at":"2026-11-25T09:03:20Z","version":"2027.1.0","commit":"9b66171"},"course":{"id":"fnd-mth-105","code":"FND-MTH-105","title":"Discrete Mathematics and Logic for Computing","track":"foundations","lang":"en","dir":"ltr","url":"https://sdaiaacademy.github.io/fnd-mth-105/","repo":"SDAIAAcademy/fnd-mth-105","home":"../index.html"},"deck":{"id":"week5","kind":"day","day":5,"label":"Week 5","title":"Counting, collisions and the birthday problem","prev":"week4.html","next":"week6.html","md":"week5.md","alt":{}},"sessions":[{"n":1,"label":"Session 1","title":"Counting arrangements and collisions","slide":"s1","outcomes":["Count arrangements and selections with the sum and product rules, permutations and combinations","Compute the chance that short codes collide and verify it by exact enumeration","Use the pigeonhole principle to show when a collision is certain"],"minutes":215,"lab":{"id":"5.1","title":"Hash collisions and the birthday problem, by formula and by brute force","minutes":105,"href":"../labs/W5_1.ipynb"}}],"slides":[{"id":"title","n":1,"title":"Counting, collisions and the birthday problem","kind":"title","session":0,"hash":"629dd807","md":"#### [week5#title] Counting, collisions and the birthday problem\n\n*SDAIA Academy · Discrete Mathematics and Logic for Computing*\n\nWeek 5: Sum and product rules, arrangements and selections, and when two codes must collide\n\nData & AI Foundations Track · 7 weeks + capstone · 1 session · 1 lab · FND-MTH-105","notes":"Return the first supervised test if it is marked, and collect PS4 difficulties: usually the gap in the district proof (the step fails from one volunteer to two, where the two groups do not overlap). This week counts, and checks every count by listing.","minutes":null,"lo":[]},{"id":"agenda","n":2,"title":"Counting, collisions and the birthday problem","kind":"content","session":0,"hash":"efed2010","md":"#### [week5#agenda] Counting, collisions and the birthday problem\n\n*This week*\n\n- **Session 1 · Counting arrangements and collisions**: The sum and product rules, permutations and combinations, the pigeonhole principle and collisions of short codes","notes":"","minutes":null,"lo":[]},{"id":"review-week4","n":3,"title":"Where is the hypothesis used?","kind":"quiz","session":0,"hash":"340739ca","md":"#### [week5#review-week4] Where is the hypothesis used?\n\n*Review · week 4*\n\n**Question:** To prove 1 + 3 + 9 + … + 3ⁿ⁻¹ = (3ⁿ − 1) / 2 by induction, the step for k + 1 must:\n\n- A. check the formula for n = k + 1 by computing both sides for k = 5\n- B. assume the formula for k + 1 and simplify\n- C. replace the first k terms by (3ᵏ − 1) / 2, add 3ᵏ, and simplify to (3ᵏ⁺¹ − 1) / 2\n- D. test the formula for n up to 1,000","notes":"Answer C. Ask a participant to say aloud where the hypothesis enters: the rubric's \"an inductive step that uses it\".","minutes":null,"lo":["LO4"]},{"id":"s1","n":4,"title":"Counting arrangements and collisions","kind":"section","session":1,"hash":"0cfd4786","md":"#### [week5#s1] Counting arrangements and collisions\n\n*Session 1*\n\n- Count arrangements and selections with the sum and product rules, permutations and combinations\n- Compute the chance that short codes collide and verify it by exact enumeration\n- Use the pigeonhole principle to show when a collision is certain","notes":"","minutes":null,"lo":["LO5"]},{"id":"sum-product","n":5,"title":"Multiply for \"and then\", add for \"either, or\"","kind":"content","session":1,"hash":"d6359fb7","md":"#### [week5#sum-product] Multiply for \"and then\", add for \"either, or\"\n\n*Block A · two rules*\n\n- **Product rule.** A plate of 3 letters then 4 digits: 26 · 26 · 26 · 10 · 10 · 10 · 10 = 175,760,000 plates.\n- **Sum rule.** A PIN of 4, 5 or 6 digits: 10⁴ + 10⁵ + 10⁶ = 1,110,000 PINs. The three lengths never overlap.\n\n> **The sum rule needs disjoint cases.** When cases overlap, subtract what was counted twice: inclusion-exclusion, week 6.","notes":"Numbers from slide_numbers.py, week 5. In code, the product rule is the length of `itertools.product`, which the lab uses to check its counts by listing.","minutes":null,"lo":["LO5"]},{"id":"perm-comb","n":6,"title":"Order matters in an arrangement, not in a selection","kind":"content","session":1,"hash":"61f96659","md":"#### [week5#perm-comb] Order matters in an arrangement, not in a selection\n\n*Arrangements and selections*\n\n| Question, from 8 people | Formula | Count |\n| --- | --- | --- |\n| Chair, deputy and secretary | P(8, 3) = 8 · 7 · 6 | 336 |\n| A committee of 3 | C(8, 3) = P(8, 3) / 3! | 56 |\n| Why divide by 3! | each committee can be ordered in 3! = 6 ways |  |\n\nP(n, k) = n! / (n − k)! and C(n, k) = n! / (k! (n − k)!).","notes":"The last row is a counting proof: count the arrangements two ways, directly and as \"choose the committee, then order it\", and divide. The lab checks both formulas against `itertools.permutations` and `combinations`.","minutes":null,"lo":["LO5"]},{"id":"check-counting","n":7,"title":"Arrangement or selection?","kind":"quiz","session":1,"hash":"c45f4bdc","md":"#### [week5#check-counting] Arrangement or selection?\n\n*Checkpoint*\n\n**Question:** A tasting panel of 4 judges is chosen from 9 cooks; the judges have no roles. How many panels are possible?\n\n- A. 3,024\n- B. 126\n- C. 6,561\n- D. 36","notes":"Answer B. 36 is C(9, 2) or C(9, 7): ask what question it would answer.","minutes":null,"lo":["LO5"]},{"id":"collision-count","n":8,"title":"All-different assignments are an arrangement count","kind":"content","session":1,"hash":"cb6e22b0","md":"#### [week5#collision-count] All-different assignments are an arrangement count\n\n*Block B · collisions*\n\n- n people, each given one of N codes: **Nⁿ** assignments\n- All codes different: **N (N − 1) … (N − n + 1)** = P(N, n)\n- Chance all different = P(N, n) / Nⁿ, a count divided by a count\n\n- **Checked by listing.** 6 codes, 3 people: listing all 216 assignments finds 120 with no repeat, and 6 · 5 · 4 = 120. The chance is 120 / 216 = 5/9.","notes":"Numbers from slide_numbers.py. The chance assumes every assignment is equally likely, which a good hash makes nearly true. The lab compares formula and brute force for every N up to 7.","minutes":null,"lo":["LO5"]},{"id":"birthday-curve","n":9,"title":"With 100 codes, 13 people already share one more often than not","kind":"content","session":1,"hash":"67f20557","md":"#### [week5#birthday-curve] With 100 codes, 13 people already share one more often than not\n\n*The birthday effect*\n\n| Item | Value |\n| --- | --- |\n| 5 people | 9.65% |\n| 10 people | 37.18% |\n| 13 people | 55.72% |\n| 20 people | 86.96% |\n\nExact chance of a shared code among n people with 100 equally likely codes.","notes":"From slide_numbers.py, computed with exact fractions. The threshold sits near 1.18 times the square root of N, here about 11.8: what matters is the number of pairs, about n²/2. The lab does the same for birthdays and for the centre's codes.","minutes":null,"lo":["LO5"]},{"id":"expected-pairs","n":10,"title":"The average number of colliding pairs is C(n, 2) / N","kind":"content","session":1,"hash":"cf3ab8a5","md":"#### [week5#expected-pairs] The average number of colliding pairs is C(n, 2) / N\n\n*Pairs*\n\n- Each of the C(n, 2) pairs shares a code in N · Nⁿ⁻² of the Nⁿ assignments\n- So, averaged over all assignments, a pair collides 1/N of the time\n- 30 people, 100 codes: C(30, 2) / 100 = **4.35** colliding pairs on average\n\n- **A count, not a simulation.** The average is a total over every assignment divided by their number. Brute force on small cases checks it exactly.","notes":"This is a counting argument, swapping the order of a double sum: count (assignment, colliding pair) pairs by pair first. Simulation with error bars is a different method, taught in the probability course.","minutes":null,"lo":["LO5"]},{"id":"check-collision","n":11,"title":"How many colliding pairs to expect?","kind":"quiz","session":1,"hash":"2150d124","md":"#### [week5#check-collision] How many colliding pairs to expect?\n\n*Checkpoint*\n\n**Question:** A shop gives each of 50 loyalty cards a random 3-digit code (1,000 codes). On average over all assignments, how many pairs of cards share a code?\n\n- A. 0.05\n- B. 2.45\n- C. 50\n- D. 1.225","notes":"Answer D. B is 50 · 49 / 1,000, ordered pairs: ask why each pair would be counted twice.","minutes":null,"lo":["LO5"]},{"id":"pigeonhole","n":12,"title":"More items than boxes means some box holds two, and ⌈n / N⌉ is guaranteed","kind":"content","session":1,"hash":"c7429674","md":"#### [week5#pigeonhole] More items than boxes means some box holds two, and ⌈n / N⌉ is guaranteed\n\n*Block C · pigeonhole*\n\n- 1,000 people and 366 possible birthdays: some day holds at least ⌈1000 / 366⌉ = **3** people\n- Proof by contradiction: if every box held at most ⌈n / N⌉ − 1, the boxes would hold fewer than n items\n- Below n = N, nothing is guaranteed, though collisions may be likely\n\n- **In hashing.** Any map from long codes to short codes squeezes many inputs into each output: collisions are certain, only their rate is in question.","notes":"Week 2's unsatisfiable schedule was a pigeonhole case: two shifts each needing one of the first-aiders who can work them, and only one such person. Ask who remembers.","minutes":null,"lo":["LO5"]},{"id":"choosing-length","n":13,"title":"Choose a code length from the risk you accept, not from the number of people","kind":"content","session":1,"hash":"e0e44687","md":"#### [week5#choosing-length] Choose a code length from the risk you accept, not from the number of people\n\n*Design*\n\n1. **State the risk** \"at most 1 in 100 that any two share a code\"\n2. **Compute exactly** the chance for each length, with the formula\n3. **Plan for the rest** a second check when a collision still happens\n\n> **What goes wrong.** \"We have 4,000 people and 65,536 codes, so codes are plenty\" ignores the pairs. The lab measures how wrong that is.","notes":"Do not quote the lab's answer before the lab. The third step matters as much as the length: a collision has a cost at check-in, and the process must handle it.","minutes":null,"lo":["LO5"]},{"id":"check-pigeonhole","n":14,"title":"What is guaranteed?","kind":"quiz","session":1,"hash":"0ef52ac5","md":"#### [week5#check-pigeonhole] What is guaranteed?\n\n*Checkpoint*\n\n**Question:** A depot sorts 830 parcels into 100 bays by the last two digits of the parcel number. What does the pigeonhole principle guarantee?\n\n- A. Some bay receives at least 9 parcels\n- B. Every bay receives 8 or 9 parcels\n- C. Some bay receives at least 8 parcels, and no more is guaranteed\n- D. Nothing, since 830 is less than 100 · 100","notes":"Answer A. C starts with a true statement but then denies the stronger guarantee of 9: rounding down is the error.","minutes":null,"lo":["LO5"]},{"id":"lab-5-1","n":15,"title":"Hash collisions and the birthday problem, by formula and by brute force","kind":"lab","session":1,"hash":"f7256386","md":"#### [week5#lab-5-1] Hash collisions and the birthday problem, by formula and by brute force\n\nLab 5.1 · 105 min\n\nCut check-in codes from a hash, count collisions two ways, and choose a code length.\n\n[W5_1.ipynb](https://sdaiaacademy.github.io/fnd-mth-105/labs/W5_1.ipynb)\n\n- [ ] Set up; sum and product rules (10 min)\n- [ ] Arrangements and selections, two ways (15 min)\n- [ ] Short check-in codes from a hash (10 min)\n- [ ] Collision-free count: formula and brute force (20 min)\n- [ ] The birthday problem exactly, with fractions (15 min)\n- [ ] Expected colliding pairs against those issued (15 min)\n- [ ] Pigeonhole: when a collision is certain (10 min)\n- [ ] Choose the code length and record it (10 min)\n- [ ] ✱ Stretch: Count the shared birthdays in the register and compare with the formula","notes":"AI-tutor: it may point at a gap, never write the answer. Watch for: the birthday product computed in floats with an early stop (fine) or as huge integers printed in full (slow and unreadable: print the float); a brute force with n larger than 7 (it will not finish); ⌈n / N⌉ written as n // N. Remind them that the expected pairs and the counted pairs are not supposed to be equal.","minutes":null,"lo":[]},{"id":"debrief-codes","n":16,"title":"Four symbols leave 125 colliding pairs; the centre needs eight","kind":"content","session":1,"hash":"6964b98d","md":"#### [week5#debrief-codes] Four symbols leave 125 colliding pairs; the centre needs eight\n\n*Debrief · lab 5.1*\n\n| k | Codes | Expected pairs | Counted |\n| --- | --- | --- | --- |\n| 3 | 4,096 | 1,952.6 | 2,026 |\n| 4 | 65,536 | 122.0 | 125 |\n| 5 | 1,048,576 | 7.6 | 6 |\n| 6 | 16,777,216 | 0.5 | 1 |\n\n- Birthdays: 23 people pass one half; four symbols: 302 codes\n- k = 2: at least 16 share a code; the largest group found is 27\n- 1% risk: k = 8 for 4,000 (0.19%), k = 10 for 40,000","notes":"From the solution run of lab 5.1. Formula and brute force agreed on every small case. Seven symbols would leave about 2.9% for 4,000 volunteers: show why eight is the answer to the operations lead's risk, and why check-in still needs a second factor.","minutes":null,"lo":["LO5"]},{"id":"wrap-up","n":17,"title":"Three things to keep","kind":"content","session":1,"hash":"329c88fd","md":"#### [week5#wrap-up] Three things to keep\n\n*Week 5 · wrap-up*\n\n- **Multiply, add, divide.** Product for steps, sum for disjoint cases, divide by the orderings you do not want.\n- **Pairs drive collisions.** C(n, 2) / N pairs on average; trouble starts near the square root of N.\n- **Check counts by listing.** Brute force on small cases catches the errors a formula hides.","notes":"Ask for one identifier in their own work that is shorter than the square root argument would allow.","minutes":null,"lo":[]},{"id":"next","n":18,"title":"Week 6: Counting people: re-identification risk","kind":"content","session":1,"hash":"9e7d5d72","md":"#### [week5#next] Week 6: Counting people: re-identification risk\n\n*Next*\n\nProblem set 5 (60 minutes, AI off for the first attempt): labs/problem-sets/PS5.ipynb.","notes":"Week 6 turns the same counting on people: how many share each combination of birth date, sex and district.","minutes":null,"lo":[]}],"activities":[{"id":"review-week4-q1","slide":"review-week4","type":"single","prompt":"To prove 1 + 3 + 9 + … + 3ⁿ⁻¹ = (3ⁿ − 1) / 2 by induction, the step for k + 1 must:","options":[{"key":"A","text":"check the formula for n = k + 1 by computing both sides for k = 5"},{"key":"B","text":"assume the formula for k + 1 and simplify"},{"key":"C","text":"replace the first k terms by (3ᵏ − 1) / 2, add 3ᵏ, and simplify to (3ᵏ⁺¹ − 1) / 2"},{"key":"D","text":"test the formula for n up to 1,000"}],"correct":[2],"explanation":"(3ᵏ − 1) / 2 + 3ᵏ = (3 · 3ᵏ − 1) / 2: the hypothesis supplies the first k terms.","misconceptions":["Checks a single case again: the base case does that, the step must reach every next case","Assumes the result for k + 1, which is what the step must show","","Replaces the proof with a test: many cases are evidence, not a proof"],"lo":["LO4"]},{"id":"check-counting-q1","slide":"check-counting","type":"single","prompt":"A tasting panel of 4 judges is chosen from 9 cooks; the judges have no roles. How many panels are possible?","options":[{"key":"A","text":"3,024"},{"key":"B","text":"126"},{"key":"C","text":"6,561"},{"key":"D","text":"36"}],"correct":[1],"explanation":"C(9, 4) = 9 · 8 · 7 · 6 / 4! = 3,024 / 24 = 126.","misconceptions":["Counts ordered choices: the panel has no roles, so order must not count","","Counts every sequence with repeats: a cook cannot sit twice","Chooses 2 judges instead of 4: that is C(9, 2)"],"lo":["LO5"]},{"id":"check-collision-q1","slide":"check-collision","type":"single","prompt":"A shop gives each of 50 loyalty cards a random 3-digit code (1,000 codes). On average over all assignments, how many pairs of cards share a code?","options":[{"key":"A","text":"0.05"},{"key":"B","text":"2.45"},{"key":"C","text":"50"},{"key":"D","text":"1.225"}],"correct":[3],"explanation":"C(50, 2) / 1,000 = 1,225 / 1,000 = 1.225 pairs on average.","misconceptions":["Divides people by codes: that is a load, not a count of pairs","Counts ordered pairs: each pair is counted twice","Treats any collision as certain beyond a threshold: it is an average, not a guarantee",""],"lo":["LO5"]},{"id":"check-pigeonhole-q1","slide":"check-pigeonhole","type":"single","prompt":"A depot sorts 830 parcels into 100 bays by the last two digits of the parcel number. What does the pigeonhole principle guarantee?","options":[{"key":"A","text":"Some bay receives at least 9 parcels"},{"key":"B","text":"Every bay receives 8 or 9 parcels"},{"key":"C","text":"Some bay receives at least 8 parcels, and no more is guaranteed"},{"key":"D","text":"Nothing, since 830 is less than 100 · 100"}],"correct":[0],"explanation":"⌈830 / 100⌉ = 9: if every bay held at most 8, the bays would hold at most 800 parcels.","misconceptions":["","Assumes an even spread: the principle only bounds the fullest bay from below","Rounds down instead of up: 100 bays of 8 hold only 800 parcels","Thinks collisions need more parcels than bays squared"],"lo":["LO5"]}],"ai":{"context":{"course":"../context/course.md","courseJs":"../context/course.js","day":"week5.md","llms":"../llms.txt"},"tasks":[],"tools":[]},"bridge":{"allowedOrigins":[]},"features":{},"strings":{}}</script>
+<script src="../_engine/academy.js"></script>
+</body>
+</html>

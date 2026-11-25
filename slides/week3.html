@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-ax="deck" data-track="foundations">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 3 · Predicates, quantifiers and first proofs · Discrete Mathematics and Logic for Computing</title>
+<meta name="generator" content="SDAIA Academy engine 1.0.0">
+<link rel="icon" href="../_engine/icon.svg">
+<link rel="alternate" type="text/markdown" href="week3.md">
+<link rel="describedby" href="../llms.txt">
+<link rel="stylesheet" href="../_engine/academy.css">
+</head>
+<body>
+<div class="deck" data-course="Discrete Mathematics and Logic for Computing" data-track="foundations" data-day="Week 3">
+<section class="slide title" id="title" data-auto="title" data-label="Welcome" data-n="1">
+  <div class="kicker">SDAIA Academy · Discrete Mathematics and Logic for Computing</div>
+  <h1>Predicates, quantifiers and first proofs</h1>
+  <p class="lead mt">Week 3: Properties of relations stated with quantifiers, checked on data, then proved or refuted</p>
+  <div class="meta"><span class="track">Data &amp; AI Foundations Track</span><span>7 weeks + capstone</span><span>1 session · 1 lab</span><span>FND-MTH-105</span></div>
+  <aside class="notes"><p>Collect PS2 difficulties first: usually "only if" read as "if", and the clause count for "at most one of n". This week adds quantifiers to week 2's formulas and writes the first proofs of the course.</p></aside>
+</section>
+
+<section class="slide" id="agenda" data-auto="agenda" data-label="Agenda" data-n="2">
+  <div class="kicker">This week</div>
+  <h2>Predicates, quantifiers and first proofs</h2>
+  <div class="agenda"><div class="item"><div><b>Session 1 · Quantifiers, relations and first proofs</b><small>Predicates and quantifiers, the properties of relations, equivalence relations and orders, and direct proof, counterexample and contradiction</small></div></div></div>
+</section>
+
+<section class="slide" id="review-week2" data-lo="LO2" data-n="3">
+  <div class="kicker">Review · week 2</div>
+  <h2>Valid or not?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="review-week2-q1">
+    <p class="lead">Rule: if a meter reading is missing, the bill is estimated. This bill is not estimated. What follows?</p>
+    <div class="opts">
+      <div class="opt" data-ok data-k="A">The reading is not missing</div>
+      <div class="opt" data-why="Reads the rule backwards: a missing reading forces an estimate, so it cannot go with an exact bill" data-k="B">The reading is missing</div>
+      <div class="opt" data-why="Thinks nothing follows from a negated conclusion: modus tollens is valid" data-k="C">Nothing: the rule says nothing about estimated bills</div>
+      <div class="opt" data-why="Reverses the arrow: a missing reading forces an estimate, not the other way" data-k="D">The bill would be estimated if the reading were present</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Modus tollens: from p → q and ¬q, conclude ¬p. No row has both premises true and "missing" true.</div>
+  </div>
+  <aside class="notes"><p>Answer A. If many pick C, write the four rows and strike out those where a premise is false: one row remains.</p></aside>
+</section>
+
+<!-- Session 1 -->
+
+<section class="slide section" id="s1" data-auto="section" data-session="1" data-n="4">
+  <div class="kicker">Session 1</div>
+  <h1>Quantifiers, relations and first proofs</h1>
+  <ul class="bullets outcomes"><li>Write a relation property or a data-quality rule with quantifiers and negate it correctly</li><li>Classify a relation as a function, an equivalence, a partial order or none, with a counterexample for each property it lacks</li><li>Prove a short claim directly or by contradiction, and refute a false one with a counterexample</li></ul>
+  <div class="sess-no">01</div>
+</section>
+
+<section class="slide" id="predicates" data-lo="LO2" data-n="5" data-session="1">
+  <div class="kicker">Block A · quantifiers</div>
+  <h2>A predicate becomes true or false once you fill its variable</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li><b>P(x)</b>: "x is overdue", over a domain such as the loans of a library</li>
+      <li><b>∀x P(x)</b>: every loan is overdue</li>
+      <li><b>∃x P(x)</b>: at least one loan is overdue</li>
+      <li>The <b>domain</b> is part of the claim: change it and the truth can change</li>
+    </ul>
+    <pre class="code" data-file="python"><code class="language-python"><span class="hljs-built_in">all</span>(overdue(x) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> loans)   <span class="hljs-comment"># for every</span>
+<span class="hljs-built_in">any</span>(overdue(x) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> loans)   <span class="hljs-comment"># there exists</span></code></pre>
+  </div>
+  <aside class="notes"><p>On a finite table, <code>all</code> and <code>any</code> evaluate a quantifier exactly. Ask: what does <code>all</code> return on an empty table? True: a "for every" claim about nothing is vacuously true, like the light parcels of week 2.</p></aside>
+</section>
+
+<section class="slide" id="quality-rules" data-lo="LO2" data-n="6" data-session="1">
+  <div class="kicker">Data-quality rules</div>
+  <h2>A data-quality rule is a quantified statement your code can evaluate</h2>
+  <table class="t small">
+    <tr><th>Rule in words</th><th>In logic</th></tr>
+    <tr><td>Every loan belongs to a member</td><td>∀l ∃m: holder(l, m)</td></tr>
+    <tr><td>No member holds more than five loans</td><td>∀m: count of l with holder(l, m) ≤ 5</td></tr>
+    <tr class="hl"><td>Every child member has a guardian on file</td><td>∀m: child(m) → guardian(m)</td></tr>
+  </table>
+  <div class="callout tip mt"><b>A failed rule</b> comes with a witness: the loan with no member, the child with no guardian. Print the witness, not only "False".</div>
+  <aside class="notes"><p>The centre's register has a rule of the third kind: every volunteer under 18 has guardian consent on file. Lab 2.1 used it as m → g for one volunteer; ask the room to write it with a quantifier over the whole register, then its negation, which describes the rows that break it.</p></aside>
+</section>
+
+<section class="slide" id="negation" data-lo="LO2" data-n="7" data-session="1">
+  <div class="kicker">Negation</div>
+  <h2>Negating a quantifier swaps it and moves the "not" inside</h2>
+  <table class="t small">
+    <tr><th>Statement</th><th>Its negation</th></tr>
+    <tr><td>∀x P(x): every loan is returned</td><td>∃x ¬P(x): some loan is not returned</td></tr>
+    <tr><td>∃x P(x): some book is damaged</td><td>∀x ¬P(x): no book is damaged</td></tr>
+    <tr class="hl"><td>∀x ∃y R(x, y): every member has a card</td><td>∃x ∀y ¬R(x, y): some member has no card at all</td></tr>
+  </table>
+  <div class="callout warn mt"><b>Order matters.</b> ∀x ∃y "every member has a card" is not ∃y ∀x "one card belongs to every member".</div>
+  <aside class="notes"><p>Do the third line slowly, one quantifier at a time. Then read the order warning aloud with the room: the swap turns a normal rule into an absurd one.</p></aside>
+</section>
+
+<section class="slide" id="check-negation" data-lo="LO2" data-n="8" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>What is the negation?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="check-negation-q1">
+    <p class="lead">The claim: "every course has at least one tutor". Which statement is its negation?</p>
+    <div class="opts">
+      <div class="opt" data-why="Negates only the inner part: it keeps 'every' where 'some' belongs" data-k="A">Every course has no tutor</div>
+      <div class="opt" data-why="Negates the outer quantifier only: 'some course has a tutor' is consistent with the claim" data-k="B">Some course has at least one tutor</div>
+      <div class="opt" data-ok data-k="C">Some course has no tutor</div>
+      <div class="opt" data-why="Swaps the order of the quantifiers instead of negating them" data-k="D">One tutor teaches no course</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> ¬∀c ∃t T(c, t) is ∃c ∀t ¬T(c, t): one course without any tutor is enough to make the claim false.</div>
+  </div>
+  <aside class="notes"><p>Answer C. A is stronger than the negation: it says every course lacks a tutor, which one counterexample does not need.</p></aside>
+</section>
+
+<section class="slide" id="properties-quantified" data-lo="LO1" data-n="9" data-session="1">
+  <div class="kicker">Block B · relation properties</div>
+  <h2>Each property of a relation is a "for every" statement</h2>
+  <table class="t small">
+    <tr><th>Property</th><th>Statement</th><th>A counterexample is</th></tr>
+    <tr><td>Reflexive</td><td>∀x: x R x</td><td>one x not related to itself</td></tr>
+    <tr><td>Symmetric</td><td>∀x, y: x R y → y R x</td><td>one pair related one way only</td></tr>
+    <tr><td>Antisymmetric</td><td>∀x, y: x R y ∧ y R x → x = y</td><td>two different elements related both ways</td></tr>
+    <tr class="hl"><td>Transitive</td><td>∀x, y, z: x R y ∧ y R z → x R z</td><td>one chain x, y, z with x not related to z</td></tr>
+  </table>
+  <aside class="notes"><p>The last column is the negation of each statement, read off with the rule from block A. The lab writes each checker as one line of <code>all</code>.</p></aside>
+</section>
+
+<section class="slide" id="classify" data-lo="LO1" data-n="10" data-session="1">
+  <div class="kicker">Kinds of relation</div>
+  <h2>The properties decide what a relation can be used for</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Kind</th><th>Properties</th><th>Example</th></tr>
+      <tr><td>Equivalence</td><td>refl, sym, trans</td><td>born in the same month</td></tr>
+      <tr><td>Partial order</td><td>refl, anti, trans</td><td>is a subset of</td></tr>
+      <tr><td>Strict order</td><td>irrefl, anti, trans</td><td>finished earlier than</td></tr>
+      <tr class="hl"><td>Preorder</td><td>refl, trans</td><td>is at least as tall as</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>Group with an <b>equivalence</b></li>
+      <li>Rank or schedule with an <b>order</b></li>
+      <li>A preorder ranks with ties between different elements</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>"At least as tall as" is not antisymmetric: two different people of the same height relate both ways. That is why it is a preorder and not a partial order. A function, from week 1, is a further property of a relation between two sets.</p></aside>
+</section>
+
+<section class="slide" id="finite-is-proof" data-lo="LO1 LO3" data-n="11" data-session="1">
+  <div class="kicker">Testing or proving</div>
+  <h2>On a finite relation, checking every case is a proof</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Finite: check them all</h4><p class="small mb0">"Same month" on 40 people: 1,600 pairs and 64,000 triples. Checking them all proves the property for those 40.</p></div>
+    <div class="card c-coral"><h4>Infinite: test, then prove</h4><p class="small mb0">"Subset of" on all sets, "divides" on all integers: no loop ends. Tests can refute; only an argument proves.</p></div>
+  </div>
+  <div class="callout note mt"><b>Mind the definition.</b> If a relation is defined by a rule ("within 5 km"), a property may fail for the next element even when it holds for today's data.</div>
+  <aside class="notes"><p>Ask: if "within 5 km" happens to be transitive on today's 40 sites, is it transitive? No: a new site between two others can break it. The property belongs to the definition, not to the sample.</p></aside>
+</section>
+
+<section class="slide" id="check-classify" data-lo="LO1" data-n="12" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>Can it be used to form groups?</h2>
+  <div class="quiz" data-type="single" data-lo="LO1" data-id="check-classify-q1">
+    <p class="lead">A delivery firm relates two depots when they are within 5 km of each other, and wants to form groups of "nearby" depots with it. What is this relation?</p>
+    <div class="opts">
+      <div class="opt" data-why="Assumes nearness chains: A near B and B near C can be 9 km apart" data-k="A">An equivalence relation, so the groups are well defined</div>
+      <div class="opt" data-ok data-k="B">Reflexive and symmetric, not transitive, so not an equivalence</div>
+      <div class="opt" data-why="Treats nearness as a ranking: it relates pairs both ways, so it cannot be antisymmetric" data-k="C">A partial order on the depots</div>
+      <div class="opt" data-why="Forgets that each depot is 0 km from itself" data-k="D">Symmetric only, as no depot relates to itself</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> A is 4 km from B and B 4 km from C, but A can be 8 km from C. Without transitivity the "groups" overlap and depend on where you start.</div>
+  </div>
+  <aside class="notes"><p>Answer B. The lab has the same trap in the centre's data under another name; do not say which.</p></aside>
+</section>
+
+<section class="slide" id="direct-proof" data-lo="LO3" data-n="13" data-session="1">
+  <div class="kicker">Block C · proofs</div>
+  <h2>A direct proof goes from the hypothesis to the conclusion, one justified step at a time</h2>
+  <div class="cols cols-2">
+    <div>
+      <p><b>Claim.</b> The sum of two even integers is even.</p>
+      <ol class="bullets tight">
+        <li>Let a and b be even: a = 2k and b = 2l for integers k, l (definition)</li>
+        <li>a + b = 2k + 2l = 2(k + l) (algebra)</li>
+        <li>k + l is an integer, so a + b is even (definition) ∎</li>
+      </ol>
+    </div>
+    <div class="card c-navy tint"><h4>The shape</h4><p class="small mb0">State the claim with its domain. Unfold the definitions. Calculate. Fold back into the definition of the conclusion. Name each reason.</p></div>
+  </div>
+  <aside class="notes"><p>Before the proof, test it in code: <code>all((a + b) % 2 == 0 for a in range(-50, 51, 2) for b in range(-50, 51, 2))</code>. The test covers 2,601 pairs; the proof covers every pair. Write the reasons in brackets: that is what the rubric's "every step justified" means.</p></aside>
+</section>
+
+<section class="slide" id="counterexample" data-lo="LO3" data-n="14" data-session="1">
+  <div class="kicker">Refuting</div>
+  <h2>One counterexample refutes a "for every" claim</h2>
+  <table class="t small">
+    <tr><th>Claim</th><th>Counterexample</th></tr>
+    <tr><td>Every prime is odd</td><td>2</td></tr>
+    <tr><td>If a² = b² then a = b, for integers</td><td>a = 3, b = −3</td></tr>
+    <tr class="hl"><td>n² − n + 11 is prime for every n ≥ 1</td><td>n = 11: 121 = 11 · 11</td></tr>
+  </table>
+  <p class="small mt">The last claim holds for n = 1 to 10. Code finds the counterexample in a moment; a person checking by hand may stop too early.</p>
+  <aside class="notes"><p>Run the search live: <code>next(n for n in range(1, 100) if not isprime(n*n - n + 11))</code> with a small primality function. Week 4's lab has a claim of the same kind that survives forty tests.</p></aside>
+</section>
+
+<section class="slide" id="contradiction" data-lo="LO3" data-n="15" data-session="1">
+  <div class="kicker">Contradiction</div>
+  <h2>A proof by contradiction assumes the opposite and reaches something impossible</h2>
+  <div class="cols cols-2">
+    <div>
+      <p><b>Claim.</b> If n² is even, then n is even (n an integer).</p>
+      <ol class="bullets tight">
+        <li>Suppose n² is even and n is odd: n = 2k + 1</li>
+        <li>n² = 4k² + 4k + 1 = 2(2k² + 2k) + 1, which is odd</li>
+        <li>n² is both even and odd: impossible. So n is even ∎</li>
+      </ol>
+    </div>
+    <div class="card c-purple"><h4>Say what you assumed</h4><p class="small mb0">The first line names the assumption; the last names the contradiction. A reader can then check that the assumption really is the negation of the claim.</p></div>
+  </div>
+  <aside class="notes"><p>This one is also a proof of the contrapositive (n odd → n² odd), which is often the cleaner way to write it. Point out the link to week 2: p → q and ¬q → ¬p are equivalent.</p></aside>
+</section>
+
+<section class="slide" id="check-method" data-lo="LO3" data-n="16" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>What settles the claim?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3" data-id="check-method-q1">
+    <p class="lead">An analyst claims: "for every integer n, n² + n is even". Her code checks n from −1,000 to 1,000 and finds no failure. What has she shown?</p>
+    <div class="opts">
+      <div class="opt" data-why="Treats many passing cases as a proof: the integers beyond 1,000 were never checked" data-k="A">That the claim is true, since 2,001 cases passed</div>
+      <div class="opt" data-why="Thinks a test result says nothing at all: it rules out a counterexample in that range" data-k="B">Nothing: tests are no evidence either way</div>
+      <div class="opt" data-why="Confuses a passing test with a refutation" data-k="C">That the claim is false for some large n</div>
+      <div class="opt" data-ok data-k="D">No counterexample in that range; a proof is still needed</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The test is evidence and finds no counterexample. The proof: n² + n = n(n + 1), a product of two consecutive integers, one of them even.</div>
+  </div>
+  <aside class="notes"><p>Answer D. Write the one-line proof from the reason after the reveal.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-3-1" data-auto="lab" data-lab="3.1" data-label="Lab 3.1" data-n="17" data-session="1">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 3.1 · 105 min</div><h2>Relation properties checked in code</h2><p class="lead small">Write checkers for reflexive, symmetric, antisymmetric and transitive, classify nine relations from the centre's data and software, find the planted faults, and close the training prerequisites.</p><a class="nb" href="../labs/W3_1.ipynb">W3_1.ipynb</a></div><ul class="checklist"><li>Set up; properties as quantified statements <span class="min">10 min</span></li><li>Write the property checkers <span class="min">20 min</span></li><li>Classify nine relations <span class="min">20 min</span></li><li>Counterexamples: the planted faults <span class="min">15 min</span></li><li>Equivalence classes and the partition <span class="min">10 min</span></li><li>Transitive closure of the training prerequisites <span class="min">15 min</span></li><li>A claim over all integers: test, then prove <span class="min">10 min</span></li><li>Record what the checks prove and what they only test <span class="min">5 min</span></li><li class="stretch">✱ Stretch: Count, among the 512 relations on a three-element set, how many are equivalence relations</li></ul></div>
+  <aside class="notes"><p>AI-tutor: it may point at a gap, never write the answer. Watch for: <code>antisymmetric</code> written as "not symmetric" (they are different properties: "same district" is symmetric and not antisymmetric, "imports" is antisymmetric and not symmetric); the closure loop that stops after one pass; participants who sort release tags as text without noticing. Task 7's proof is AI-off for the first attempt.</p></aside>
+</section>
+
+<section class="slide" id="debrief-relations" data-lo="LO1 LO3" data-n="18" data-session="1">
+  <div class="kicker">Debrief · lab 3.1</div>
+  <h2>One relation fails by meaning, one by data, and one order is the wrong order</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Relation</th><th>Verdict</th></tr>
+      <tr><td>Same district</td><td>equivalence: 11 classes</td></tr>
+      <tr class="hl"><td>Born within a year of</td><td>not transitive: 144 and 350 days apart, but 494</td></tr>
+      <tr class="hl"><td>Lead can cover for lead</td><td>not symmetric: TL-04 covers TL-09, not back</td></tr>
+      <tr><td>Has at least the skills of</td><td>preorder: ties between different people</td></tr>
+      <tr><td>Release text at most</td><td>an order that puts 10.0.0 first</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>Prerequisites: 9 direct pairs, 21 after closure; T8 needs T1 to T7</li>
+      <li>"Divides" passed every triple up to 60; the proof covers the rest</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>From the solution run of lab 3.1. Ask which of the faults a better data entry form would fix (the cover table) and which no data can fix ("within a year" used for grouping).</p></aside>
+</section>
+
+<section class="slide" id="wrap-up" data-n="19" data-session="1">
+  <div class="kicker">Week 3 · wrap-up</div>
+  <h2>Three things to keep</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Negate carefully</h4><p class="small mb0">Swap ∀ and ∃ and move the "not" inside. The negation tells you what a counterexample looks like.</p></div>
+    <div class="card c-coral"><h4>Properties decide use</h4><p class="small mb0">Group only with an equivalence; rank only with an order. Check before you use.</p></div>
+    <div class="card c-purple"><h4>Finite or infinite</h4><p class="small mb0">Every case checked is a proof for a finite set. For the integers, tests refute and proofs prove.</p></div>
+  </div>
+  <aside class="notes"><p>Remind the room that the first supervised test is after week 4: 90 minutes, AI off, proofs and short problems on weeks 1 to 4.</p></aside>
+</section>
+
+<section class="slide dark" id="next" data-label="Next" data-n="20" data-session="1">
+  <div class="kicker">Next</div>
+  <h2>Week 4: Induction, invariants and the limits of testing</h2>
+  <p class="lead">Problem set 3 (60 minutes, AI off for the first attempt): labs/problem-sets/PS3.ipynb. The first supervised test follows week 4.</p>
+  <aside class="notes"><p>Announce the first supervised AI-off test after week 4: 90 minutes, proofs and short problems on weeks 1 to 4.</p></aside>
+</section>
+</div>
+<script type="application/json" id="academy-data">{"v":1,"engine":"1.0.0","build":{"at":"2026-11-25T09:03:20Z","version":"2027.1.0","commit":"9b66171"},"course":{"id":"fnd-mth-105","code":"FND-MTH-105","title":"Discrete Mathematics and Logic for Computing","track":"foundations","lang":"en","dir":"ltr","url":"https://sdaiaacademy.github.io/fnd-mth-105/","repo":"SDAIAAcademy/fnd-mth-105","home":"../index.html"},"deck":{"id":"week3","kind":"day","day":3,"label":"Week 3","title":"Predicates, quantifiers and first proofs","prev":"week2.html","next":"week4.html","md":"week3.md","alt":{}},"sessions":[{"n":1,"label":"Session 1","title":"Quantifiers, relations and first proofs","slide":"s1","outcomes":["Write a relation property or a data-quality rule with quantifiers and negate it correctly","Classify a relation as a function, an equivalence, a partial order or none, with a counterexample for each property it lacks","Prove a short claim directly or by contradiction, and refute a false one with a counterexample"],"minutes":215,"lab":{"id":"3.1","title":"Relation properties checked in code","minutes":105,"href":"../labs/W3_1.ipynb"}}],"slides":[{"id":"title","n":1,"title":"Predicates, quantifiers and first proofs","kind":"title","session":0,"hash":"895faa71","md":"#### [week3#title] Predicates, quantifiers and first proofs\n\n*SDAIA Academy · Discrete Mathematics and Logic for Computing*\n\nWeek 3: Properties of relations stated with quantifiers, checked on data, then proved or refuted\n\nData & AI Foundations Track · 7 weeks + capstone · 1 session · 1 lab · FND-MTH-105","notes":"Collect PS2 difficulties first: usually \"only if\" read as \"if\", and the clause count for \"at most one of n\". This week adds quantifiers to week 2's formulas and writes the first proofs of the course.","minutes":null,"lo":[]},{"id":"agenda","n":2,"title":"Predicates, quantifiers and first proofs","kind":"content","session":0,"hash":"a8673df1","md":"#### [week3#agenda] Predicates, quantifiers and first proofs\n\n*This week*\n\n- **Session 1 · Quantifiers, relations and first proofs**: Predicates and quantifiers, the properties of relations, equivalence relations and orders, and direct proof, counterexample and contradiction","notes":"","minutes":null,"lo":[]},{"id":"review-week2","n":3,"title":"Valid or not?","kind":"quiz","session":0,"hash":"38157b4c","md":"#### [week3#review-week2] Valid or not?\n\n*Review · week 2*\n\n**Question:** Rule: if a meter reading is missing, the bill is estimated. This bill is not estimated. What follows?\n\n- A. The reading is not missing\n- B. The reading is missing\n- C. Nothing: the rule says nothing about estimated bills\n- D. The bill would be estimated if the reading were present","notes":"Answer A. If many pick C, write the four rows and strike out those where a premise is false: one row remains.","minutes":null,"lo":["LO2"]},{"id":"s1","n":4,"title":"Quantifiers, relations and first proofs","kind":"section","session":1,"hash":"c46abbce","md":"#### [week3#s1] Quantifiers, relations and first proofs\n\n*Session 1*\n\n- Write a relation property or a data-quality rule with quantifiers and negate it correctly\n- Classify a relation as a function, an equivalence, a partial order or none, with a counterexample for each property it lacks\n- Prove a short claim directly or by contradiction, and refute a false one with a counterexample","notes":"","minutes":null,"lo":["LO1","LO2","LO3"]},{"id":"predicates","n":5,"title":"A predicate becomes true or false once you fill its variable","kind":"content","session":1,"hash":"fa02de35","md":"#### [week3#predicates] A predicate becomes true or false once you fill its variable\n\n*Block A · quantifiers*\n\n- **P(x)**: \"x is overdue\", over a domain such as the loans of a library\n- **∀x P(x)**: every loan is overdue\n- **∃x P(x)**: at least one loan is overdue\n- The **domain** is part of the claim: change it and the truth can change\n\n```python\n# file: python\nall(overdue(x) for x in loans)   # for every\nany(overdue(x) for x in loans)   # there exists\n```","notes":"On a finite table, `all` and `any` evaluate a quantifier exactly. Ask: what does `all` return on an empty table? True: a \"for every\" claim about nothing is vacuously true, like the light parcels of week 2.","minutes":null,"lo":["LO2"]},{"id":"quality-rules","n":6,"title":"A data-quality rule is a quantified statement your code can evaluate","kind":"content","session":1,"hash":"6b4994c9","md":"#### [week3#quality-rules] A data-quality rule is a quantified statement your code can evaluate\n\n*Data-quality rules*\n\n| Rule in words | In logic |\n| --- | --- |\n| Every loan belongs to a member | ∀l ∃m: holder(l, m) |\n| No member holds more than five loans | ∀m: count of l with holder(l, m) ≤ 5 |\n| Every child member has a guardian on file | ∀m: child(m) → guardian(m) |\n\n> **A failed rule** comes with a witness: the loan with no member, the child with no guardian. Print the witness, not only \"False\".","notes":"The centre's register has a rule of the third kind: every volunteer under 18 has guardian consent on file. Lab 2.1 used it as m → g for one volunteer; ask the room to write it with a quantifier over the whole register, then its negation, which describes the rows that break it.","minutes":null,"lo":["LO2"]},{"id":"negation","n":7,"title":"Negating a quantifier swaps it and moves the \"not\" inside","kind":"content","session":1,"hash":"9fc55fcf","md":"#### [week3#negation] Negating a quantifier swaps it and moves the \"not\" inside\n\n*Negation*\n\n| Statement | Its negation |\n| --- | --- |\n| ∀x P(x): every loan is returned | ∃x ¬P(x): some loan is not returned |\n| ∃x P(x): some book is damaged | ∀x ¬P(x): no book is damaged |\n| ∀x ∃y R(x, y): every member has a card | ∃x ∀y ¬R(x, y): some member has no card at all |\n\n> **Order matters.** ∀x ∃y \"every member has a card\" is not ∃y ∀x \"one card belongs to every member\".","notes":"Do the third line slowly, one quantifier at a time. Then read the order warning aloud with the room: the swap turns a normal rule into an absurd one.","minutes":null,"lo":["LO2"]},{"id":"check-negation","n":8,"title":"What is the negation?","kind":"quiz","session":1,"hash":"413f798e","md":"#### [week3#check-negation] What is the negation?\n\n*Checkpoint*\n\n**Question:** The claim: \"every course has at least one tutor\". Which statement is its negation?\n\n- A. Every course has no tutor\n- B. Some course has at least one tutor\n- C. Some course has no tutor\n- D. One tutor teaches no course","notes":"Answer C. A is stronger than the negation: it says every course lacks a tutor, which one counterexample does not need.","minutes":null,"lo":["LO2"]},{"id":"properties-quantified","n":9,"title":"Each property of a relation is a \"for every\" statement","kind":"content","session":1,"hash":"c83349de","md":"#### [week3#properties-quantified] Each property of a relation is a \"for every\" statement\n\n*Block B · relation properties*\n\n| Property | Statement | A counterexample is |\n| --- | --- | --- |\n| Reflexive | ∀x: x R x | one x not related to itself |\n| Symmetric | ∀x, y: x R y → y R x | one pair related one way only |\n| Antisymmetric | ∀x, y: x R y ∧ y R x → x = y | two different elements related both ways |\n| Transitive | ∀x, y, z: x R y ∧ y R z → x R z | one chain x, y, z with x not related to z |","notes":"The last column is the negation of each statement, read off with the rule from block A. The lab writes each checker as one line of `all`.","minutes":null,"lo":["LO1"]},{"id":"classify","n":10,"title":"The properties decide what a relation can be used for","kind":"content","session":1,"hash":"c8dbcb2b","md":"#### [week3#classify] The properties decide what a relation can be used for\n\n*Kinds of relation*\n\n| Kind | Properties | Example |\n| --- | --- | --- |\n| Equivalence | refl, sym, trans | born in the same month |\n| Partial order | refl, anti, trans | is a subset of |\n| Strict order | irrefl, anti, trans | finished earlier than |\n| Preorder | refl, trans | is at least as tall as |\n\n- Group with an **equivalence**\n- Rank or schedule with an **order**\n- A preorder ranks with ties between different elements","notes":"\"At least as tall as\" is not antisymmetric: two different people of the same height relate both ways. That is why it is a preorder and not a partial order. A function, from week 1, is a further property of a relation between two sets.","minutes":null,"lo":["LO1"]},{"id":"finite-is-proof","n":11,"title":"On a finite relation, checking every case is a proof","kind":"content","session":1,"hash":"7979b486","md":"#### [week3#finite-is-proof] On a finite relation, checking every case is a proof\n\n*Testing or proving*\n\n- **Finite: check them all.** \"Same month\" on 40 people: 1,600 pairs and 64,000 triples. Checking them all proves the property for those 40.\n- **Infinite: test, then prove.** \"Subset of\" on all sets, \"divides\" on all integers: no loop ends. Tests can refute; only an argument proves.\n\n> **Mind the definition.** If a relation is defined by a rule (\"within 5 km\"), a property may fail for the next element even when it holds for today's data.","notes":"Ask: if \"within 5 km\" happens to be transitive on today's 40 sites, is it transitive? No: a new site between two others can break it. The property belongs to the definition, not to the sample.","minutes":null,"lo":["LO1","LO3"]},{"id":"check-classify","n":12,"title":"Can it be used to form groups?","kind":"quiz","session":1,"hash":"65b6afe3","md":"#### [week3#check-classify] Can it be used to form groups?\n\n*Checkpoint*\n\n**Question:** A delivery firm relates two depots when they are within 5 km of each other, and wants to form groups of \"nearby\" depots with it. What is this relation?\n\n- A. An equivalence relation, so the groups are well defined\n- B. Reflexive and symmetric, not transitive, so not an equivalence\n- C. A partial order on the depots\n- D. Symmetric only, as no depot relates to itself","notes":"Answer B. The lab has the same trap in the centre's data under another name; do not say which.","minutes":null,"lo":["LO1"]},{"id":"direct-proof","n":13,"title":"A direct proof goes from the hypothesis to the conclusion, one justified step at a time","kind":"content","session":1,"hash":"d85009cc","md":"#### [week3#direct-proof] A direct proof goes from the hypothesis to the conclusion, one justified step at a time\n\n*Block C · proofs*\n\n**Claim.** The sum of two even integers is even.\n\n1. Let a and b be even: a = 2k and b = 2l for integers k, l (definition)\n2. a + b = 2k + 2l = 2(k + l) (algebra)\n3. k + l is an integer, so a + b is even (definition) ∎\n\n- **The shape.** State the claim with its domain. Unfold the definitions. Calculate. Fold back into the definition of the conclusion. Name each reason.","notes":"Before the proof, test it in code: `all((a + b) % 2 == 0 for a in range(-50, 51, 2) for b in range(-50, 51, 2))`. The test covers 2,601 pairs; the proof covers every pair. Write the reasons in brackets: that is what the rubric's \"every step justified\" means.","minutes":null,"lo":["LO3"]},{"id":"counterexample","n":14,"title":"One counterexample refutes a \"for every\" claim","kind":"content","session":1,"hash":"4e41648e","md":"#### [week3#counterexample] One counterexample refutes a \"for every\" claim\n\n*Refuting*\n\n| Claim | Counterexample |\n| --- | --- |\n| Every prime is odd | 2 |\n| If a² = b² then a = b, for integers | a = 3, b = −3 |\n| n² − n + 11 is prime for every n ≥ 1 | n = 11: 121 = 11 · 11 |\n\nThe last claim holds for n = 1 to 10. Code finds the counterexample in a moment; a person checking by hand may stop too early.","notes":"Run the search live: `next(n for n in range(1, 100) if not isprime(n*n - n + 11))` with a small primality function. Week 4's lab has a claim of the same kind that survives forty tests.","minutes":null,"lo":["LO3"]},{"id":"contradiction","n":15,"title":"A proof by contradiction assumes the opposite and reaches something impossible","kind":"content","session":1,"hash":"f8b8a301","md":"#### [week3#contradiction] A proof by contradiction assumes the opposite and reaches something impossible\n\n*Contradiction*\n\n**Claim.** If n² is even, then n is even (n an integer).\n\n1. Suppose n² is even and n is odd: n = 2k + 1\n2. n² = 4k² + 4k + 1 = 2(2k² + 2k) + 1, which is odd\n3. n² is both even and odd: impossible. So n is even ∎\n\n- **Say what you assumed.** The first line names the assumption; the last names the contradiction. A reader can then check that the assumption really is the negation of the claim.","notes":"This one is also a proof of the contrapositive (n odd → n² odd), which is often the cleaner way to write it. Point out the link to week 2: p → q and ¬q → ¬p are equivalent.","minutes":null,"lo":["LO3"]},{"id":"check-method","n":16,"title":"What settles the claim?","kind":"quiz","session":1,"hash":"6f0f7585","md":"#### [week3#check-method] What settles the claim?\n\n*Checkpoint*\n\n**Question:** An analyst claims: \"for every integer n, n² + n is even\". Her code checks n from −1,000 to 1,000 and finds no failure. What has she shown?\n\n- A. That the claim is true, since 2,001 cases passed\n- B. Nothing: tests are no evidence either way\n- C. That the claim is false for some large n\n- D. No counterexample in that range; a proof is still needed","notes":"Answer D. Write the one-line proof from the reason after the reveal.","minutes":null,"lo":["LO3"]},{"id":"lab-3-1","n":17,"title":"Relation properties checked in code","kind":"lab","session":1,"hash":"6a537399","md":"#### [week3#lab-3-1] Relation properties checked in code\n\nLab 3.1 · 105 min\n\nWrite checkers for reflexive, symmetric, antisymmetric and transitive, classify nine relations from the centre's data and software, find the planted faults, and close the training prerequisites.\n\n[W3_1.ipynb](https://sdaiaacademy.github.io/fnd-mth-105/labs/W3_1.ipynb)\n\n- [ ] Set up; properties as quantified statements (10 min)\n- [ ] Write the property checkers (20 min)\n- [ ] Classify nine relations (20 min)\n- [ ] Counterexamples: the planted faults (15 min)\n- [ ] Equivalence classes and the partition (10 min)\n- [ ] Transitive closure of the training prerequisites (15 min)\n- [ ] A claim over all integers: test, then prove (10 min)\n- [ ] Record what the checks prove and what they only test (5 min)\n- [ ] ✱ Stretch: Count, among the 512 relations on a three-element set, how many are equivalence relations","notes":"AI-tutor: it may point at a gap, never write the answer. Watch for: `antisymmetric` written as \"not symmetric\" (they are different properties: \"same district\" is symmetric and not antisymmetric, \"imports\" is antisymmetric and not symmetric); the closure loop that stops after one pass; participants who sort release tags as text without noticing. Task 7's proof is AI-off for the first attempt.","minutes":null,"lo":[]},{"id":"debrief-relations","n":18,"title":"One relation fails by meaning, one by data, and one order is the wrong order","kind":"content","session":1,"hash":"4001b4c9","md":"#### [week3#debrief-relations] One relation fails by meaning, one by data, and one order is the wrong order\n\n*Debrief · lab 3.1*\n\n| Relation | Verdict |\n| --- | --- |\n| Same district | equivalence: 11 classes |\n| Born within a year of | not transitive: 144 and 350 days apart, but 494 |\n| Lead can cover for lead | not symmetric: TL-04 covers TL-09, not back |\n| Has at least the skills of | preorder: ties between different people |\n| Release text at most | an order that puts 10.0.0 first |\n\n- Prerequisites: 9 direct pairs, 21 after closure; T8 needs T1 to T7\n- \"Divides\" passed every triple up to 60; the proof covers the rest","notes":"From the solution run of lab 3.1. Ask which of the faults a better data entry form would fix (the cover table) and which no data can fix (\"within a year\" used for grouping).","minutes":null,"lo":["LO1","LO3"]},{"id":"wrap-up","n":19,"title":"Three things to keep","kind":"content","session":1,"hash":"bb58583d","md":"#### [week3#wrap-up] Three things to keep\n\n*Week 3 · wrap-up*\n\n- **Negate carefully.** Swap ∀ and ∃ and move the \"not\" inside. The negation tells you what a counterexample looks like.\n- **Properties decide use.** Group only with an equivalence; rank only with an order. Check before you use.\n- **Finite or infinite.** Every case checked is a proof for a finite set. For the integers, tests refute and proofs prove.","notes":"Remind the room that the first supervised test is after week 4: 90 minutes, AI off, proofs and short problems on weeks 1 to 4.","minutes":null,"lo":[]},{"id":"next","n":20,"title":"Week 4: Induction, invariants and the limits of testing","kind":"content","session":1,"hash":"2fd67b21","md":"#### [week3#next] Week 4: Induction, invariants and the limits of testing\n\n*Next*\n\nProblem set 3 (60 minutes, AI off for the first attempt): labs/problem-sets/PS3.ipynb. The first supervised test follows week 4.","notes":"Announce the first supervised AI-off test after week 4: 90 minutes, proofs and short problems on weeks 1 to 4.","minutes":null,"lo":[]}],"activities":[{"id":"review-week2-q1","slide":"review-week2","type":"single","prompt":"Rule: if a meter reading is missing, the bill is estimated. This bill is not estimated. What follows?","options":[{"key":"A","text":"The reading is not missing"},{"key":"B","text":"The reading is missing"},{"key":"C","text":"Nothing: the rule says nothing about estimated bills"},{"key":"D","text":"The bill would be estimated if the reading were present"}],"correct":[0],"explanation":"Modus tollens: from p → q and ¬q, conclude ¬p. No row has both premises true and \"missing\" true.","misconceptions":["","Reads the rule backwards: a missing reading forces an estimate, so it cannot go with an exact bill","Thinks nothing follows from a negated conclusion: modus tollens is valid","Reverses the arrow: a missing reading forces an estimate, not the other way"],"lo":["LO2"]},{"id":"check-negation-q1","slide":"check-negation","type":"single","prompt":"The claim: \"every course has at least one tutor\". Which statement is its negation?","options":[{"key":"A","text":"Every course has no tutor"},{"key":"B","text":"Some course has at least one tutor"},{"key":"C","text":"Some course has no tutor"},{"key":"D","text":"One tutor teaches no course"}],"correct":[2],"explanation":"¬∀c ∃t T(c, t) is ∃c ∀t ¬T(c, t): one course without any tutor is enough to make the claim false.","misconceptions":["Negates only the inner part: it keeps 'every' where 'some' belongs","Negates the outer quantifier only: 'some course has a tutor' is consistent with the claim","","Swaps the order of the quantifiers instead of negating them"],"lo":["LO2"]},{"id":"check-classify-q1","slide":"check-classify","type":"single","prompt":"A delivery firm relates two depots when they are within 5 km of each other, and wants to form groups of \"nearby\" depots with it. What is this relation?","options":[{"key":"A","text":"An equivalence relation, so the groups are well defined"},{"key":"B","text":"Reflexive and symmetric, not transitive, so not an equivalence"},{"key":"C","text":"A partial order on the depots"},{"key":"D","text":"Symmetric only, as no depot relates to itself"}],"correct":[1],"explanation":"A is 4 km from B and B 4 km from C, but A can be 8 km from C. Without transitivity the \"groups\" overlap and depend on where you start.","misconceptions":["Assumes nearness chains: A near B and B near C can be 9 km apart","","Treats nearness as a ranking: it relates pairs both ways, so it cannot be antisymmetric","Forgets that each depot is 0 km from itself"],"lo":["LO1"]},{"id":"check-method-q1","slide":"check-method","type":"single","prompt":"An analyst claims: \"for every integer n, n² + n is even\". Her code checks n from −1,000 to 1,000 and finds no failure. What has she shown?","options":[{"key":"A","text":"That the claim is true, since 2,001 cases passed"},{"key":"B","text":"Nothing: tests are no evidence either way"},{"key":"C","text":"That the claim is false for some large n"},{"key":"D","text":"No counterexample in that range; a proof is still needed"}],"correct":[3],"explanation":"The test is evidence and finds no counterexample. The proof: n² + n = n(n + 1), a product of two consecutive integers, one of them even.","misconceptions":["Treats many passing cases as a proof: the integers beyond 1,000 were never checked","Thinks a test result says nothing at all: it rules out a counterexample in that range","Confuses a passing test with a refutation",""],"lo":["LO3"]}],"ai":{"context":{"course":"../context/course.md","courseJs":"../context/course.js","day":"week3.md","llms":"../llms.txt"},"tasks":[],"tools":[]},"bridge":{"allowedOrigins":[]},"features":{},"strings":{}}</script>
+<script src="../_engine/academy.js"></script>
+</body>
+</html>

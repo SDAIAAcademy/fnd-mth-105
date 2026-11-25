@@ -1,0 +1,11 @@
+{
+ "same district": "equivalence",
+ "born within a year of": "none of these",
+ "strictly older than": "strict order",
+ "has at least the skills of": "preorder",
+ "module requires module": "none of these",
+ "lead can cover for lead": "none of these",
+ "software module imports": "none of these",
+ "release version at most": "partial order",
+ "release text at most": "partial order"
+}

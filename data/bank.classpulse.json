@@ -1,0 +1,2268 @@
+{
+  "format": "classpulse-bank",
+  "version": 1,
+  "course": {
+    "name": "Discrete Mathematics and Logic for Computing",
+    "los": [
+      {
+        "code": "LO1",
+        "description": "Identify whether a relation is a function, an equivalence or an order, and which properties it has, given twelve relations from data and software"
+      },
+      {
+        "code": "LO2",
+        "description": "Distinguish valid from invalid arguments and translate plain-language rules into propositional and predicate logic, given five access and data-quality rules"
+      },
+      {
+        "code": "LO3",
+        "description": "Describe direct, contradiction and induction proofs and identify the gap in a flawed proof, given six short proofs, two with planted errors"
+      },
+      {
+        "code": "LO4",
+        "description": "Apply induction and loop invariants to prove simple claims about integers, sets and recursive code, given claims first tested in code"
+      },
+      {
+        "code": "LO5",
+        "description": "Compute counts of arrangements, selections and collisions and verify them by enumeration, given hashing and record-linkage problems"
+      },
+      {
+        "code": "LO6",
+        "description": "Use a graph model of dependencies to find cycles and compute a topological order, given a pipeline graph with a planted cycle"
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "check-sets-q1",
+      "type": "single",
+      "prompt": "A training team lists 8 modules and 5 rooms. It wants one row for every module and room that could be booked together. How many rows does that table have?",
+      "options": [
+        "13",
+        "40",
+        "2 to the power 40",
+        "80"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO1"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The table is the product of the two sets: 8 · 5 = 40 pairs.",
+      "misconceptions": [
+        "Adds the sizes: that counts modules or rooms, not pairs of them",
+        "",
+        "Counts the relations, the subsets of the product, not the pairs in it",
+        "Thinks a module and a room in either order make two rows: a pair from A × B has a fixed order"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 10
+    },
+    {
+      "id": "check-functions-q1",
+      "type": "single",
+      "prompt": "A sports hall gives each of its 120 lockers to one of 4 cleaning rounds, every round gets 30 lockers. As a map from lockers to rounds, which is true?",
+      "options": [
+        "A bijection, since every round gets the same number",
+        "Not a function, since each round has many lockers",
+        "Injective, since every round is used",
+        "A surjective function that is not injective"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO1"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Each locker has exactly one round (a function), every round is reached (surjective), and 30 lockers share each round (not injective).",
+      "misconceptions": [
+        "Thinks equal shares make a bijection: 120 lockers cannot pair one to one with 4 rounds",
+        "Reads 'many lockers per round' as 'many rounds per locker': each locker still has one round",
+        "Confuses injective with surjective: it is the reaching of every round that holds",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 14
+    },
+    {
+      "id": "check-composition-q1",
+      "type": "single",
+      "prompt": "A library joins loans (reader, copy) with copies (copy, title). One reader borrowed two copies of the same title. Compared with the composition \"reader borrowed title\", the join returns:",
+      "options": [
+        "the same number of rows as there are pairs",
+        "one fewer row, as the second copy is dropped",
+        "one more row: the (reader, title) pair appears twice",
+        "an error, as the key repeats"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO1"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Each loan row matches one copy row, so two loans give two rows with the same (reader, title); the composition keeps that pair once.",
+      "misconceptions": [
+        "Assumes a join removes duplicates like a set: SQL keeps one row per matching pair",
+        "Thinks the repeated title is dropped: the join keeps both matching rows",
+        "",
+        "Thinks a repeat breaks the join: the join runs, it just repeats a row"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 18
+    },
+    {
+      "id": "review-week1-q1",
+      "type": "single",
+      "prompt": "A school replaces each of its 500 pupil numbers with a random code from 1,000 possible codes, never giving one code twice. As a map from pupils to the 1,000 codes, what is it?",
+      "options": [
+        "A bijection",
+        "Injective, not surjective",
+        "Surjective, not injective",
+        "Not a function"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO1"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "No two pupils share a code (injective), but half the codes are never used (not surjective). On its 500 pupils and the codes used, it can still be inverted.",
+      "misconceptions": [
+        "Thinks 'no repeats' is enough for a bijection: 500 unused codes mean it is not surjective",
+        "",
+        "Confuses the two properties: it is the absence of shared codes that holds here",
+        "Thinks a random choice is not a function: each pupil still gets exactly one code"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 3
+    },
+    {
+      "id": "check-converse-q1",
+      "type": "single",
+      "prompt": "A warehouse rule: \"If a box is fragile, it is packed with foam.\" Which sentence is equivalent to it?",
+      "options": [
+        "If a box is packed with foam, it is fragile",
+        "If a box is not fragile, it is not packed with foam",
+        "Every box is fragile and packed with foam",
+        "If a box is not packed with foam, it is not fragile"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO2"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The contrapositive ¬q → ¬p agrees with p → q on all four rows.",
+      "misconceptions": [
+        "Takes the converse for the rule: foam on a sturdy box does not break it",
+        "Takes the inverse for the rule: the rule says nothing about sturdy boxes",
+        "Turns the condition into a conjunction: that forces every box to be fragile",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 9
+    },
+    {
+      "id": "check-only-if-q1",
+      "type": "single",
+      "prompt": "A laboratory: \"A visitor may enter only if they wear goggles.\" With p = \"the visitor enters\" and s = \"the visitor wears goggles\", which formula is the rule?",
+      "options": [
+        "s → p",
+        "p → s",
+        "p ∧ s",
+        "p ↔ s"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO2"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "\"p only if q\" is p → q: entering requires goggles, and goggles require nothing.",
+      "misconceptions": [
+        "Reads 'only if' as 'if': that makes goggles a promise of entry",
+        "",
+        "Turns a condition into a fact: every visitor would have to enter",
+        "Makes the condition two-way: wearing goggles would oblige the visitor to enter"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 12
+    },
+    {
+      "id": "check-unsat-q1",
+      "type": "single",
+      "prompt": "A clinic encodes its nurse rota and the solver answers \"unsatisfiable\". What has been established?",
+      "options": [
+        "The solver failed and should be run again with more time",
+        "No rota was found among those the solver tried",
+        "No rota meets all the clauses as written",
+        "No rota meets the clinic's real rules"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO2"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The answer covers every assignment of the encoded clauses. Whether the clauses say what the clinic meant is a separate check.",
+      "misconceptions": [
+        "Blames the tool: an unsatisfiable answer is a proof about the clauses, not a crash",
+        "Thinks the solver tried only some rotas: it rules out every assignment",
+        "",
+        "Forgets the encoding can be wrong: the rules meant may differ from the clauses written"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 16
+    },
+    {
+      "id": "review-week2-q1",
+      "type": "single",
+      "prompt": "Rule: if a meter reading is missing, the bill is estimated. This bill is not estimated. What follows?",
+      "options": [
+        "The reading is not missing",
+        "The reading is missing",
+        "Nothing: the rule says nothing about estimated bills",
+        "The bill would be estimated if the reading were present"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO2"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Modus tollens: from p → q and ¬q, conclude ¬p. No row has both premises true and \"missing\" true.",
+      "misconceptions": [
+        "",
+        "Reads the rule backwards: a missing reading forces an estimate, so it cannot go with an exact bill",
+        "Thinks nothing follows from a negated conclusion: modus tollens is valid",
+        "Reverses the arrow: a missing reading forces an estimate, not the other way"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 3
+    },
+    {
+      "id": "check-negation-q1",
+      "type": "single",
+      "prompt": "The claim: \"every course has at least one tutor\". Which statement is its negation?",
+      "options": [
+        "Every course has no tutor",
+        "Some course has at least one tutor",
+        "Some course has no tutor",
+        "One tutor teaches no course"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO2"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "¬∀c ∃t T(c, t) is ∃c ∀t ¬T(c, t): one course without any tutor is enough to make the claim false.",
+      "misconceptions": [
+        "Negates only the inner part: it keeps 'every' where 'some' belongs",
+        "Negates the outer quantifier only: 'some course has a tutor' is consistent with the claim",
+        "",
+        "Swaps the order of the quantifiers instead of negating them"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 8
+    },
+    {
+      "id": "check-classify-q1",
+      "type": "single",
+      "prompt": "A delivery firm relates two depots when they are within 5 km of each other, and wants to form groups of \"nearby\" depots with it. What is this relation?",
+      "options": [
+        "An equivalence relation, so the groups are well defined",
+        "Reflexive and symmetric, not transitive, so not an equivalence",
+        "A partial order on the depots",
+        "Symmetric only, as no depot relates to itself"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO1"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "A is 4 km from B and B 4 km from C, but A can be 8 km from C. Without transitivity the \"groups\" overlap and depend on where you start.",
+      "misconceptions": [
+        "Assumes nearness chains: A near B and B near C can be 9 km apart",
+        "",
+        "Treats nearness as a ranking: it relates pairs both ways, so it cannot be antisymmetric",
+        "Forgets that each depot is 0 km from itself"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 12
+    },
+    {
+      "id": "check-method-q1",
+      "type": "single",
+      "prompt": "An analyst claims: \"for every integer n, n² + n is even\". Her code checks n from −1,000 to 1,000 and finds no failure. What has she shown?",
+      "options": [
+        "That the claim is true, since 2,001 cases passed",
+        "Nothing: tests are no evidence either way",
+        "That the claim is false for some large n",
+        "No counterexample in that range; a proof is still needed"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO3"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The test is evidence and finds no counterexample. The proof: n² + n = n(n + 1), a product of two consecutive integers, one of them even.",
+      "misconceptions": [
+        "Treats many passing cases as a proof: the integers beyond 1,000 were never checked",
+        "Thinks a test result says nothing at all: it rules out a counterexample in that range",
+        "Confuses a passing test with a refutation",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 16
+    },
+    {
+      "id": "review-week3-q1",
+      "type": "single",
+      "prompt": "On the files of a shared drive, \"file A is in the same folder as file B or in one of its subfolders\" relates A to B. Which property does it lack?",
+      "options": [
+        "Reflexivity",
+        "Transitivity",
+        "It has all four, so it is an equivalence",
+        "Symmetry"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO1"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "A file in a subfolder relates to a file in the parent folder, but not the other way round.",
+      "misconceptions": [
+        "Misses that every file is in its own folder, so each relates to itself",
+        "Misses that nesting chains: a subfolder of a subfolder is still a subfolder",
+        "Thinks the property holds by name only: a file deep inside relates to one above, not back",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 3
+    },
+    {
+      "id": "check-induction-parts-q1",
+      "type": "single",
+      "prompt": "A proof that \"n + 1 < n for every n ≥ 1\" assumes k + 1 < k and adds 1 to both sides to get k + 2 < k + 1. What is wrong with it?",
+      "options": [
+        "It has no base case, and the base case is false",
+        "Adding 1 to both sides is not allowed",
+        "The hypothesis assumes what it wants to prove",
+        "It needs strong induction instead"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO3"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The step is valid on its own; with no true starting case it proves nothing. For n = 1, 2 < 1 is false.",
+      "misconceptions": [
+        "",
+        "Blames the algebra: adding 1 to both sides of an inequality is valid",
+        "Thinks the hypothesis is the flaw: assuming P(k) is how every induction step works",
+        "Thinks strong induction would rescue it: no form of induction proves a false claim"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 8
+    },
+    {
+      "id": "check-structural-q1",
+      "type": "single",
+      "prompt": "To prove by structural induction that a recursive depth function on nested lists is correct, the step for a list [a, b, c] may assume:",
+      "options": [
+        "that the function is correct on [a, b, c]",
+        "that it is correct on a only",
+        "that it is correct on each of a, b and c",
+        "that it is correct on every list of length 2"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO4"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The hypothesis is the claim for every immediate part of the structure; the step builds the whole from them.",
+      "misconceptions": [
+        "Assumes the claim for the whole structure, which is what the step must show",
+        "Thinks only one part may be assumed: the hypothesis covers every smaller part",
+        "",
+        "Thinks structural induction needs a numeric n: it inducts on the structure"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 12
+    },
+    {
+      "id": "check-invariant-q1",
+      "type": "single",
+      "prompt": "A loop counts the even numbers in a list: count starts at 0, i at 0; each pass adds 1 to count if xs[i] is even, then adds 1 to i. Which invariant proves it correct?",
+      "options": [
+        "count ≥ 0",
+        "count equals the number of evens in the whole list",
+        "count = i",
+        "count equals the number of evens in xs[:i]"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO4"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "It holds at the start (0 evens in an empty prefix), each pass keeps it, and at exit i = len(xs) gives the result.",
+      "misconceptions": [
+        "Picks a true but weak statement: it holds and proves nothing about the result",
+        "Describes the final result, which is false before the loop has finished",
+        "Ties count to i, which only holds when every element so far was even",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 16
+    },
+    {
+      "id": "review-week4-q1",
+      "type": "single",
+      "prompt": "To prove 1 + 3 + 9 + … + 3ⁿ⁻¹ = (3ⁿ − 1) / 2 by induction, the step for k + 1 must:",
+      "options": [
+        "check the formula for n = k + 1 by computing both sides for k = 5",
+        "assume the formula for k + 1 and simplify",
+        "replace the first k terms by (3ᵏ − 1) / 2, add 3ᵏ, and simplify to (3ᵏ⁺¹ − 1) / 2",
+        "test the formula for n up to 1,000"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO4"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "(3ᵏ − 1) / 2 + 3ᵏ = (3 · 3ᵏ − 1) / 2: the hypothesis supplies the first k terms.",
+      "misconceptions": [
+        "Checks a single case again: the base case does that, the step must reach every next case",
+        "Assumes the result for k + 1, which is what the step must show",
+        "",
+        "Replaces the proof with a test: many cases are evidence, not a proof"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 3
+    },
+    {
+      "id": "check-counting-q1",
+      "type": "single",
+      "prompt": "A tasting panel of 4 judges is chosen from 9 cooks; the judges have no roles. How many panels are possible?",
+      "options": [
+        "3,024",
+        "126",
+        "6,561",
+        "36"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "C(9, 4) = 9 · 8 · 7 · 6 / 4! = 3,024 / 24 = 126.",
+      "misconceptions": [
+        "Counts ordered choices: the panel has no roles, so order must not count",
+        "",
+        "Counts every sequence with repeats: a cook cannot sit twice",
+        "Chooses 2 judges instead of 4: that is C(9, 2)"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 7
+    },
+    {
+      "id": "check-collision-q1",
+      "type": "single",
+      "prompt": "A shop gives each of 50 loyalty cards a random 3-digit code (1,000 codes). On average over all assignments, how many pairs of cards share a code?",
+      "options": [
+        "0.05",
+        "2.45",
+        "50",
+        "1.225"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "C(50, 2) / 1,000 = 1,225 / 1,000 = 1.225 pairs on average.",
+      "misconceptions": [
+        "Divides people by codes: that is a load, not a count of pairs",
+        "Counts ordered pairs: each pair is counted twice",
+        "Treats any collision as certain beyond a threshold: it is an average, not a guarantee",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 11
+    },
+    {
+      "id": "check-pigeonhole-q1",
+      "type": "single",
+      "prompt": "A depot sorts 830 parcels into 100 bays by the last two digits of the parcel number. What does the pigeonhole principle guarantee?",
+      "options": [
+        "Some bay receives at least 9 parcels",
+        "Every bay receives 8 or 9 parcels",
+        "Some bay receives at least 8 parcels, and no more is guaranteed",
+        "Nothing, since 830 is less than 100 · 100"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "⌈830 / 100⌉ = 9: if every bay held at most 8, the bays would hold at most 800 parcels.",
+      "misconceptions": [
+        "",
+        "Assumes an even spread: the principle only bounds the fullest bay from below",
+        "Rounds down instead of up: 100 bays of 8 hold only 800 parcels",
+        "Thinks collisions need more parcels than bays squared"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 14
+    },
+    {
+      "id": "review-week5-q1",
+      "type": "single",
+      "prompt": "Five interns each draw one of 8 desk numbers. In how many of the 8⁵ draws do all five get different desks?",
+      "options": [
+        "56",
+        "32,768",
+        "6,720",
+        "40,320"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "P(8, 5) = 8 · 7 · 6 · 5 · 4 = 6,720.",
+      "misconceptions": [
+        "Counts unordered sets of desks: the interns are distinct, so order matters",
+        "Counts every draw, repeats included",
+        "",
+        "Multiplies too many factors: five interns take five desks, not eight"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 3
+    },
+    {
+      "id": "check-ie-q1",
+      "type": "single",
+      "prompt": "Of a club's members, 45 read the newsletter, 30 attend events and 12 do both. How many do at least one of the two?",
+      "options": [
+        "75",
+        "63",
+        "51",
+        "33"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "45 + 30 − 12 = 63: the 12 who do both were counted in both sets.",
+      "misconceptions": [
+        "Adds the sets and forgets the overlap, counting the 12 twice",
+        "",
+        "Subtracts the overlap twice",
+        "Counts only the readers who do not attend"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 7
+    },
+    {
+      "id": "check-unique-q1",
+      "type": "single",
+      "prompt": "A survey of 500 people keeps age in years (60 values), sex and one of 4 regions. Roughly how many combinations are there per person?",
+      "options": [
+        "240,000",
+        "66",
+        "about 0.48",
+        "about 0.96"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "60 · 2 · 4 = 480 combinations for 500 people: about one each, so many people will be alone or nearly so.",
+      "misconceptions": [
+        "Multiplies people by combinations instead of dividing",
+        "Adds the column sizes instead of multiplying them",
+        "Forgets sex in the product: 60 · 4 = 240",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 11
+    },
+    {
+      "id": "check-anonymised-q1",
+      "type": "single",
+      "prompt": "A gym removes member numbers from its list and keeps full birth date, sex and home district. Most members are alone in their combination. Under the Law's definition, the list is:",
+      "options": [
+        "anonymised, since no identifier remains",
+        "still personal data, since it makes identification indirectly possible",
+        "pseudonymised, so outside the Law",
+        "personal data only if more than half are unique"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The definition covers data that may indirectly make identification possible, which unique combinations do.",
+      "misconceptions": [
+        "Thinks anonymity comes from removing the identifier column: other columns still single people out",
+        "",
+        "Confuses pseudonymised data, where a code replaces the identifier, with this list",
+        "Thinks a law turns on a fixed share of unique people: the definition speaks of possibility"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 15
+    },
+    {
+      "id": "review-week6-q1",
+      "type": "single",
+      "prompt": "Two tables are released. 32 people are alone in their combination in the first, 18 in the second, and 7 of them are alone in both. How many people are alone in at least one table?",
+      "options": [
+        "43",
+        "50",
+        "32",
+        "36"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "32 + 18 − 7 = 43: the risk of two releases is the union of the people they expose.",
+      "misconceptions": [
+        "",
+        "Adds the two counts and counts the 7 in both twice",
+        "Takes the riskier table alone: releases combine",
+        "Subtracts the overlap twice"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 3
+    },
+    {
+      "id": "check-cycle-q1",
+      "type": "single",
+      "prompt": "Edges: A → B, B → C, C → D, D → B, A → E. Peeling starts with every job that has no dependency. Which jobs are never ready?",
+      "options": [
+        "B, C and D",
+        "D only",
+        "B, C, D and E",
+        "none, since A has no dependency"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO6"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "A runs, then E. B waits on D, D on C, C on B: none of the three ever becomes ready.",
+      "misconceptions": [
+        "",
+        "Blames only the edge that closes the cycle: B and C wait on it too",
+        "Thinks everything after A waits: E depends only on A, which finishes",
+        "Thinks one source is enough for the run to finish"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 7
+    },
+    {
+      "id": "check-topo-q1",
+      "type": "single",
+      "prompt": "Edges: P → R, Q → R, R → S, Q → S. Which running order respects every edge?",
+      "options": [
+        "P R Q S",
+        "Q P S R",
+        "Q P R S",
+        "R Q P S"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO6"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Check each edge: P before R, Q before R, R before S, Q before S all hold in Q P R S.",
+      "misconceptions": [
+        "Puts R before Q, breaking Q → R",
+        "Puts S before R, breaking R → S",
+        "",
+        "Starts with the job that has the most edges: R needs P and Q first"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 10
+    },
+    {
+      "id": "check-recurrence-q1",
+      "type": "single",
+      "prompt": "H(1) = 0 and H(n) = H(n − 1) + (n − 1). What is H(6)?",
+      "options": [
+        "21",
+        "30",
+        "36",
+        "15"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO4"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "0, 1, 3, 6, 10, 15: or 6 · 5/2 = 15 from the closed form.",
+      "misconceptions": [
+        "Adds n instead of n − 1 at each step: that is n(n + 1)/2",
+        "Forgets to halve: n(n − 1) counts each link twice",
+        "Uses n², the growth of the count, not its value",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000,
+      "slide": 14
+    },
+    {
+      "id": "w1-product-size",
+      "type": "single",
+      "prompt": "A clinic lists 6 doctors and 4 consulting rooms. A rota table has one row for every possible doctor and room pair. How many rows does it have?",
+      "options": [
+        "24",
+        "10",
+        "2 to the power 24",
+        "4 to the power 6"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO1"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The rows are the Cartesian product of the two sets, so there are 6 times 4 = 24 of them.",
+      "misconceptions": [
+        "",
+        "Adds the two sizes: that counts doctors or rooms, not pairs",
+        "Counts the relations, every subset of the pairs, not the pairs",
+        "Counts the functions from doctors to rooms, not the pairs"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w1-not-a-function",
+      "type": "single",
+      "prompt": "A staff table maps each employee code to a desk. Two codes have no desk and one code has two desks. Which statement is right?",
+      "options": [
+        "It is an injective function",
+        "It is a function, only not surjective",
+        "It is a bijection once the duplicates are removed",
+        "It is not a function on the employee codes"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO1"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "A function needs exactly one output for every input: a missing desk and a second desk each break that.",
+      "misconceptions": [
+        "Thinks injectivity is about inputs having outputs: it is about outputs not being shared",
+        "Misses that a missing or second output breaks the function itself",
+        "Believes removing rows fixes totality: the two codes without a desk still have no output",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w1-injective-integers",
+      "type": "single",
+      "prompt": "Which map from the integers to the integers is injective but not surjective?",
+      "options": [
+        "n to n squared",
+        "n to n minus 4",
+        "n to 5n",
+        "n to the remainder of n divided by 2"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO1"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "5m = 5n gives m = n, so it is injective; 7 is never reached, so it is not surjective.",
+      "misconceptions": [
+        "Misses that n and minus n share a square, so it is not injective",
+        "Misses that every integer m is reached by m plus 4: it is a bijection",
+        "",
+        "Misses that infinitely many integers share each remainder"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w1-join-rows",
+      "type": "single",
+      "prompt": "A warehouse joins orders (customer, order) with order lines (order, product). Is the join the composition 'customer ordered product'?",
+      "options": [
+        "Yes, row for row",
+        "Its distinct rows are; the join can repeat a pair",
+        "No, a join is never related to composition",
+        "Only when every order has exactly one line in the table, never otherwise"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO1"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The join has one row per matching pair of rows; removing repeated rows leaves the composition, a set of pairs.",
+      "misconceptions": [
+        "Forgets that a customer can order one product in two orders, which repeats the pair",
+        "",
+        "Misses that the join's distinct rows are exactly the composition",
+        "Thinks one line per order prevents repeats: two orders of one product by one customer still repeat"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w2-affirming",
+      "type": "single",
+      "prompt": "Rule: if a request is urgent, the duty officer is paged. The duty officer was paged. A colleague concludes the request was urgent. Is the argument valid?",
+      "options": [
+        "Valid, by modus ponens",
+        "Invalid: a non-urgent request may also page the officer",
+        "Valid, by modus tollens, since the officer was paged and the rule holds",
+        "Invalid, because the rule itself may be false"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO2"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The row with urgent false and paged true makes both premises true and the conclusion false, so the form is invalid.",
+      "misconceptions": [
+        "Mistakes the form: modus ponens starts from 'urgent', not from 'paged'",
+        "",
+        "Mistakes the form: modus tollens starts from 'not paged'",
+        "Confuses validity with truth: validity is about the form, whatever the premises' truth"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w2-unless",
+      "type": "single",
+      "prompt": "'The gate stays locked unless a guard is present.' With l = locked and g = guard present, which formula is equivalent?",
+      "options": [
+        "l ∨ g",
+        "g → l",
+        "l ∧ ¬g",
+        "l ↔ g"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO2"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "'p unless q' is ¬q → p, which is equivalent to p ∨ q: when no guard is present, the gate is locked.",
+      "misconceptions": [
+        "",
+        "Reverses the condition: a guard being present does not force the gate locked",
+        "Makes it a fact that no guard is ever present",
+        "Makes it two-way: the rule does not say a guard locks the gate"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w2-cnf-clauses",
+      "type": "single",
+      "prompt": "Six tasks are yes-or-no variables. Encoding 'at most one task runs' by forbidding every pair, how many clauses are needed?",
+      "options": [
+        "6",
+        "12",
+        "36",
+        "15"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO2"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "One clause per pair of tasks: 6 · 5 / 2 = 15.",
+      "misconceptions": [
+        "Counts one clause per task: that encodes 'at least one' style rules, not every pair",
+        "Counts ordered pairs once each way without halving correctly",
+        "Counts every ordered pair including a task with itself",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w2-equivalent",
+      "type": "single",
+      "prompt": "Which pair of formulas is equivalent on every row of the truth table?",
+      "options": [
+        "p → q and q → p",
+        "¬(p ∨ q) and ¬p ∨ ¬q",
+        "p → q and ¬p ∨ q",
+        "p ∧ (q ∨ r) and (p ∧ q) ∨ r"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO2"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "p → q is false only when p is true and q false, exactly when ¬p ∨ q is false.",
+      "misconceptions": [
+        "Takes the converse for an equivalent: they differ when p is false and q true",
+        "Misapplies De Morgan: the negation of an or is the and of the negations",
+        "",
+        "Distributes only half way: with r true and p false the two differ"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w2-sat-check",
+      "type": "single",
+      "prompt": "A solver returns a shift plan for a clinic. What should the planner do before using it?",
+      "options": [
+        "Nothing: a solver's model always meets the rules",
+        "Run the solver a second time and compare the two plans it returns, line by line",
+        "Check the plan against the rules in words with separate code",
+        "Count the clauses to confirm the encoding is complete"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO2"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The model meets the clauses written; only an independent check against the rules catches an encoding mistake.",
+      "misconceptions": [
+        "Forgets that a wrong clause produces a wrong plan that still satisfies the clauses",
+        "Thinks agreement between two runs shows correctness: both satisfy the same wrong clauses",
+        "",
+        "Treats the number of clauses as evidence of their meaning"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w3-preorder",
+      "type": "single",
+      "prompt": "In a sports league, team A relates to team B when A has at least as many points as B. Two teams are level on points. Which kind of relation is it?",
+      "options": [
+        "An equivalence relation",
+        "A preorder that is not a partial order",
+        "A partial order, since the relation is reflexive and transitive",
+        "A strict order"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO1"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "It is reflexive and transitive, but two different level teams relate both ways, so it is not antisymmetric.",
+      "misconceptions": [
+        "Takes 'relates both ways for level teams' as symmetry: a leader does not relate back to a team below",
+        "",
+        "Misses that two different level teams break antisymmetry",
+        "Misses that every team has at least as many points as itself, so the relation is reflexive"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w3-transitive-test",
+      "type": "single",
+      "prompt": "Which relation on the people of a town is NOT transitive?",
+      "options": [
+        "Lives within 2 km of",
+        "Is older than",
+        "Was born in the same year as",
+        "Has the same surname initial as"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO1"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "A within 2 km of B and B within 2 km of C allows A and C to be up to 4 km apart.",
+      "misconceptions": [
+        "",
+        "Misses that 'older than' chains: older than someone older is older still",
+        "Misses that 'same year' is an equivalence: it is transitive",
+        "Misses that 'same initial' is an equivalence: it is transitive"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w3-negation",
+      "type": "single",
+      "prompt": "Rule: 'every invoice has an approver'. Which finding shows the rule is broken?",
+      "options": [
+        "One invoice has two approvers",
+        "Every invoice has no approver",
+        "One approver has no invoice",
+        "One invoice has no approver"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO2"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The negation of 'for every invoice, some approver' is 'some invoice has no approver': one witness suffices.",
+      "misconceptions": [
+        "Confuses 'at least one' with 'exactly one'",
+        "States a much stronger claim than the negation needs",
+        "Reverses the quantified variable: the rule is about invoices",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w3-counterexample",
+      "type": "single",
+      "prompt": "A colleague claims: 'for every positive integer n, 2n + 1 is prime'. Which is the best response?",
+      "options": [
+        "Test n from 1 to 3: all prime, so accept",
+        "Reject it, because claims about all integers cannot be checked",
+        "Ask for a proof by induction before deciding",
+        "Give n = 4: 2n + 1 = 9 = 3 · 3"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO3"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "One counterexample refutes a 'for every' claim.",
+      "misconceptions": [
+        "Treats a few passing tests as a proof",
+        "Thinks universal claims cannot be settled: one counterexample refutes them",
+        "Asks for a proof of a false claim: a counterexample settles it at once",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w3-contradiction",
+      "type": "single",
+      "prompt": "To prove 'if n² is odd then n is odd' by contradiction, what do you assume first?",
+      "options": [
+        "n² is odd and n is odd",
+        "n² is even and n is even",
+        "n² is odd and n is even",
+        "n is odd"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO3"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "A proof by contradiction assumes the hypothesis and the negation of the conclusion, then derives something impossible.",
+      "misconceptions": [
+        "Assumes the claim itself, which proves nothing",
+        "Assumes the negation of both parts, which is the converse's contrapositive",
+        "",
+        "Assumes only the conclusion, which is the claim to be shown"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w4-hypothesis-use",
+      "type": "single",
+      "prompt": "In an induction proof that 3 divides n³ − n for every n ≥ 1, where must the hypothesis be used?",
+      "options": [
+        "In the base case, to check n = 1",
+        "In the step, to rewrite the part of (k + 1)³ − (k + 1) that equals k³ − k",
+        "At the end, to conclude the claim for all n",
+        "Nowhere: the step is pure algebra on (k + 1)³ − (k + 1), expanded and regrouped term by term"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO4"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "(k + 1)³ − (k + 1) = (k³ − k) + 3k² + 3k; the hypothesis says 3 divides k³ − k, and 3 divides the rest.",
+      "misconceptions": [
+        "Confuses the base case with the step: the base is checked directly",
+        "",
+        "Thinks the conclusion uses the hypothesis: it follows from base and step together",
+        "Misses that divisibility of k³ − k is exactly what the algebra cannot supply"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w4-tested-claim",
+      "type": "single",
+      "prompt": "A claim about every positive integer passes all tests for n up to 10,000. What may the report say?",
+      "options": [
+        "No counterexample for n from 1 to 10,000; not yet proved",
+        "The claim is true for all practical purposes",
+        "The claim is true",
+        "The claim is false beyond 10,000"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO3"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Tests show the absence of a counterexample in the range tried; only a proof covers every n.",
+      "misconceptions": [
+        "",
+        "Softens the same error: 'practical purposes' still claims more than was checked",
+        "Treats tests as proof: patterns can break after many passes",
+        "Turns absence of evidence into a refutation"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w4-invariant-parts",
+      "type": "single",
+      "prompt": "An analyst shows that an invariant holds before a loop and after every pass. What else does the correctness proof need?",
+      "options": [
+        "That the loop terminates, and that the invariant with the exit condition gives the result",
+        "Nothing more",
+        "A test on random inputs",
+        "That the invariant also holds in the middle of every pass, between any two statements of the loop body"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO4"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Initialisation and maintenance give an invariant; termination and the exit condition turn it into the result.",
+      "misconceptions": [
+        "",
+        "Forgets termination and the link to the result",
+        "Treats a test as a substitute for the missing proof steps",
+        "Asks for more than an invariant promises: it may be broken inside a pass"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w4-flawed-step",
+      "type": "single",
+      "prompt": "A proof that '2ⁿ ≥ n³ for every n ≥ 1' checks n = 1 and has a step that uses 2k³ ≥ (k + 1)³ without saying so. Testing shows 2² = 4 < 8 = 2³. Where is the gap?",
+      "options": [
+        "In the base case",
+        "Nowhere: a written proof outweighs a failing test, so the test must be wrong",
+        "In the identity 2ᵏ⁺¹ = 2 · 2ᵏ",
+        "In the step, which is not valid for small k"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO3"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "2k³ ≥ (k + 1)³ holds only from k = 4 on, so the step from n = 1 to n = 2 is not justified.",
+      "misconceptions": [
+        "Blames the base case, which was checked and is true",
+        "Trusts the argument over a concrete counterexample, which settles the claim",
+        "Blames a correct identity",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w4-structural",
+      "type": "single",
+      "prompt": "A recursive function counts the files in a folder tree by adding the counts of its subfolders. A proof of its correctness by structural induction assumes:",
+      "options": [
+        "the function is correct on the whole tree",
+        "the tree has at most two levels",
+        "the function is correct on every subfolder of the folder",
+        "every folder has the same number of files"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO4"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The hypothesis is the claim for every immediate part; the step shows it for the folder built from them.",
+      "misconceptions": [
+        "Assumes the conclusion",
+        "Restricts the structure for no reason: the induction covers any depth",
+        "",
+        "Adds a condition the proof does not need"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w5-product",
+      "type": "single",
+      "prompt": "A ticket code is one letter from A to J followed by three digits. How many codes are there?",
+      "options": [
+        "13",
+        "10,000",
+        "1,000",
+        "40"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Product rule: 10 letters times 10 · 10 · 10 digits = 10,000.",
+      "misconceptions": [
+        "Adds the choices instead of multiplying them",
+        "",
+        "Forgets the letter",
+        "Multiplies the number of positions by the letters"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w5-arrangement",
+      "type": "single",
+      "prompt": "From 7 drivers, a dispatcher picks a first, a second and a third driver for a route, in that order. How many choices are there?",
+      "options": [
+        "35",
+        "210",
+        "343",
+        "21"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Order matters and no driver repeats: P(7, 3) = 7 · 6 · 5 = 210.",
+      "misconceptions": [
+        "Counts unordered selections, C(7, 3)",
+        "",
+        "Allows a driver to be picked more than once: 7³",
+        "Counts pairs, C(7, 2)"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w5-collision-formula",
+      "type": "single",
+      "prompt": "Four guests each get one of 10 table numbers at random. Counting assignments, what is the chance that all four numbers differ?",
+      "options": [
+        "10 · 9 · 8 · 7 / 10⁴",
+        "4 / 10",
+        "1 − 4/10",
+        "C(10, 4) / 10⁴"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "There are 10⁴ assignments, of which P(10, 4) = 10 · 9 · 8 · 7 have no repeat.",
+      "misconceptions": [
+        "",
+        "Treats the chance as guests over tables",
+        "Subtracts a load from one",
+        "Counts unordered sets of tables, but the assignments are ordered by guest"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w5-brute",
+      "type": "single",
+      "prompt": "An analyst's formula for collision-free assignments gives 60 for 5 codes and 3 people. Listing all 125 assignments finds 60 with no repeat. What does the agreement show?",
+      "options": [
+        "The formula is proved for all sizes",
+        "The listing must be wrong, since formulas are exact",
+        "Listing was unnecessary: once a formula exists, enumerating the cases adds no evidence of any kind",
+        "The formula is right for this case and worth trusting more; other sizes still need a proof"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "A brute-force count checks the formula on one case; a counting argument proves it for all.",
+      "misconceptions": [
+        "Treats one agreeing case as a proof",
+        "Trusts the formula over a count made by definition",
+        "Discards the check that catches formula errors",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w5-pigeonhole",
+      "type": "single",
+      "prompt": "A system cuts every customer number down to a 2-digit code (100 codes). It has 250 customers. What is certain?",
+      "options": [
+        "No code is shared by more than 3 customers",
+        "Every code is used",
+        "Some code is shared by at least 3 customers",
+        "Collisions happen only after 10,000 customers"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "⌈250 / 100⌉ = 3: if each code held at most 2 customers, 100 codes would hold only 200.",
+      "misconceptions": [
+        "Confuses a lower bound with an upper bound",
+        "Assumes an even spread: some codes may be unused",
+        "",
+        "Squares the number of codes, mixing pigeonhole with the birthday threshold"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w6-ie-three",
+      "type": "single",
+      "prompt": "Of 100 staff, 40 speak French, 30 Spanish and 20 German; 10 speak French and Spanish, 8 French and German, 5 Spanish and German, and 3 all three. How many speak at least one?",
+      "options": [
+        "90",
+        "67",
+        "70",
+        "64"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "40 + 30 + 20 − 10 − 8 − 5 + 3 = 70.",
+      "misconceptions": [
+        "Adds the three sets without removing overlaps",
+        "Forgets to add back the 3 who speak all three",
+        "",
+        "Subtracts the triple overlap instead of adding it back"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w6-combinations",
+      "type": "single",
+      "prompt": "A register keeps birth year (50 values), sex and one of 20 districts for 1,000 people. How many combinations are possible, and what does that suggest?",
+      "options": [
+        "72 combinations: everyone shares with many others",
+        "2,000 combinations: about half a person per combination, so many people are alone",
+        "1,000 combinations: exactly one person each",
+        "100,000 combinations: so many that people spread out and no one can be alone"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "50 · 2 · 20 = 2,000 combinations for 1,000 people: on average half a person each, so many classes hold one person.",
+      "misconceptions": [
+        "Adds the column sizes instead of multiplying",
+        "",
+        "Confuses the number of people with the number of combinations",
+        "Inflates the product, and draws the opposite conclusion: more combinations means more people alone"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w6-not-anonymous",
+      "type": "single",
+      "prompt": "A charity drops the member number from a list but keeps date of birth, sex and postcode district. Why is the list still personal data?",
+      "options": [
+        "Because those columns together can indirectly identify most members",
+        "Because any list about people is personal data",
+        "Because the member number can be guessed from the row order",
+        "Because the list was not encrypted"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The Law's definition covers data that may directly or indirectly make identification possible; unique combinations do that.",
+      "misconceptions": [
+        "",
+        "Overstates the rule: aggregated counts with large groups need not identify anyone",
+        "Names a possible leak, but not the reason the columns themselves identify people",
+        "Confuses protection in transit with whether data identifies people"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w6-union-risk",
+      "type": "single",
+      "prompt": "Two tables are released from one register. 40 people are alone in the first, 25 in the second, and 10 of them are alone in both. How many people can be singled out?",
+      "options": [
+        "40",
+        "65",
+        "25",
+        "55"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Anyone alone in either table can be found: 40 + 25 − 10 = 55.",
+      "misconceptions": [
+        "Takes the riskier table alone, ignoring the second",
+        "Counts the 10 people twice",
+        "Takes the safer table alone",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w6-generalise",
+      "type": "single",
+      "prompt": "Which change to a released table most reduces the number of people who are alone in their combination?",
+      "options": [
+        "Sorting the rows into a random order before the table is released",
+        "Removing the first row",
+        "Renaming the columns",
+        "Replacing full birth date by a ten-year band"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO5"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Generalising a quasi-identifier merges combinations, so classes grow and fewer people stand alone.",
+      "misconceptions": [
+        "Thinks row order identifies people: the combinations stay the same",
+        "Removes one person, not the risk to the others",
+        "Thinks column names matter: the values still single people out",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w7-degree-sum",
+      "type": "single",
+      "prompt": "A build file lists 18 dependencies between 11 modules, each as (needed module, module that needs it). What do the in-degrees of the 11 modules add up to?",
+      "options": [
+        "11",
+        "36",
+        "18",
+        "29"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO6"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Each dependency arrives at exactly one module, so it adds one to exactly one in-degree: the in-degrees add up to the 18 edges.",
+      "misconceptions": [
+        "Counts the modules, not the edges",
+        "Doubles the edges, as for in-degree plus out-degree together",
+        "",
+        "Adds modules and edges"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w7-peel-stops",
+      "type": "single",
+      "prompt": "A warehouse runs its tasks by repeatedly starting every task whose prerequisites are all done. After a while 7 tasks remain and none can start. What must be true?",
+      "options": [
+        "Every one of the 7 tasks is on a cycle",
+        "The 7 remaining tasks contain a cycle of prerequisites",
+        "One of the 7 tasks has no prerequisites",
+        "The prerequisite file has a duplicate line that blocks the tasks listed after it"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO6"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "If no remaining task can start, each one waits on another remaining task; walking back through finitely many tasks must repeat one, which is a cycle. Tasks downstream of the cycle wait too, so not all 7 need be on it.",
+      "misconceptions": [
+        "Forgets the tasks downstream of a cycle, which wait without being on it",
+        "",
+        "Contradicts the situation: such a task could start",
+        "A duplicate line repeats an edge and blocks nothing"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w7-valid-order",
+      "type": "single",
+      "prompt": "Course modules have prerequisites M1 before M3, M2 before M3, M3 before M5 and M2 before M4. Which study order respects every prerequisite?",
+      "options": [
+        "M2, M4, M1, M3, M5",
+        "M1, M3, M2, M4, M5",
+        "M3, M1, M2, M4, M5",
+        "M1, M2, M5, M3, M4"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO6"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Check each prerequisite: M1 and M2 come before M3, M3 before M5, and M2 before M4. Only M2, M4, M1, M3, M5 passes all four.",
+      "misconceptions": [
+        "",
+        "Puts M3 before M2, breaking M2 before M3",
+        "Starts with M3, before both its prerequisites",
+        "Puts M5 before M3, breaking M3 before M5"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w7-order-check",
+      "type": "single",
+      "prompt": "A script claims to return a valid running order of 40 jobs. What check proves its output is valid?",
+      "options": [
+        "Every job appears exactly once and, for every dependency (u, v), u appears before v",
+        "The first job has no dependency, the last has nothing depending on it, and no job is missing",
+        "The order matches the one a graph library returns",
+        "Every job appears exactly once"
+      ],
+      "key": {
+        "indices": [
+          0
+        ]
+      },
+      "lo": [
+        "LO6"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "A topological order is defined edge by edge, so checking every edge and that each job appears once is the whole definition.",
+      "misconceptions": [
+        "",
+        "Checks only the two ends: a middle edge can still point backwards",
+        "Orders are rarely unique: a valid order can differ from the library's",
+        "Checks the jobs and none of the edges"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w7-paths-recurrence",
+      "type": "single",
+      "prompt": "In a graph without cycles, node T has three predecessors with 4, 2 and 5 paths into each from the sources. How many paths from the sources reach T?",
+      "options": [
+        "40",
+        "5",
+        "3",
+        "11"
+      ],
+      "key": {
+        "indices": [
+          3
+        ]
+      },
+      "lo": [
+        "LO4",
+        "LO6"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "Each path into T arrives by exactly one last edge, so the paths split by predecessor: 4 + 2 + 5 = 11.",
+      "misconceptions": [
+        "Multiplies the counts: that would count choosing one path into each predecessor at once",
+        "Takes the largest predecessor count",
+        "Counts the predecessors, not the paths",
+        ""
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w7-closed-form",
+      "type": "single",
+      "prompt": "A count satisfies T(0) = 1 and T(n) = 3 · T(n − 1). Which closed form is right, and what does its proof use?",
+      "options": [
+        "T(n) = 3n + 1, proved by checking n = 0 to 5",
+        "T(n) = n³, by induction on n",
+        "T(n) = 3ⁿ, by induction: the step uses T(n − 1) = 3ⁿ⁻¹",
+        "T(n) = 3ⁿ, proved by checking n = 0 to 20"
+      ],
+      "key": {
+        "indices": [
+          2
+        ]
+      },
+      "lo": [
+        "LO4"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "The values are 1, 3, 9, 27: T(n) = 3ⁿ. Base T(0) = 1 = 3⁰; step T(n) = 3 · 3ⁿ⁻¹ = 3ⁿ uses the hypothesis for n − 1.",
+      "misconceptions": [
+        "Treats repeated multiplying as adding, and a few checks are not a proof",
+        "Confuses 3ⁿ with n³, which gives 0 at n = 0",
+        "",
+        "Checks cases: tests support the claim but prove it only for those 21 values"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    },
+    {
+      "id": "w7-growth",
+      "type": "single",
+      "prompt": "Listing every possible order of n independent jobs takes about 1 microsecond per order. Roughly how long for 20 jobs?",
+      "options": [
+        "About a second",
+        "About 77,000 years",
+        "About 20 microseconds",
+        "About 400 microseconds"
+      ],
+      "key": {
+        "indices": [
+          1
+        ]
+      },
+      "lo": [
+        "LO4"
+      ],
+      "weight": 1,
+      "scored": true,
+      "timer": 30,
+      "displayMode": "full",
+      "explanation": "20 independent jobs have 20! ≈ 2.4 × 10¹⁸ orders; at 10⁶ per second that is about 2.4 × 10¹² seconds, roughly 77,000 years.",
+      "misconceptions": [
+        "Thinks the count grows like 2ⁿ, about a million orders",
+        "",
+        "Thinks the count grows like n",
+        "Thinks the count grows like n²"
+      ],
+      "liveContext": false,
+      "basis": "best",
+      "confidence": true,
+      "createdAt": 1795597400000,
+      "updatedAt": 1795597400000
+    }
+  ]
+}

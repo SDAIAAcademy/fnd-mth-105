@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-ax="deck" data-track="foundations">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 2 · Logic: truth tables and satisfiability · Discrete Mathematics and Logic for Computing</title>
+<meta name="generator" content="SDAIA Academy engine 1.0.0">
+<link rel="icon" href="../_engine/icon.svg">
+<link rel="alternate" type="text/markdown" href="week2.md">
+<link rel="describedby" href="../llms.txt">
+<link rel="stylesheet" href="../_engine/academy.css">
+</head>
+<body>
+<div class="deck" data-course="Discrete Mathematics and Logic for Computing" data-track="foundations" data-day="Week 2">
+<section class="slide title" id="title" data-auto="title" data-label="Welcome" data-n="1">
+  <div class="kicker">SDAIA Academy · Discrete Mathematics and Logic for Computing</div>
+  <h1>Logic: truth tables and satisfiability</h1>
+  <p class="lead mt">Week 2: Rules as formulas, arguments checked row by row, and a schedule found by a solver</p>
+  <div class="meta"><span class="track">Data &amp; AI Foundations Track</span><span>7 weeks + capstone</span><span>1 session · 1 lab</span><span>FND-MTH-105</span></div>
+  <aside class="notes"><p>Collect PS1 difficulties first: usually item 1 (the identity holds only for disjoint sets) and the difference between "not a function" and "not injective". This week moves from sets to the statements we make about them.</p></aside>
+</section>
+
+<section class="slide" id="agenda" data-auto="agenda" data-label="Agenda" data-n="2">
+  <div class="kicker">This week</div>
+  <h2>Logic: truth tables and satisfiability</h2>
+  <div class="agenda"><div class="item"><div><b>Session 1 · Propositional logic, normal forms and SAT</b><small>Propositional logic and truth tables, valid and invalid arguments, conjunctive normal form and Boolean satisfiability with a solver</small></div></div></div>
+</section>
+
+<section class="slide" id="review-week1" data-lo="LO1" data-n="3">
+  <div class="kicker">Review · week 1</div>
+  <h2>Can the code be swapped back?</h2>
+  <div class="quiz" data-type="single" data-lo="LO1" data-id="review-week1-q1">
+    <p class="lead">A school replaces each of its 500 pupil numbers with a random code from 1,000 possible codes, never giving one code twice. As a map from pupils to the 1,000 codes, what is it?</p>
+    <div class="opts">
+      <div class="opt" data-why="Thinks 'no repeats' is enough for a bijection: 500 unused codes mean it is not surjective" data-k="A">A bijection</div>
+      <div class="opt" data-ok data-k="B">Injective, not surjective</div>
+      <div class="opt" data-why="Confuses the two properties: it is the absence of shared codes that holds here" data-k="C">Surjective, not injective</div>
+      <div class="opt" data-why="Thinks a random choice is not a function: each pupil still gets exactly one code" data-k="D">Not a function</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> No two pupils share a code (injective), but half the codes are never used (not surjective). On its 500 pupils and the codes used, it can still be inverted.</div>
+  </div>
+  <aside class="notes"><p>Answer B. Point out the last sentence: injective is what makes a code reversible. Week 6 shows that reversibility is not the only route back to a person.</p></aside>
+</section>
+
+<!-- Session 1 -->
+
+<section class="slide section" id="s1" data-auto="section" data-session="1" data-n="4">
+  <div class="kicker">Session 1</div>
+  <h1>Propositional logic, normal forms and SAT</h1>
+  <ul class="bullets outcomes"><li>Translate a plain-language rule into a propositional formula and check it by truth table</li><li>Distinguish a valid argument from an invalid one by searching for a counterexample row</li><li>Encode a small scheduling problem in conjunctive normal form and solve it with a SAT solver</li></ul>
+  <div class="sess-no">01</div>
+</section>
+
+<section class="slide" id="propositions" data-lo="LO2" data-n="5" data-session="1">
+  <div class="kicker">Block A · propositions</div>
+  <h2>A proposition is true or false, and connectives build bigger ones</h2>
+  <table class="t small">
+    <tr><th>Symbol</th><th>Reads</th><th>True when</th></tr>
+    <tr><td>¬p</td><td>not p</td><td>p is false</td></tr>
+    <tr><td>p ∧ q</td><td>p and q</td><td>both are true</td></tr>
+    <tr><td>p ∨ q</td><td>p or q</td><td>at least one is true</td></tr>
+    <tr class="hl"><td>p → q</td><td>if p then q</td><td>p is false, or q is true</td></tr>
+    <tr><td>p ↔ q</td><td>p if and only if q</td><td>both have the same value</td></tr>
+  </table>
+  <aside class="notes"><p>"Or" is inclusive: both true counts. The exclusive or of everyday speech ("tea or coffee") is a different connective. "The parcel is heavy" is a proposition; "lift the parcel" is not, as it is neither true nor false.</p></aside>
+</section>
+
+<section class="slide" id="implication" data-lo="LO2" data-n="6" data-session="1">
+  <div class="kicker">Implication</div>
+  <h2>"If p then q" is broken only by p true and q false</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>p: over 20 kg</th><th>q: two lifters</th><th>p → q</th></tr>
+      <tr><td>F</td><td>F</td><td>T</td></tr>
+      <tr><td>F</td><td>T</td><td>T</td></tr>
+      <tr class="hl"><td>T</td><td>F</td><td>F</td></tr>
+      <tr><td>T</td><td>T</td><td>T</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>A light parcel lifted by two people does not break the rule</li>
+      <li>A light parcel makes the rule true whatever happens: <b>vacuously</b></li>
+      <li>Only a heavy parcel lifted alone breaks it</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>Ask the room to find the only row that breaks the rule before revealing the column. The two rows where p is false surprise people: the rule says nothing about light parcels, and a rule that says nothing is not broken.</p></aside>
+</section>
+
+<section class="slide" id="truth-table-code" data-lo="LO2" data-n="7" data-session="1">
+  <div class="kicker">In code</div>
+  <h2>A truth table is a loop over every row of truth values</h2>
+  <div class="cols cols-2">
+    <pre class="code" data-file="python"><code class="language-python"><span class="hljs-keyword">import</span> itertools
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">implies</span>(<span class="hljs-params">a, b</span>):
+    <span class="hljs-keyword">return</span> (<span class="hljs-keyword">not</span> a) <span class="hljs-keyword">or</span> b
+
+<span class="hljs-keyword">for</span> p, q <span class="hljs-keyword">in</span> itertools.product([<span class="hljs-literal">False</span>, <span class="hljs-literal">True</span>], repeat=<span class="hljs-number">2</span>):
+    <span class="hljs-built_in">print</span>(p, q, implies(p, q))</code></pre>
+    <ul class="bullets">
+      <li>n variables give <b>2ⁿ rows</b>: 4 for two, 1,024 for ten</li>
+      <li>Checking every row is a proof for a finite claim</li>
+      <li>For 50 variables, 2⁵⁰ rows is out of reach: that is where a solver comes in</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The first lab task writes this as a function. Stress the second bullet: when the cases are finite and few, testing every one of them is a proof, not merely a test.</p></aside>
+</section>
+
+<section class="slide" id="equivalence-laws" data-lo="LO2" data-n="8" data-session="1">
+  <div class="kicker">Equivalence</div>
+  <h2>Two formulas are equivalent when they agree on every row</h2>
+  <table class="t small">
+    <tr><th>Law</th><th>Equivalent pair</th></tr>
+    <tr><td>De Morgan</td><td>¬(p ∧ q) and ¬p ∨ ¬q; ¬(p ∨ q) and ¬p ∧ ¬q</td></tr>
+    <tr><td>Contrapositive</td><td>p → q and ¬q → ¬p</td></tr>
+    <tr><td>Implication as or</td><td>p → q and ¬p ∨ q</td></tr>
+    <tr><td>Distribution</td><td>p ∧ (q ∨ r) and (p ∧ q) ∨ (p ∧ r)</td></tr>
+  </table>
+  <div class="callout warn mt"><b>Not a law.</b> The converse q → p is a different rule: a parcel lifted by two people need not be heavy.</div>
+  <aside class="notes"><p>Each line can be checked by a four- or eight-row table, which the lab does in code. The converse is the most common error in reading rules: watch for it in the checkpoint.</p></aside>
+</section>
+
+<section class="slide" id="check-converse" data-lo="LO2" data-n="9" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which sentence says the same thing?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="check-converse-q1">
+    <p class="lead">A warehouse rule: "If a box is fragile, it is packed with foam." Which sentence is equivalent to it?</p>
+    <div class="opts">
+      <div class="opt" data-why="Takes the converse for the rule: foam on a sturdy box does not break it" data-k="A">If a box is packed with foam, it is fragile</div>
+      <div class="opt" data-why="Takes the inverse for the rule: the rule says nothing about sturdy boxes" data-k="B">If a box is not fragile, it is not packed with foam</div>
+      <div class="opt" data-why="Turns the condition into a conjunction: that forces every box to be fragile" data-k="C">Every box is fragile and packed with foam</div>
+      <div class="opt" data-ok data-k="D">If a box is not packed with foam, it is not fragile</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The contrapositive ¬q → ¬p agrees with p → q on all four rows.</div>
+  </div>
+  <aside class="notes"><p>Answer D. If the room splits between A and B, write the four rows and let them find the row where each fails.</p></aside>
+</section>
+
+<section class="slide" id="validity" data-lo="LO2" data-n="10" data-session="1">
+  <div class="kicker">Block B · arguments</div>
+  <h2>An argument is valid when no row makes the premises true and the conclusion false</h2>
+  <table class="t small">
+    <tr><th>Form</th><th>Premises</th><th>Conclusion</th><th>Verdict</th></tr>
+    <tr><td>Modus ponens</td><td>p → q, p</td><td>q</td><td>valid</td></tr>
+    <tr><td>Modus tollens</td><td>p → q, ¬q</td><td>¬p</td><td>valid</td></tr>
+    <tr class="hl"><td>Affirming the consequent</td><td>p → q, q</td><td>p</td><td>invalid: row p F, q T</td></tr>
+    <tr class="hl"><td>Denying the antecedent</td><td>p → q, ¬p</td><td>¬q</td><td>invalid: row p F, q T</td></tr>
+  </table>
+  <p class="small mt">Validity is about form, not truth: a valid argument from a false premise can reach a false conclusion.</p>
+  <aside class="notes"><p>The search for a counterexample row is the whole method, and it is the same idea as a counterexample to a claim in week 3. The lab writes it as a function and runs it on the centre's consent rule.</p></aside>
+</section>
+
+<section class="slide" id="translating-rules" data-lo="LO2" data-n="11" data-session="1">
+  <div class="kicker">Rules in words</div>
+  <h2>Words like "only if" and "unless" fix the direction of the arrow</h2>
+  <table class="t small">
+    <tr><th>Words</th><th>Formula</th></tr>
+    <tr><td>p if q</td><td>q → p</td></tr>
+    <tr><td>p only if q</td><td>p → q</td></tr>
+    <tr><td>p unless q</td><td>¬q → p, the same as p ∨ q</td></tr>
+    <tr class="hl"><td>A or B and C</td><td>ambiguous: (A ∨ B) ∧ C, or A ∨ (B ∧ C)</td></tr>
+  </table>
+  <div class="callout tip mt"><b>Habit.</b> Name each variable in one line, write the formula with brackets, then read it back in words.</div>
+  <aside class="notes"><p>Example to work aloud: "A member may borrow a laptop only if they have signed the agreement" is borrow → signed; signing does not entitle anyone to a laptop. The bracket line is where access rules go wrong, and the lab has one.</p></aside>
+</section>
+
+<section class="slide" id="check-only-if" data-lo="LO2" data-n="12" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>Translate the rule</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="check-only-if-q1">
+    <p class="lead">A laboratory: "A visitor may enter only if they wear goggles." With p = "the visitor enters" and s = "the visitor wears goggles", which formula is the rule?</p>
+    <div class="opts">
+      <div class="opt" data-why="Reads 'only if' as 'if': that makes goggles a promise of entry" data-k="A">s → p</div>
+      <div class="opt" data-ok data-k="B">p → s</div>
+      <div class="opt" data-why="Turns a condition into a fact: every visitor would have to enter" data-k="C">p ∧ s</div>
+      <div class="opt" data-why="Makes the condition two-way: wearing goggles would oblige the visitor to enter" data-k="D">p ↔ s</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> "p only if q" is p → q: entering requires goggles, and goggles require nothing.</div>
+  </div>
+  <aside class="notes"><p>Answer B. Ask for the one situation the rule forbids: a visitor inside without goggles.</p></aside>
+</section>
+
+<section class="slide" id="cnf" data-lo="LO2" data-n="13" data-session="1">
+  <div class="kicker">Block C · normal form</div>
+  <h2>Conjunctive normal form is an "and" of clauses, each an "or" of literals</h2>
+  <div class="cols cols-2">
+    <div>
+      <p>(a ∨ b) ∧ (¬a ∨ c) ∧ (¬b ∨ ¬c)</p>
+      <ul class="bullets">
+        <li>A <b>literal</b> is a variable or its negation</li>
+        <li>A <b>clause</b> is an or of literals: at least one must hold</li>
+        <li>Every formula has an equivalent CNF: one clause per row it must exclude</li>
+      </ul>
+    </div>
+    <div class="card c-purple"><h4>For a solver</h4><p class="small mb0">Variables are numbers and a clause is a list: [1, 2], [-1, 3], [-2, -3]. A minus sign is "not".</p></div>
+  </div>
+  <aside class="notes"><p>Build the CNF of p → q on the board from its table: the only false row is p T, q F; excluding it gives the clause ¬p ∨ q. That is how "every formula has a CNF" is proved, one excluded row at a time.</p></aside>
+</section>
+
+<section class="slide" id="sat" data-lo="LO2" data-n="14" data-session="1">
+  <div class="kicker">Satisfiability</div>
+  <h2>A SAT solver finds a row that makes every clause true, or proves there is none</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>Encode</b>one variable per yes-or-no decision; one clause per rule</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>Solve</b>a model: a value for every variable, or "unsatisfiable"</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>Check</b>the model against the rules in words, with separate code</div>
+  </div>
+  <ul class="bullets mt">
+    <li>Checking a proposed assignment is quick; finding one can take exponential time in the worst case with every known method</li>
+    <li>"Unsatisfiable" is a proof that no assignment works; a solver can name a small set of rules that already conflict</li>
+  </ul>
+  <aside class="notes"><p>Tools are examples: the lab uses PySAT; Z3 fills the same slot. The third step is the course's habit: a solver satisfies the clauses you gave it, not the rules you meant.</p></aside>
+</section>
+
+<section class="slide" id="encoding-counts" data-lo="LO2" data-n="15" data-session="1">
+  <div class="kicker">Encoding</div>
+  <h2>"Exactly one" and "at most two" become many small clauses</h2>
+  <table class="t small">
+    <tr><th>Rule over n yes-or-no variables</th><th>Clauses</th><th>For n = 8</th></tr>
+    <tr><td>At least one</td><td>1 clause of n literals</td><td>1</td></tr>
+    <tr><td>At most one: no two together</td><td>one per pair, n(n − 1)/2</td><td>28</td></tr>
+    <tr><td>At most two: no three together</td><td>one per triple, n(n − 1)(n − 2)/6</td><td>56</td></tr>
+    <tr class="hl"><td>At least two: someone besides each one</td><td>n clauses of n − 1 literals</td><td>8</td></tr>
+  </table>
+  <aside class="notes"><p>Numbers for eight variables, a parallel to the lab's ten volunteers. The counts are combinations, which week 5 derives. Libraries offer shorter encodings of cardinality rules; the lab writes the direct ones so that each clause can be read aloud.</p></aside>
+</section>
+
+<section class="slide" id="check-unsat" data-lo="LO2" data-n="16" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>What does "unsatisfiable" tell the planner?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="check-unsat-q1">
+    <p class="lead">A clinic encodes its nurse rota and the solver answers "unsatisfiable". What has been established?</p>
+    <div class="opts">
+      <div class="opt" data-why="Blames the tool: an unsatisfiable answer is a proof about the clauses, not a crash" data-k="A">The solver failed and should be run again with more time</div>
+      <div class="opt" data-why="Thinks the solver tried only some rotas: it rules out every assignment" data-k="B">No rota was found among those the solver tried</div>
+      <div class="opt" data-ok data-k="C">No rota meets all the clauses as written</div>
+      <div class="opt" data-why="Forgets the encoding can be wrong: the rules meant may differ from the clauses written" data-k="D">No rota meets the clinic's real rules</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The answer covers every assignment of the encoded clauses. Whether the clauses say what the clinic meant is a separate check.</div>
+  </div>
+  <aside class="notes"><p>Answer C. D is the subtle one: it would be true only if the encoding is right. That is why the lab checks the solver's schedule with code written from the rules in words.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-2-1" data-auto="lab" data-lab="2.1" data-label="Lab 2.1" data-n="17" data-session="1">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 2.1 · 105 min</div><h2>Truth tables in code, and a scheduling puzzle solved with a SAT solver</h2><p class="lead small">Check laws and arguments by truth table, repair an access rule, and schedule ten volunteers with a solver.</p><a class="nb" href="../labs/W2_1.ipynb">W2_1.ipynb</a></div><ul class="checklist"><li>Set up; a truth table by hand and in code <span class="min">15 min</span></li><li>Equivalent or not: laws by truth table <span class="min">15 min</span></li><li>Valid and invalid arguments <span class="min">15 min</span></li><li>Two phrasings of an access rule <span class="min">15 min</span></li><li>Encode the shift puzzle in CNF <span class="min">20 min</span></li><li>Solve, then check against every rule <span class="min">10 min</span></li><li>The late change: unsatisfiable, and why <span class="min">10 min</span></li><li>Small variant: brute force against solver <span class="min">5 min</span></li><li class="stretch">✱ Stretch: Count every schedule of the full puzzle by blocking each one found</li></ul></div>
+  <aside class="notes"><p>AI-tutor: it may point at a gap, never write the answer. Watch for: <code>officer_rule</code> written without brackets, which reproduces the handbook's error; "exactly two per shift" encoded as "at most two" only (the solver then leaves shifts empty); the schedule check written by reusing the clauses. If PySAT fails to install, the hosted notebook route works.</p></aside>
+</section>
+
+<section class="slide" id="debrief-rules" data-lo="LO2" data-n="18" data-session="1">
+  <div class="kicker">Debrief · lab 2.1</div>
+  <h2>The handbook opens contact details to anyone, for consenting volunteers</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Result</th><th>Value</th></tr>
+      <tr><td>Rows where the two phrasings differ</td><td>2 of 16: o F, c F, s T</td></tr>
+      <tr><td>Shift puzzle</td><td>50 variables, 800 clauses, a schedule found and checked</td></tr>
+      <tr class="hl"><td>After the late change</td><td>unsatisfiable: one first-aider for SH-C and SH-D</td></tr>
+      <tr><td>Small variant</td><td>36 schedules by brute force, by solver and by 3! · 3!</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>Fix the handbook with brackets: o ∨ (c ∧ (d ∨ s))</li>
+      <li>The solver's core named the two first-aid rules</li>
+      <li>Keeping V-00090 on SH-D, or dropping first aid on one shift, restores a schedule</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>From the solution run of lab 2.1. The core is the pigeonhole principle of week 5 in disguise: two shifts each need one of the first-aiders who can work them, and only V-00048 can. Both repairs in the last bullet were checked with the solver.</p></aside>
+</section>
+
+<section class="slide" id="wrap-up" data-n="19" data-session="1">
+  <div class="kicker">Week 2 · wrap-up</div>
+  <h2>Three things to keep</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Only one row breaks "if"</h4><p class="small mb0">p true and q false. The converse is a different rule.</p></div>
+    <div class="card c-coral"><h4>Validity is a row search</h4><p class="small mb0">Look for premises true and conclusion false. None found in every row: valid.</p></div>
+    <div class="card c-purple"><h4>Encode, solve, check</h4><p class="small mb0">A solver meets the clauses you wrote. Check its answer against the words.</p></div>
+  </div>
+  <aside class="notes"><p>Ask for one rule from their own workplace that hides an "only if" or a missing bracket.</p></aside>
+</section>
+
+<section class="slide dark" id="next" data-label="Next" data-n="20" data-session="1">
+  <div class="kicker">Next</div>
+  <h2>Week 3: Predicates, quantifiers and first proofs</h2>
+  <p class="lead">Problem set 2 (60 minutes, AI off for the first attempt): labs/problem-sets/PS2.ipynb.</p>
+  <aside class="notes"><p>Week 3 adds "for every" and "there is" to these formulas, and writes the first proofs.</p></aside>
+</section>
+</div>
+<script type="application/json" id="academy-data">{"v":1,"engine":"1.0.0","build":{"at":"2026-11-25T09:03:20Z","version":"2027.1.0","commit":"9b66171"},"course":{"id":"fnd-mth-105","code":"FND-MTH-105","title":"Discrete Mathematics and Logic for Computing","track":"foundations","lang":"en","dir":"ltr","url":"https://sdaiaacademy.github.io/fnd-mth-105/","repo":"SDAIAAcademy/fnd-mth-105","home":"../index.html"},"deck":{"id":"week2","kind":"day","day":2,"label":"Week 2","title":"Logic: truth tables and satisfiability","prev":"week1.html","next":"week3.html","md":"week2.md","alt":{}},"sessions":[{"n":1,"label":"Session 1","title":"Propositional logic, normal forms and SAT","slide":"s1","outcomes":["Translate a plain-language rule into a propositional formula and check it by truth table","Distinguish a valid argument from an invalid one by searching for a counterexample row","Encode a small scheduling problem in conjunctive normal form and solve it with a SAT solver"],"minutes":215,"lab":{"id":"2.1","title":"Truth tables in code, and a scheduling puzzle solved with a SAT solver","minutes":105,"href":"../labs/W2_1.ipynb"}}],"slides":[{"id":"title","n":1,"title":"Logic: truth tables and satisfiability","kind":"title","session":0,"hash":"09dbb8db","md":"#### [week2#title] Logic: truth tables and satisfiability\n\n*SDAIA Academy · Discrete Mathematics and Logic for Computing*\n\nWeek 2: Rules as formulas, arguments checked row by row, and a schedule found by a solver\n\nData & AI Foundations Track · 7 weeks + capstone · 1 session · 1 lab · FND-MTH-105","notes":"Collect PS1 difficulties first: usually item 1 (the identity holds only for disjoint sets) and the difference between \"not a function\" and \"not injective\". This week moves from sets to the statements we make about them.","minutes":null,"lo":[]},{"id":"agenda","n":2,"title":"Logic: truth tables and satisfiability","kind":"content","session":0,"hash":"efc98d84","md":"#### [week2#agenda] Logic: truth tables and satisfiability\n\n*This week*\n\n- **Session 1 · Propositional logic, normal forms and SAT**: Propositional logic and truth tables, valid and invalid arguments, conjunctive normal form and Boolean satisfiability with a solver","notes":"","minutes":null,"lo":[]},{"id":"review-week1","n":3,"title":"Can the code be swapped back?","kind":"quiz","session":0,"hash":"3a2136d4","md":"#### [week2#review-week1] Can the code be swapped back?\n\n*Review · week 1*\n\n**Question:** A school replaces each of its 500 pupil numbers with a random code from 1,000 possible codes, never giving one code twice. As a map from pupils to the 1,000 codes, what is it?\n\n- A. A bijection\n- B. Injective, not surjective\n- C. Surjective, not injective\n- D. Not a function","notes":"Answer B. Point out the last sentence: injective is what makes a code reversible. Week 6 shows that reversibility is not the only route back to a person.","minutes":null,"lo":["LO1"]},{"id":"s1","n":4,"title":"Propositional logic, normal forms and SAT","kind":"section","session":1,"hash":"eb5e7d75","md":"#### [week2#s1] Propositional logic, normal forms and SAT\n\n*Session 1*\n\n- Translate a plain-language rule into a propositional formula and check it by truth table\n- Distinguish a valid argument from an invalid one by searching for a counterexample row\n- Encode a small scheduling problem in conjunctive normal form and solve it with a SAT solver","notes":"","minutes":null,"lo":["LO2"]},{"id":"propositions","n":5,"title":"A proposition is true or false, and connectives build bigger ones","kind":"content","session":1,"hash":"4ed858cd","md":"#### [week2#propositions] A proposition is true or false, and connectives build bigger ones\n\n*Block A · propositions*\n\n| Symbol | Reads | True when |\n| --- | --- | --- |\n| ¬p | not p | p is false |\n| p ∧ q | p and q | both are true |\n| p ∨ q | p or q | at least one is true |\n| p → q | if p then q | p is false, or q is true |\n| p ↔ q | p if and only if q | both have the same value |","notes":"\"Or\" is inclusive: both true counts. The exclusive or of everyday speech (\"tea or coffee\") is a different connective. \"The parcel is heavy\" is a proposition; \"lift the parcel\" is not, as it is neither true nor false.","minutes":null,"lo":["LO2"]},{"id":"implication","n":6,"title":"\"If p then q\" is broken only by p true and q false","kind":"content","session":1,"hash":"1dc07c58","md":"#### [week2#implication] \"If p then q\" is broken only by p true and q false\n\n*Implication*\n\n| p: over 20 kg | q: two lifters | p → q |\n| --- | --- | --- |\n| F | F | T |\n| F | T | T |\n| T | F | F |\n| T | T | T |\n\n- A light parcel lifted by two people does not break the rule\n- A light parcel makes the rule true whatever happens: **vacuously**\n- Only a heavy parcel lifted alone breaks it","notes":"Ask the room to find the only row that breaks the rule before revealing the column. The two rows where p is false surprise people: the rule says nothing about light parcels, and a rule that says nothing is not broken.","minutes":null,"lo":["LO2"]},{"id":"truth-table-code","n":7,"title":"A truth table is a loop over every row of truth values","kind":"content","session":1,"hash":"7b41fcb6","md":"#### [week2#truth-table-code] A truth table is a loop over every row of truth values\n\n*In code*\n\n```python\n# file: python\nimport itertools\n\ndef implies(a, b):\n    return (not a) or b\n\nfor p, q in itertools.product([False, True], repeat=2):\n    print(p, q, implies(p, q))\n```\n\n- n variables give **2ⁿ rows**: 4 for two, 1,024 for ten\n- Checking every row is a proof for a finite claim\n- For 50 variables, 2⁵⁰ rows is out of reach: that is where a solver comes in","notes":"The first lab task writes this as a function. Stress the second bullet: when the cases are finite and few, testing every one of them is a proof, not merely a test.","minutes":null,"lo":["LO2"]},{"id":"equivalence-laws","n":8,"title":"Two formulas are equivalent when they agree on every row","kind":"content","session":1,"hash":"8150bd3d","md":"#### [week2#equivalence-laws] Two formulas are equivalent when they agree on every row\n\n*Equivalence*\n\n| Law | Equivalent pair |\n| --- | --- |\n| De Morgan | ¬(p ∧ q) and ¬p ∨ ¬q; ¬(p ∨ q) and ¬p ∧ ¬q |\n| Contrapositive | p → q and ¬q → ¬p |\n| Implication as or | p → q and ¬p ∨ q |\n| Distribution | p ∧ (q ∨ r) and (p ∧ q) ∨ (p ∧ r) |\n\n> **Not a law.** The converse q → p is a different rule: a parcel lifted by two people need not be heavy.","notes":"Each line can be checked by a four- or eight-row table, which the lab does in code. The converse is the most common error in reading rules: watch for it in the checkpoint.","minutes":null,"lo":["LO2"]},{"id":"check-converse","n":9,"title":"Which sentence says the same thing?","kind":"quiz","session":1,"hash":"0553710b","md":"#### [week2#check-converse] Which sentence says the same thing?\n\n*Checkpoint*\n\n**Question:** A warehouse rule: \"If a box is fragile, it is packed with foam.\" Which sentence is equivalent to it?\n\n- A. If a box is packed with foam, it is fragile\n- B. If a box is not fragile, it is not packed with foam\n- C. Every box is fragile and packed with foam\n- D. If a box is not packed with foam, it is not fragile","notes":"Answer D. If the room splits between A and B, write the four rows and let them find the row where each fails.","minutes":null,"lo":["LO2"]},{"id":"validity","n":10,"title":"An argument is valid when no row makes the premises true and the conclusion false","kind":"content","session":1,"hash":"fa94d8f5","md":"#### [week2#validity] An argument is valid when no row makes the premises true and the conclusion false\n\n*Block B · arguments*\n\n| Form | Premises | Conclusion | Verdict |\n| --- | --- | --- | --- |\n| Modus ponens | p → q, p | q | valid |\n| Modus tollens | p → q, ¬q | ¬p | valid |\n| Affirming the consequent | p → q, q | p | invalid: row p F, q T |\n| Denying the antecedent | p → q, ¬p | ¬q | invalid: row p F, q T |\n\nValidity is about form, not truth: a valid argument from a false premise can reach a false conclusion.","notes":"The search for a counterexample row is the whole method, and it is the same idea as a counterexample to a claim in week 3. The lab writes it as a function and runs it on the centre's consent rule.","minutes":null,"lo":["LO2"]},{"id":"translating-rules","n":11,"title":"Words like \"only if\" and \"unless\" fix the direction of the arrow","kind":"content","session":1,"hash":"c71bdfd7","md":"#### [week2#translating-rules] Words like \"only if\" and \"unless\" fix the direction of the arrow\n\n*Rules in words*\n\n| Words | Formula |\n| --- | --- |\n| p if q | q → p |\n| p only if q | p → q |\n| p unless q | ¬q → p, the same as p ∨ q |\n| A or B and C | ambiguous: (A ∨ B) ∧ C, or A ∨ (B ∧ C) |\n\n> **Habit.** Name each variable in one line, write the formula with brackets, then read it back in words.","notes":"Example to work aloud: \"A member may borrow a laptop only if they have signed the agreement\" is borrow → signed; signing does not entitle anyone to a laptop. The bracket line is where access rules go wrong, and the lab has one.","minutes":null,"lo":["LO2"]},{"id":"check-only-if","n":12,"title":"Translate the rule","kind":"quiz","session":1,"hash":"76b539fb","md":"#### [week2#check-only-if] Translate the rule\n\n*Checkpoint*\n\n**Question:** A laboratory: \"A visitor may enter only if they wear goggles.\" With p = \"the visitor enters\" and s = \"the visitor wears goggles\", which formula is the rule?\n\n- A. s → p\n- B. p → s\n- C. p ∧ s\n- D. p ↔ s","notes":"Answer B. Ask for the one situation the rule forbids: a visitor inside without goggles.","minutes":null,"lo":["LO2"]},{"id":"cnf","n":13,"title":"Conjunctive normal form is an \"and\" of clauses, each an \"or\" of literals","kind":"content","session":1,"hash":"abcfeb0b","md":"#### [week2#cnf] Conjunctive normal form is an \"and\" of clauses, each an \"or\" of literals\n\n*Block C · normal form*\n\n(a ∨ b) ∧ (¬a ∨ c) ∧ (¬b ∨ ¬c)\n\n- A **literal** is a variable or its negation\n- A **clause** is an or of literals: at least one must hold\n- Every formula has an equivalent CNF: one clause per row it must exclude\n\n- **For a solver.** Variables are numbers and a clause is a list: [1, 2], [-1, 3], [-2, -3]. A minus sign is \"not\".","notes":"Build the CNF of p → q on the board from its table: the only false row is p T, q F; excluding it gives the clause ¬p ∨ q. That is how \"every formula has a CNF\" is proved, one excluded row at a time.","minutes":null,"lo":["LO2"]},{"id":"sat","n":14,"title":"A SAT solver finds a row that makes every clause true, or proves there is none","kind":"content","session":1,"hash":"80ae109a","md":"#### [week2#sat] A SAT solver finds a row that makes every clause true, or proves there is none\n\n*Satisfiability*\n\n1. **Encode** one variable per yes-or-no decision; one clause per rule\n2. **Solve** a model: a value for every variable, or \"unsatisfiable\"\n3. **Check** the model against the rules in words, with separate code\n\n- Checking a proposed assignment is quick; finding one can take exponential time in the worst case with every known method\n- \"Unsatisfiable\" is a proof that no assignment works; a solver can name a small set of rules that already conflict","notes":"Tools are examples: the lab uses PySAT; Z3 fills the same slot. The third step is the course's habit: a solver satisfies the clauses you gave it, not the rules you meant.","minutes":null,"lo":["LO2"]},{"id":"encoding-counts","n":15,"title":"\"Exactly one\" and \"at most two\" become many small clauses","kind":"content","session":1,"hash":"be2a83b2","md":"#### [week2#encoding-counts] \"Exactly one\" and \"at most two\" become many small clauses\n\n*Encoding*\n\n| Rule over n yes-or-no variables | Clauses | For n = 8 |\n| --- | --- | --- |\n| At least one | 1 clause of n literals | 1 |\n| At most one: no two together | one per pair, n(n − 1)/2 | 28 |\n| At most two: no three together | one per triple, n(n − 1)(n − 2)/6 | 56 |\n| At least two: someone besides each one | n clauses of n − 1 literals | 8 |","notes":"Numbers for eight variables, a parallel to the lab's ten volunteers. The counts are combinations, which week 5 derives. Libraries offer shorter encodings of cardinality rules; the lab writes the direct ones so that each clause can be read aloud.","minutes":null,"lo":["LO2"]},{"id":"check-unsat","n":16,"title":"What does \"unsatisfiable\" tell the planner?","kind":"quiz","session":1,"hash":"3ef6aa40","md":"#### [week2#check-unsat] What does \"unsatisfiable\" tell the planner?\n\n*Checkpoint*\n\n**Question:** A clinic encodes its nurse rota and the solver answers \"unsatisfiable\". What has been established?\n\n- A. The solver failed and should be run again with more time\n- B. No rota was found among those the solver tried\n- C. No rota meets all the clauses as written\n- D. No rota meets the clinic's real rules","notes":"Answer C. D is the subtle one: it would be true only if the encoding is right. That is why the lab checks the solver's schedule with code written from the rules in words.","minutes":null,"lo":["LO2"]},{"id":"lab-2-1","n":17,"title":"Truth tables in code, and a scheduling puzzle solved with a SAT solver","kind":"lab","session":1,"hash":"e1289c83","md":"#### [week2#lab-2-1] Truth tables in code, and a scheduling puzzle solved with a SAT solver\n\nLab 2.1 · 105 min\n\nCheck laws and arguments by truth table, repair an access rule, and schedule ten volunteers with a solver.\n\n[W2_1.ipynb](https://sdaiaacademy.github.io/fnd-mth-105/labs/W2_1.ipynb)\n\n- [ ] Set up; a truth table by hand and in code (15 min)\n- [ ] Equivalent or not: laws by truth table (15 min)\n- [ ] Valid and invalid arguments (15 min)\n- [ ] Two phrasings of an access rule (15 min)\n- [ ] Encode the shift puzzle in CNF (20 min)\n- [ ] Solve, then check against every rule (10 min)\n- [ ] The late change: unsatisfiable, and why (10 min)\n- [ ] Small variant: brute force against solver (5 min)\n- [ ] ✱ Stretch: Count every schedule of the full puzzle by blocking each one found","notes":"AI-tutor: it may point at a gap, never write the answer. Watch for: `officer_rule` written without brackets, which reproduces the handbook's error; \"exactly two per shift\" encoded as \"at most two\" only (the solver then leaves shifts empty); the schedule check written by reusing the clauses. If PySAT fails to install, the hosted notebook route works.","minutes":null,"lo":[]},{"id":"debrief-rules","n":18,"title":"The handbook opens contact details to anyone, for consenting volunteers","kind":"content","session":1,"hash":"fdacbfa1","md":"#### [week2#debrief-rules] The handbook opens contact details to anyone, for consenting volunteers\n\n*Debrief · lab 2.1*\n\n| Result | Value |\n| --- | --- |\n| Rows where the two phrasings differ | 2 of 16: o F, c F, s T |\n| Shift puzzle | 50 variables, 800 clauses, a schedule found and checked |\n| After the late change | unsatisfiable: one first-aider for SH-C and SH-D |\n| Small variant | 36 schedules by brute force, by solver and by 3! · 3! |\n\n- Fix the handbook with brackets: o ∨ (c ∧ (d ∨ s))\n- The solver's core named the two first-aid rules\n- Keeping V-00090 on SH-D, or dropping first aid on one shift, restores a schedule","notes":"From the solution run of lab 2.1. The core is the pigeonhole principle of week 5 in disguise: two shifts each need one of the first-aiders who can work them, and only V-00048 can. Both repairs in the last bullet were checked with the solver.","minutes":null,"lo":["LO2"]},{"id":"wrap-up","n":19,"title":"Three things to keep","kind":"content","session":1,"hash":"9419bf1a","md":"#### [week2#wrap-up] Three things to keep\n\n*Week 2 · wrap-up*\n\n- **Only one row breaks \"if\".** p true and q false. The converse is a different rule.\n- **Validity is a row search.** Look for premises true and conclusion false. None found in every row: valid.\n- **Encode, solve, check.** A solver meets the clauses you wrote. Check its answer against the words.","notes":"Ask for one rule from their own workplace that hides an \"only if\" or a missing bracket.","minutes":null,"lo":[]},{"id":"next","n":20,"title":"Week 3: Predicates, quantifiers and first proofs","kind":"content","session":1,"hash":"bcf4fa43","md":"#### [week2#next] Week 3: Predicates, quantifiers and first proofs\n\n*Next*\n\nProblem set 2 (60 minutes, AI off for the first attempt): labs/problem-sets/PS2.ipynb.","notes":"Week 3 adds \"for every\" and \"there is\" to these formulas, and writes the first proofs.","minutes":null,"lo":[]}],"activities":[{"id":"review-week1-q1","slide":"review-week1","type":"single","prompt":"A school replaces each of its 500 pupil numbers with a random code from 1,000 possible codes, never giving one code twice. As a map from pupils to the 1,000 codes, what is it?","options":[{"key":"A","text":"A bijection"},{"key":"B","text":"Injective, not surjective"},{"key":"C","text":"Surjective, not injective"},{"key":"D","text":"Not a function"}],"correct":[1],"explanation":"No two pupils share a code (injective), but half the codes are never used (not surjective). On its 500 pupils and the codes used, it can still be inverted.","misconceptions":["Thinks 'no repeats' is enough for a bijection: 500 unused codes mean it is not surjective","","Confuses the two properties: it is the absence of shared codes that holds here","Thinks a random choice is not a function: each pupil still gets exactly one code"],"lo":["LO1"]},{"id":"check-converse-q1","slide":"check-converse","type":"single","prompt":"A warehouse rule: \"If a box is fragile, it is packed with foam.\" Which sentence is equivalent to it?","options":[{"key":"A","text":"If a box is packed with foam, it is fragile"},{"key":"B","text":"If a box is not fragile, it is not packed with foam"},{"key":"C","text":"Every box is fragile and packed with foam"},{"key":"D","text":"If a box is not packed with foam, it is not fragile"}],"correct":[3],"explanation":"The contrapositive ¬q → ¬p agrees with p → q on all four rows.","misconceptions":["Takes the converse for the rule: foam on a sturdy box does not break it","Takes the inverse for the rule: the rule says nothing about sturdy boxes","Turns the condition into a conjunction: that forces every box to be fragile",""],"lo":["LO2"]},{"id":"check-only-if-q1","slide":"check-only-if","type":"single","prompt":"A laboratory: \"A visitor may enter only if they wear goggles.\" With p = \"the visitor enters\" and s = \"the visitor wears goggles\", which formula is the rule?","options":[{"key":"A","text":"s → p"},{"key":"B","text":"p → s"},{"key":"C","text":"p ∧ s"},{"key":"D","text":"p ↔ s"}],"correct":[1],"explanation":"\"p only if q\" is p → q: entering requires goggles, and goggles require nothing.","misconceptions":["Reads 'only if' as 'if': that makes goggles a promise of entry","","Turns a condition into a fact: every visitor would have to enter","Makes the condition two-way: wearing goggles would oblige the visitor to enter"],"lo":["LO2"]},{"id":"check-unsat-q1","slide":"check-unsat","type":"single","prompt":"A clinic encodes its nurse rota and the solver answers \"unsatisfiable\". What has been established?","options":[{"key":"A","text":"The solver failed and should be run again with more time"},{"key":"B","text":"No rota was found among those the solver tried"},{"key":"C","text":"No rota meets all the clauses as written"},{"key":"D","text":"No rota meets the clinic's real rules"}],"correct":[2],"explanation":"The answer covers every assignment of the encoded clauses. Whether the clauses say what the clinic meant is a separate check.","misconceptions":["Blames the tool: an unsatisfiable answer is a proof about the clauses, not a crash","Thinks the solver tried only some rotas: it rules out every assignment","","Forgets the encoding can be wrong: the rules meant may differ from the clauses written"],"lo":["LO2"]}],"ai":{"context":{"course":"../context/course.md","courseJs":"../context/course.js","day":"week2.md","llms":"../llms.txt"},"tasks":[],"tools":[]},"bridge":{"allowedOrigins":[]},"features":{},"strings":{}}</script>
+<script src="../_engine/academy.js"></script>
+</body>
+</html>

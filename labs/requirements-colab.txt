@@ -1,0 +1,3 @@
+# The free hosted notebook has NetworkX and matplotlib; the SAT solver library is installed (about 2 MB)
+python-sat
+networkx>=3.3

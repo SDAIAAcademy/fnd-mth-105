@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-ax="deck" data-track="foundations">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 6 · Counting people: re-identification risk · Discrete Mathematics and Logic for Computing</title>
+<meta name="generator" content="SDAIA Academy engine 1.0.0">
+<link rel="icon" href="../_engine/icon.svg">
+<link rel="alternate" type="text/markdown" href="week6.md">
+<link rel="describedby" href="../llms.txt">
+<link rel="stylesheet" href="../_engine/academy.css">
+</head>
+<body>
+<div class="deck" data-course="Discrete Mathematics and Logic for Computing" data-track="foundations" data-day="Week 6">
+<section class="slide title" id="title" data-auto="title" data-label="Welcome" data-n="1">
+  <div class="kicker">SDAIA Academy · Discrete Mathematics and Logic for Computing</div>
+  <h1>Counting people: re-identification risk</h1>
+  <p class="lead mt">Week 6: Why removing the identifier column does not anonymise a register</p>
+  <div class="meta"><span class="track">Data &amp; AI Foundations Track</span><span>7 weeks + capstone</span><span>1 session · 1 lab</span><span>FND-MTH-105</span></div>
+  <aside class="notes"><p>Collect PS5 difficulties first: usually "at least one 7" counted directly instead of by the complement. This week turns counting on people. Say at the start: every person in the lab is a synthetic code, and nothing from any real register is used.</p></aside>
+</section>
+
+<section class="slide" id="agenda" data-auto="agenda" data-label="Agenda" data-n="2">
+  <div class="kicker">This week</div>
+  <h2>Counting people: re-identification risk</h2>
+  <div class="agenda"><div class="item"><div><b>Session 1 · Inclusion-exclusion and linkage risk</b><small>Inclusion-exclusion, the product rule over quasi-identifiers, class sizes in a register, generalisation, and personal versus anonymised data</small></div></div></div>
+</section>
+
+<section class="slide" id="review-week5" data-lo="LO5" data-n="3">
+  <div class="kicker">Review · week 5</div>
+  <h2>How many all-different assignments?</h2>
+  <div class="quiz" data-type="single" data-lo="LO5" data-id="review-week5-q1">
+    <p class="lead">Five interns each draw one of 8 desk numbers. In how many of the 8⁵ draws do all five get different desks?</p>
+    <div class="opts">
+      <div class="opt" data-why="Counts unordered sets of desks: the interns are distinct, so order matters" data-k="A">56</div>
+      <div class="opt" data-why="Counts every draw, repeats included" data-k="B">32,768</div>
+      <div class="opt" data-ok data-k="C">6,720</div>
+      <div class="opt" data-why="Multiplies too many factors: five interns take five desks, not eight" data-k="D">40,320</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> P(8, 5) = 8 · 7 · 6 · 5 · 4 = 6,720.</div>
+  </div>
+  <aside class="notes"><p>Answer C. 40,320 is 8!, the arrangements of all eight desks.</p></aside>
+</section>
+
+<!-- Session 1 -->
+
+<section class="slide section" id="s1" data-auto="section" data-session="1" data-n="4">
+  <div class="kicker">Session 1</div>
+  <h1>Inclusion-exclusion and linkage risk</h1>
+  <ul class="bullets outcomes"><li>Count the people who share each combination of quasi-identifiers and find who is unique</li><li>Apply inclusion-exclusion to count records that meet at least one of several conditions, and check it with sets</li><li>Explain why removing the direct identifier does not anonymise data, and what generalisation changes</li></ul>
+  <div class="sess-no">01</div>
+</section>
+
+<section class="slide" id="ie-two" data-lo="LO5" data-n="5" data-session="1">
+  <div class="kicker">Block A · inclusion-exclusion</div>
+  <h2>Add the sets, then subtract what you counted twice</h2>
+  <div class="cols cols-2">
+    <div>
+      <p><b>|A ∪ B| = |A| + |B| − |A ∩ B|</b></p>
+      <p class="small">|A| = 60, |B| = 50, |A ∩ B| = 20: |A ∪ B| = 90.</p>
+      <p><b>Three sets:</b> |A ∪ B ∪ C| = |A| + |B| + |C| − |A ∩ B| − |A ∩ C| − |B ∩ C| + |A ∩ B ∩ C|</p>
+    </div>
+    <div class="card c-teal"><h4>Why it works</h4><p class="small mb0">An element in exactly two of three sets is added twice and subtracted once; one in all three is added three times, subtracted three times, added once. Every element ends with count 1.</p></div>
+  </div>
+  <aside class="notes"><p>Numbers from slide_numbers.py, week 6. The card is the proof: check each element's contribution. With 120, 90 and 60 in the sets, pairwise 30, 20 and 15, and 5 in all three, the union holds 210.</p></aside>
+</section>
+
+<section class="slide" id="ie-code" data-lo="LO5" data-n="6" data-session="1">
+  <div class="kicker">Checked with sets</div>
+  <h2>A formula over counts can be checked against the sets themselves</h2>
+  <div class="cols cols-2">
+    <pre class="code" data-file="python"><code class="language-python">ie = <span class="hljs-built_in">len</span>(A) + <span class="hljs-built_in">len</span>(B) - <span class="hljs-built_in">len</span>(A &amp; B)
+<span class="hljs-keyword">assert</span> ie == <span class="hljs-built_in">len</span>(A | B)</code></pre>
+    <ul class="bullets">
+      <li>The formula needs only counts: useful when the sets are held by different teams</li>
+      <li>The union needs the elements themselves</li>
+      <li>On data you hold, compute both: they must agree</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The general rule alternates signs over every sub-collection of the sets; PS6 asks for a function that does it for any number of sets. The complement trick of week 5 is the same idea: count what you do not want and subtract.</p></aside>
+</section>
+
+<section class="slide" id="check-ie" data-lo="LO5" data-n="7" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>How many are in at least one?</h2>
+  <div class="quiz" data-type="single" data-lo="LO5" data-id="check-ie-q1">
+    <p class="lead">Of a club's members, 45 read the newsletter, 30 attend events and 12 do both. How many do at least one of the two?</p>
+    <div class="opts">
+      <div class="opt" data-why="Adds the sets and forgets the overlap, counting the 12 twice" data-k="A">75</div>
+      <div class="opt" data-ok data-k="B">63</div>
+      <div class="opt" data-why="Subtracts the overlap twice" data-k="C">51</div>
+      <div class="opt" data-why="Counts only the readers who do not attend" data-k="D">33</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> 45 + 30 − 12 = 63: the 12 who do both were counted in both sets.</div>
+  </div>
+  <aside class="notes"><p>Answer B. 51 is also 63 − 12, the members who do exactly one of the two: ask what question it answers.</p></aside>
+</section>
+
+<section class="slide" id="quasi-identifiers" data-lo="LO5" data-n="8" data-session="1">
+  <div class="kicker">Block B · counting people</div>
+  <h2>Quasi-identifiers single people out in combination</h2>
+  <div class="cols cols-2">
+    <div class="card c-coral"><h4>Direct identifier</h4><p class="small mb0">Identifies a person alone: a name, a member number, a code assigned to one person. "Removing names" removes these columns.</p></div>
+    <div class="card c-amber"><h4>Quasi-identifiers</h4><p class="small mb0">Shared by many people alone, but rare in combination: birth date, sex, postal district. Often known to neighbours and colleagues.</p></div>
+  </div>
+  <div class="callout warn mt"><b>The question to count.</b> After the direct identifiers are gone, how many people are alone in their combination of quasi-identifiers?</div>
+  <aside class="notes"><p>The lab's register has no names at all: its direct identifier is the volunteer code. Removing that column is the "removing names" of the course description. The point holds either way.</p></aside>
+</section>
+
+<section class="slide" id="product-people" data-lo="LO5" data-n="9" data-session="1">
+  <div class="kicker">The product rule again</div>
+  <h2>When combinations outnumber people, almost everyone is unique</h2>
+  <table class="t small">
+    <tr><th>A town of 20,000 adults, 10 districts</th><th class="num">Combinations</th><th class="num">People each</th></tr>
+    <tr class="hl"><td>Birth date (60 years), sex, district</td><td class="num">438,000</td><td class="num">0.05</td></tr>
+    <tr><td>Birth year, sex, district</td><td class="num">1,200</td><td class="num">16.67</td></tr>
+    <tr><td>10-year band, sex, district</td><td class="num">120</td><td class="num">166.67</td></tr>
+  </table>
+  <p class="small mt">If people spread evenly, n (1 − 1/M)ⁿ⁻¹ of them are alone among M combinations: 95.5% in the first row.</p>
+  <aside class="notes"><p>From slide_numbers.py, week 6, a parallel town. Each person is unique when the n − 1 others all land elsewhere: (1 − 1/M) to the power n − 1. Real people do not spread evenly, which the lab measures; the product rule still gives the order of magnitude.</p></aside>
+</section>
+
+<section class="slide" id="class-sizes" data-lo="LO5" data-n="10" data-session="1">
+  <div class="kicker">By hand first</div>
+  <h2>Count the people in each combination, then the people alone</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Six members: year, sex, area</th><th class="num">People</th></tr>
+      <tr><td>1990, F, D1</td><td class="num">2</td></tr>
+      <tr class="hl"><td>1990, M, D1</td><td class="num">1</td></tr>
+      <tr><td>1985, F, D2</td><td class="num">2</td></tr>
+      <tr class="hl"><td>1972, M, D3</td><td class="num">1</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>A combination held by one person is a <b>class of size 1</b></li>
+      <li>The smallest class says how alone the most exposed people are</li>
+      <li>A release rule can set a smallest class, for example five</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The threshold of five in the lab is the case organisation's own rule, labelled as such; it is not a legal threshold. The lab writes the counter as a function and runs it on five releases.</p></aside>
+</section>
+
+<section class="slide" id="check-unique" data-lo="LO5" data-n="11" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>What does the product rule predict?</h2>
+  <div class="quiz" data-type="single" data-lo="LO5" data-id="check-unique-q1">
+    <p class="lead">A survey of 500 people keeps age in years (60 values), sex and one of 4 regions. Roughly how many combinations are there per person?</p>
+    <div class="opts">
+      <div class="opt" data-why="Multiplies people by combinations instead of dividing" data-k="A">240,000</div>
+      <div class="opt" data-why="Adds the column sizes instead of multiplying them" data-k="B">66</div>
+      <div class="opt" data-why="Forgets sex in the product: 60 · 4 = 240" data-k="C">about 0.48</div>
+      <div class="opt" data-ok data-k="D">about 0.96</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> 60 · 2 · 4 = 480 combinations for 500 people: about one each, so many people will be alone or nearly so.</div>
+  </div>
+  <aside class="notes"><p>Answer D. Then ask: with birth date instead of age, how many combinations per person? About 365 times as many.</p></aside>
+</section>
+
+<section class="slide" id="pdpl" data-lo="LO5" data-n="12" data-session="1">
+  <div class="kicker">Block C · the law</div>
+  <h2>Data that can identify a person indirectly is personal data</h2>
+  <div class="cols cols-2">
+    <div class="card c-navy tint"><h4>Personal Data Protection Law, Article 1</h4><p class="small mb0">Personal data includes data that "may directly or indirectly make it possible to identify an individual" (SDAIA's English text).</p></div>
+    <div class="card c-teal"><h4>SDAIA's anonymisation guideline</h4><p class="small mb0">Anonymised data "shall no longer be considered personal data"; the guideline asks that it be irreversible, with an assessment of re-identification. It states that it is not a binding legal document.</p></div>
+  </div>
+  <div class="callout warn mt"><b>So.</b> An extract in which birth date, sex and district single people out still makes identification indirectly possible: removing the code column does not anonymise it.</div>
+  <aside class="notes"><p>Sources: the Personal Data Protection Law, Article 1, and the Personal Data Destruction, Anonymization and Pseudonymisation Guideline, version 1.0, both on sdaia.gov.sa; quoted from the English texts, which the course read. The guideline also says that replacing an identifier with a code (pseudonymisation) leaves the data personal. Quote, do not paraphrase into legal advice.</p></aside>
+</section>
+
+<section class="slide" id="generalise" data-lo="LO5" data-n="13" data-session="1">
+  <div class="kicker">Generalisation</div>
+  <h2>Coarser columns make classes bigger and lose detail</h2>
+  <div class="flow">
+    <div class="step c-coral"><b>Birth date</b>438,000 combinations in the parallel town</div>
+    <div class="arrow">→</div>
+    <div class="step c-amber"><b>Birth year</b>1,200</div>
+    <div class="arrow">→</div>
+    <div class="step c-teal"><b>10-year band</b>120</div>
+  </div>
+  <ul class="bullets mt">
+    <li>The guideline's examples include age bands and birth year in place of the full date</li>
+    <li>Each step trades analysis detail for larger classes: say what the analysis loses</li>
+  </ul>
+  <aside class="notes"><p>The guideline lists generalisation (age bands) and aggregation (birth year instead of birth date) among its example techniques; the lab tries five releases of the centre's register and measures each one.</p></aside>
+</section>
+
+<section class="slide" id="linkage" data-lo="LO5" data-n="14" data-session="1">
+  <div class="kicker">Linkage</div>
+  <h2>Releases combine: the risk is the union, not the safer of the two</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>Two tables, each with few people alone, are released: A and B are the people alone in each</li>
+      <li>Anyone in A ∪ B can be found: |A| + |B| − |A ∩ B| people</li>
+      <li>A list published elsewhere with the same columns links back row by row</li>
+    </ul>
+    <div class="card c-coral"><h4>Count before you publish</h4><p class="small mb0">For each row of a list to be posted, count how many people in your register share its quasi-identifiers. One means that row names a person.</p></div>
+  </div>
+  <aside class="notes"><p>Inclusion-exclusion from block A, applied to people. The lab links a sign-in sheet the centre posted last year back to its register.</p></aside>
+</section>
+
+<section class="slide" id="check-anonymised" data-lo="LO5" data-n="15" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>Is it anonymised?</h2>
+  <div class="quiz" data-type="single" data-lo="LO5" data-id="check-anonymised-q1">
+    <p class="lead">A gym removes member numbers from its list and keeps full birth date, sex and home district. Most members are alone in their combination. Under the Law's definition, the list is:</p>
+    <div class="opts">
+      <div class="opt" data-why="Thinks anonymity comes from removing the identifier column: other columns still single people out" data-k="A">anonymised, since no identifier remains</div>
+      <div class="opt" data-ok data-k="B">still personal data, since it makes identification indirectly possible</div>
+      <div class="opt" data-why="Confuses pseudonymised data, where a code replaces the identifier, with this list" data-k="C">pseudonymised, so outside the Law</div>
+      <div class="opt" data-why="Thinks a law turns on a fixed share of unique people: the definition speaks of possibility" data-k="D">personal data only if more than half are unique</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The definition covers data that may indirectly make identification possible, which unique combinations do.</div>
+  </div>
+  <aside class="notes"><p>Answer B. C is wrong twice: this is not pseudonymisation, and the guideline says pseudonymised data remains personal data.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-6-1" data-auto="lab" data-lab="6.1" data-label="Lab 6.1" data-n="16" data-session="1">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 6.1 · 105 min</div><h2>Re-identification risk counted from birth date, sex and postal district in a synthetic register</h2><p class="lead small">Count who shares each combination of birth date, sex and district, generalise, and link a posted sheet back.</p><a class="nb" href="../labs/W6_1.ipynb">W6_1.ipynb</a></div><ul class="checklist"><li>Set up; the extract without the volunteer code <span class="min">10 min</span></li><li>People per combination of the three columns <span class="min">15 min</span></li><li>Product rule: combinations and expected uniques <span class="min">15 min</span></li><li>Generalise: birth year, five-year bands, district groups <span class="min">20 min</span></li><li>Inclusion-exclusion, checked with sets <span class="min">15 min</span></li><li>Link the posted sign-in sheet <span class="min">15 min</span></li><li>Record for the data protection officer <span class="min">15 min</span></li><li class="stretch">✱ Stretch: Find the most detailed release in which every combination holds five people</li></ul></div>
+  <aside class="notes"><p>AI-tutor: it may point at a gap, never write the answer; nothing from the register goes into any AI tool, only code and error messages. Watch for: counting combinations instead of people in classes of size 1; band edges that overlap; the union computed as the larger of the two sets. The data is synthetic; still, treat it as if it were real.</p></aside>
+</section>
+
+<section class="slide" id="debrief-reid" data-lo="LO5" data-n="17" data-session="1">
+  <div class="kicker">Debrief · lab 6.1</div>
+  <h2>Without its codes, the register still singles out 98.9% of volunteers</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Release</th><th class="num">Unique</th><th class="num">Smallest class</th></tr>
+      <tr class="hl"><td>Date, sex, district</td><td class="num">3,956</td><td class="num">1</td></tr>
+      <tr><td>Year, sex, district</td><td class="num">245</td><td class="num">1</td></tr>
+      <tr><td>5-year band, sex, district</td><td class="num">19</td><td class="num">1</td></tr>
+      <tr><td>5-year band, sex, district group</td><td class="num">6</td><td class="num">1</td></tr>
+      <tr><td>10-year band, sex, district group</td><td class="num">0</td><td class="num">8</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>Even spread predicts 3,966 unique; by year it predicts 193, against 245 counted</li>
+      <li>Three tables, each modest alone: 572 people unique in at least one</li>
+      <li>The posted sign-in sheet: all 60 rows match exactly one volunteer</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>From the solution run of lab 6.1. The by-year gap comes from sparse early birth years. Ask for the release they would send and what it costs an analyst; only the last row meets the centre's own rule of five.</p></aside>
+</section>
+
+<section class="slide" id="wrap-up" data-n="18" data-session="1">
+  <div class="kicker">Week 6 · wrap-up</div>
+  <h2>Three things to keep</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Subtract the overlap</h4><p class="small mb0">Inclusion-exclusion counts a union from its parts, and code can check it.</p></div>
+    <div class="card c-coral"><h4>Count who is alone</h4><p class="small mb0">Removing the identifier column leaves quasi-identifiers; count the classes of size 1.</p></div>
+    <div class="card c-purple"><h4>Releases add up</h4><p class="small mb0">Two safe-looking tables, or a posted list, can name people together.</p></div>
+  </div>
+  <aside class="notes"><p>Ask: which list in their own organisation would they now count before publishing?</p></aside>
+</section>
+
+<section class="slide dark" id="next" data-label="Next" data-n="19" data-session="1">
+  <div class="kicker">Next</div>
+  <h2>Week 7: Graphs, topological order and growth</h2>
+  <p class="lead">Problem set 6 (60 minutes, AI off for the first attempt): labs/problem-sets/PS6.ipynb.</p>
+  <aside class="notes"><p>Week 7 is the last teaching week; the capstone claims are issued at its end.</p></aside>
+</section>
+</div>
+<script type="application/json" id="academy-data">{"v":1,"engine":"1.0.0","build":{"at":"2026-11-25T09:03:20Z","version":"2027.1.0","commit":"9b66171"},"course":{"id":"fnd-mth-105","code":"FND-MTH-105","title":"Discrete Mathematics and Logic for Computing","track":"foundations","lang":"en","dir":"ltr","url":"https://sdaiaacademy.github.io/fnd-mth-105/","repo":"SDAIAAcademy/fnd-mth-105","home":"../index.html"},"deck":{"id":"week6","kind":"day","day":6,"label":"Week 6","title":"Counting people: re-identification risk","prev":"week5.html","next":"week7.html","md":"week6.md","alt":{}},"sessions":[{"n":1,"label":"Session 1","title":"Inclusion-exclusion and linkage risk","slide":"s1","outcomes":["Count the people who share each combination of quasi-identifiers and find who is unique","Apply inclusion-exclusion to count records that meet at least one of several conditions, and check it with sets","Explain why removing the direct identifier does not anonymise data, and what generalisation changes"],"minutes":215,"lab":{"id":"6.1","title":"Re-identification risk counted from birth date, sex and postal district in a synthetic register","minutes":105,"href":"../labs/W6_1.ipynb"}}],"slides":[{"id":"title","n":1,"title":"Counting people: re-identification risk","kind":"title","session":0,"hash":"2c1dad42","md":"#### [week6#title] Counting people: re-identification risk\n\n*SDAIA Academy · Discrete Mathematics and Logic for Computing*\n\nWeek 6: Why removing the identifier column does not anonymise a register\n\nData & AI Foundations Track · 7 weeks + capstone · 1 session · 1 lab · FND-MTH-105","notes":"Collect PS5 difficulties first: usually \"at least one 7\" counted directly instead of by the complement. This week turns counting on people. Say at the start: every person in the lab is a synthetic code, and nothing from any real register is used.","minutes":null,"lo":[]},{"id":"agenda","n":2,"title":"Counting people: re-identification risk","kind":"content","session":0,"hash":"72658999","md":"#### [week6#agenda] Counting people: re-identification risk\n\n*This week*\n\n- **Session 1 · Inclusion-exclusion and linkage risk**: Inclusion-exclusion, the product rule over quasi-identifiers, class sizes in a register, generalisation, and personal versus anonymised data","notes":"","minutes":null,"lo":[]},{"id":"review-week5","n":3,"title":"How many all-different assignments?","kind":"quiz","session":0,"hash":"ec9a51ca","md":"#### [week6#review-week5] How many all-different assignments?\n\n*Review · week 5*\n\n**Question:** Five interns each draw one of 8 desk numbers. In how many of the 8⁵ draws do all five get different desks?\n\n- A. 56\n- B. 32,768\n- C. 6,720\n- D. 40,320","notes":"Answer C. 40,320 is 8!, the arrangements of all eight desks.","minutes":null,"lo":["LO5"]},{"id":"s1","n":4,"title":"Inclusion-exclusion and linkage risk","kind":"section","session":1,"hash":"cd487839","md":"#### [week6#s1] Inclusion-exclusion and linkage risk\n\n*Session 1*\n\n- Count the people who share each combination of quasi-identifiers and find who is unique\n- Apply inclusion-exclusion to count records that meet at least one of several conditions, and check it with sets\n- Explain why removing the direct identifier does not anonymise data, and what generalisation changes","notes":"","minutes":null,"lo":["LO5"]},{"id":"ie-two","n":5,"title":"Add the sets, then subtract what you counted twice","kind":"content","session":1,"hash":"42a9a766","md":"#### [week6#ie-two] Add the sets, then subtract what you counted twice\n\n*Block A · inclusion-exclusion*\n\n**|A ∪ B| = |A| + |B| − |A ∩ B|**\n\n|A| = 60, |B| = 50, |A ∩ B| = 20: |A ∪ B| = 90.\n\n**Three sets:** |A ∪ B ∪ C| = |A| + |B| + |C| − |A ∩ B| − |A ∩ C| − |B ∩ C| + |A ∩ B ∩ C|\n\n- **Why it works.** An element in exactly two of three sets is added twice and subtracted once; one in all three is added three times, subtracted three times, added once. Every element ends with count 1.","notes":"Numbers from slide_numbers.py, week 6. The card is the proof: check each element's contribution. With 120, 90 and 60 in the sets, pairwise 30, 20 and 15, and 5 in all three, the union holds 210.","minutes":null,"lo":["LO5"]},{"id":"ie-code","n":6,"title":"A formula over counts can be checked against the sets themselves","kind":"content","session":1,"hash":"b725d1f1","md":"#### [week6#ie-code] A formula over counts can be checked against the sets themselves\n\n*Checked with sets*\n\n```python\n# file: python\nie = len(A) + len(B) - len(A & B)\nassert ie == len(A | B)\n```\n\n- The formula needs only counts: useful when the sets are held by different teams\n- The union needs the elements themselves\n- On data you hold, compute both: they must agree","notes":"The general rule alternates signs over every sub-collection of the sets; PS6 asks for a function that does it for any number of sets. The complement trick of week 5 is the same idea: count what you do not want and subtract.","minutes":null,"lo":["LO5"]},{"id":"check-ie","n":7,"title":"How many are in at least one?","kind":"quiz","session":1,"hash":"0c78a26e","md":"#### [week6#check-ie] How many are in at least one?\n\n*Checkpoint*\n\n**Question:** Of a club's members, 45 read the newsletter, 30 attend events and 12 do both. How many do at least one of the two?\n\n- A. 75\n- B. 63\n- C. 51\n- D. 33","notes":"Answer B. 51 is also 63 − 12, the members who do exactly one of the two: ask what question it answers.","minutes":null,"lo":["LO5"]},{"id":"quasi-identifiers","n":8,"title":"Quasi-identifiers single people out in combination","kind":"content","session":1,"hash":"34e3fcb3","md":"#### [week6#quasi-identifiers] Quasi-identifiers single people out in combination\n\n*Block B · counting people*\n\n- **Direct identifier.** Identifies a person alone: a name, a member number, a code assigned to one person. \"Removing names\" removes these columns.\n- **Quasi-identifiers.** Shared by many people alone, but rare in combination: birth date, sex, postal district. Often known to neighbours and colleagues.\n\n> **The question to count.** After the direct identifiers are gone, how many people are alone in their combination of quasi-identifiers?","notes":"The lab's register has no names at all: its direct identifier is the volunteer code. Removing that column is the \"removing names\" of the course description. The point holds either way.","minutes":null,"lo":["LO5"]},{"id":"product-people","n":9,"title":"When combinations outnumber people, almost everyone is unique","kind":"content","session":1,"hash":"e00547d5","md":"#### [week6#product-people] When combinations outnumber people, almost everyone is unique\n\n*The product rule again*\n\n| A town of 20,000 adults, 10 districts | Combinations | People each |\n| --- | --- | --- |\n| Birth date (60 years), sex, district | 438,000 | 0.05 |\n| Birth year, sex, district | 1,200 | 16.67 |\n| 10-year band, sex, district | 120 | 166.67 |\n\nIf people spread evenly, n (1 − 1/M)ⁿ⁻¹ of them are alone among M combinations: 95.5% in the first row.","notes":"From slide_numbers.py, week 6, a parallel town. Each person is unique when the n − 1 others all land elsewhere: (1 − 1/M) to the power n − 1. Real people do not spread evenly, which the lab measures; the product rule still gives the order of magnitude.","minutes":null,"lo":["LO5"]},{"id":"class-sizes","n":10,"title":"Count the people in each combination, then the people alone","kind":"content","session":1,"hash":"62d2d97c","md":"#### [week6#class-sizes] Count the people in each combination, then the people alone\n\n*By hand first*\n\n| Six members: year, sex, area | People |\n| --- | --- |\n| 1990, F, D1 | 2 |\n| 1990, M, D1 | 1 |\n| 1985, F, D2 | 2 |\n| 1972, M, D3 | 1 |\n\n- A combination held by one person is a **class of size 1**\n- The smallest class says how alone the most exposed people are\n- A release rule can set a smallest class, for example five","notes":"The threshold of five in the lab is the case organisation's own rule, labelled as such; it is not a legal threshold. The lab writes the counter as a function and runs it on five releases.","minutes":null,"lo":["LO5"]},{"id":"check-unique","n":11,"title":"What does the product rule predict?","kind":"quiz","session":1,"hash":"ea637351","md":"#### [week6#check-unique] What does the product rule predict?\n\n*Checkpoint*\n\n**Question:** A survey of 500 people keeps age in years (60 values), sex and one of 4 regions. Roughly how many combinations are there per person?\n\n- A. 240,000\n- B. 66\n- C. about 0.48\n- D. about 0.96","notes":"Answer D. Then ask: with birth date instead of age, how many combinations per person? About 365 times as many.","minutes":null,"lo":["LO5"]},{"id":"pdpl","n":12,"title":"Data that can identify a person indirectly is personal data","kind":"content","session":1,"hash":"d7fa1fd0","md":"#### [week6#pdpl] Data that can identify a person indirectly is personal data\n\n*Block C · the law*\n\n- **Personal Data Protection Law, Article 1.** Personal data includes data that \"may directly or indirectly make it possible to identify an individual\" (SDAIA's English text).\n- **SDAIA's anonymisation guideline.** Anonymised data \"shall no longer be considered personal data\"; the guideline asks that it be irreversible, with an assessment of re-identification. It states that it is not a binding legal document.\n\n> **So.** An extract in which birth date, sex and district single people out still makes identification indirectly possible: removing the code column does not anonymise it.","notes":"Sources: the Personal Data Protection Law, Article 1, and the Personal Data Destruction, Anonymization and Pseudonymisation Guideline, version 1.0, both on sdaia.gov.sa; quoted from the English texts, which the course read. The guideline also says that replacing an identifier with a code (pseudonymisation) leaves the data personal. Quote, do not paraphrase into legal advice.","minutes":null,"lo":["LO5"]},{"id":"generalise","n":13,"title":"Coarser columns make classes bigger and lose detail","kind":"content","session":1,"hash":"4d49b9c6","md":"#### [week6#generalise] Coarser columns make classes bigger and lose detail\n\n*Generalisation*\n\n**Birth date** 438,000 combinations in the parallel town → **Birth year** 1,200 → **10-year band** 120\n\n- The guideline's examples include age bands and birth year in place of the full date\n- Each step trades analysis detail for larger classes: say what the analysis loses","notes":"The guideline lists generalisation (age bands) and aggregation (birth year instead of birth date) among its example techniques; the lab tries five releases of the centre's register and measures each one.","minutes":null,"lo":["LO5"]},{"id":"linkage","n":14,"title":"Releases combine: the risk is the union, not the safer of the two","kind":"content","session":1,"hash":"5243037d","md":"#### [week6#linkage] Releases combine: the risk is the union, not the safer of the two\n\n*Linkage*\n\n- Two tables, each with few people alone, are released: A and B are the people alone in each\n- Anyone in A ∪ B can be found: |A| + |B| − |A ∩ B| people\n- A list published elsewhere with the same columns links back row by row\n\n- **Count before you publish.** For each row of a list to be posted, count how many people in your register share its quasi-identifiers. One means that row names a person.","notes":"Inclusion-exclusion from block A, applied to people. The lab links a sign-in sheet the centre posted last year back to its register.","minutes":null,"lo":["LO5"]},{"id":"check-anonymised","n":15,"title":"Is it anonymised?","kind":"quiz","session":1,"hash":"5b92a0fd","md":"#### [week6#check-anonymised] Is it anonymised?\n\n*Checkpoint*\n\n**Question:** A gym removes member numbers from its list and keeps full birth date, sex and home district. Most members are alone in their combination. Under the Law's definition, the list is:\n\n- A. anonymised, since no identifier remains\n- B. still personal data, since it makes identification indirectly possible\n- C. pseudonymised, so outside the Law\n- D. personal data only if more than half are unique","notes":"Answer B. C is wrong twice: this is not pseudonymisation, and the guideline says pseudonymised data remains personal data.","minutes":null,"lo":["LO5"]},{"id":"lab-6-1","n":16,"title":"Re-identification risk counted from birth date, sex and postal district in a synthetic register","kind":"lab","session":1,"hash":"ac7fd651","md":"#### [week6#lab-6-1] Re-identification risk counted from birth date, sex and postal district in a synthetic register\n\nLab 6.1 · 105 min\n\nCount who shares each combination of birth date, sex and district, generalise, and link a posted sheet back.\n\n[W6_1.ipynb](https://sdaiaacademy.github.io/fnd-mth-105/labs/W6_1.ipynb)\n\n- [ ] Set up; the extract without the volunteer code (10 min)\n- [ ] People per combination of the three columns (15 min)\n- [ ] Product rule: combinations and expected uniques (15 min)\n- [ ] Generalise: birth year, five-year bands, district groups (20 min)\n- [ ] Inclusion-exclusion, checked with sets (15 min)\n- [ ] Link the posted sign-in sheet (15 min)\n- [ ] Record for the data protection officer (15 min)\n- [ ] ✱ Stretch: Find the most detailed release in which every combination holds five people","notes":"AI-tutor: it may point at a gap, never write the answer; nothing from the register goes into any AI tool, only code and error messages. Watch for: counting combinations instead of people in classes of size 1; band edges that overlap; the union computed as the larger of the two sets. The data is synthetic; still, treat it as if it were real.","minutes":null,"lo":[]},{"id":"debrief-reid","n":17,"title":"Without its codes, the register still singles out 98.9% of volunteers","kind":"content","session":1,"hash":"33bccdfd","md":"#### [week6#debrief-reid] Without its codes, the register still singles out 98.9% of volunteers\n\n*Debrief · lab 6.1*\n\n| Release | Unique | Smallest class |\n| --- | --- | --- |\n| Date, sex, district | 3,956 | 1 |\n| Year, sex, district | 245 | 1 |\n| 5-year band, sex, district | 19 | 1 |\n| 5-year band, sex, district group | 6 | 1 |\n| 10-year band, sex, district group | 0 | 8 |\n\n- Even spread predicts 3,966 unique; by year it predicts 193, against 245 counted\n- Three tables, each modest alone: 572 people unique in at least one\n- The posted sign-in sheet: all 60 rows match exactly one volunteer","notes":"From the solution run of lab 6.1. The by-year gap comes from sparse early birth years. Ask for the release they would send and what it costs an analyst; only the last row meets the centre's own rule of five.","minutes":null,"lo":["LO5"]},{"id":"wrap-up","n":18,"title":"Three things to keep","kind":"content","session":1,"hash":"1367b137","md":"#### [week6#wrap-up] Three things to keep\n\n*Week 6 · wrap-up*\n\n- **Subtract the overlap.** Inclusion-exclusion counts a union from its parts, and code can check it.\n- **Count who is alone.** Removing the identifier column leaves quasi-identifiers; count the classes of size 1.\n- **Releases add up.** Two safe-looking tables, or a posted list, can name people together.","notes":"Ask: which list in their own organisation would they now count before publishing?","minutes":null,"lo":[]},{"id":"next","n":19,"title":"Week 7: Graphs, topological order and growth","kind":"content","session":1,"hash":"3291262e","md":"#### [week6#next] Week 7: Graphs, topological order and growth\n\n*Next*\n\nProblem set 6 (60 minutes, AI off for the first attempt): labs/problem-sets/PS6.ipynb.","notes":"Week 7 is the last teaching week; the capstone claims are issued at its end.","minutes":null,"lo":[]}],"activities":[{"id":"review-week5-q1","slide":"review-week5","type":"single","prompt":"Five interns each draw one of 8 desk numbers. In how many of the 8⁵ draws do all five get different desks?","options":[{"key":"A","text":"56"},{"key":"B","text":"32,768"},{"key":"C","text":"6,720"},{"key":"D","text":"40,320"}],"correct":[2],"explanation":"P(8, 5) = 8 · 7 · 6 · 5 · 4 = 6,720.","misconceptions":["Counts unordered sets of desks: the interns are distinct, so order matters","Counts every draw, repeats included","","Multiplies too many factors: five interns take five desks, not eight"],"lo":["LO5"]},{"id":"check-ie-q1","slide":"check-ie","type":"single","prompt":"Of a club's members, 45 read the newsletter, 30 attend events and 12 do both. How many do at least one of the two?","options":[{"key":"A","text":"75"},{"key":"B","text":"63"},{"key":"C","text":"51"},{"key":"D","text":"33"}],"correct":[1],"explanation":"45 + 30 − 12 = 63: the 12 who do both were counted in both sets.","misconceptions":["Adds the sets and forgets the overlap, counting the 12 twice","","Subtracts the overlap twice","Counts only the readers who do not attend"],"lo":["LO5"]},{"id":"check-unique-q1","slide":"check-unique","type":"single","prompt":"A survey of 500 people keeps age in years (60 values), sex and one of 4 regions. Roughly how many combinations are there per person?","options":[{"key":"A","text":"240,000"},{"key":"B","text":"66"},{"key":"C","text":"about 0.48"},{"key":"D","text":"about 0.96"}],"correct":[3],"explanation":"60 · 2 · 4 = 480 combinations for 500 people: about one each, so many people will be alone or nearly so.","misconceptions":["Multiplies people by combinations instead of dividing","Adds the column sizes instead of multiplying them","Forgets sex in the product: 60 · 4 = 240",""],"lo":["LO5"]},{"id":"check-anonymised-q1","slide":"check-anonymised","type":"single","prompt":"A gym removes member numbers from its list and keeps full birth date, sex and home district. Most members are alone in their combination. Under the Law's definition, the list is:","options":[{"key":"A","text":"anonymised, since no identifier remains"},{"key":"B","text":"still personal data, since it makes identification indirectly possible"},{"key":"C","text":"pseudonymised, so outside the Law"},{"key":"D","text":"personal data only if more than half are unique"}],"correct":[1],"explanation":"The definition covers data that may indirectly make identification possible, which unique combinations do.","misconceptions":["Thinks anonymity comes from removing the identifier column: other columns still single people out","","Confuses pseudonymised data, where a code replaces the identifier, with this list","Thinks a law turns on a fixed share of unique people: the definition speaks of possibility"],"lo":["LO5"]}],"ai":{"context":{"course":"../context/course.md","courseJs":"../context/course.js","day":"week6.md","llms":"../llms.txt"},"tasks":[],"tools":[]},"bridge":{"allowedOrigins":[]},"features":{},"strings":{}}</script>
+<script src="../_engine/academy.js"></script>
+</body>
+</html>

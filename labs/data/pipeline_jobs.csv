@@ -1,0 +1,31 @@
+job,task
+J01,copy the register extract
+J02,copy the shift table
+J03,copy the assignments
+J04,copy the event list
+J05,copy the training records
+J06,check register dates
+J07,check district codes
+J08,check shift codes
+J09,deduplicate assignments
+J10,join assignments to shifts
+J11,join shifts to events
+J12,compute volunteer hours
+J13,compute training status
+J14,flag expired training
+J15,build the district summary
+J16,build the event summary
+J17,suppress small counts
+J18,build the coordinator report
+J19,compute hours by district
+J20,build check-in codes
+J21,check code collisions
+J22,build the badge file
+J23,refresh the hours baseline
+J24,build the weekly digest
+J25,archive yesterday's files
+J26,write the audit record
+J27,publish the open summary
+J28,notify the coordinators
+J29,compute the quality score
+J30,close the run
