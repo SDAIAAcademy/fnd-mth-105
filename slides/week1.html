@@ -1,56 +1,277 @@
 <section class="slide title" id="title" data-auto="title">
-  <aside class="notes">REPLACE: welcome; introduce yourself; one question to the room that calibrates the pace; the rhythm of the day</aside>
+  <aside class="notes"><p>Welcome the group and introduce yourself. One calibrating question: who has written a proof since school? Who has written a SQL join? The two hands rarely overlap, and this course joins the two.</p><p>The rhythm of every week: about 110 minutes of teaching in three blocks (120 this week, with the setup), each block closing with a checkpoint, then the lab (90 minutes this week, 105 from week 2). A 60-minute problem set follows each week, AI off for the first attempt.</p></aside>
 </section>
 
 <section class="slide" id="agenda" data-auto="agenda"></section>
+
+<section class="slide" id="test-then-prove" data-lo="LO4">
+  <div class="kicker">Seven weeks</div>
+  <h2>Every claim is tested in code first, then proved</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Test</h4><p class="small mb0">Run the claim on generated cases, or on every case when there are few. A failure is a counterexample.</p></div>
+    <div class="card c-cyan"><h4>Prove</h4><p class="small mb0">An argument that covers every case, including the ones no test reached.</p></div>
+    <div class="card c-coral"><h4>Mind the gap</h4><p class="small mb0">A thousand passing tests prove nothing about the next case. Week 4 shows a claim that fails on its forty-first.</p></div>
+  </div>
+  <table class="t small mt">
+    <tr><th>Assessed work</th><th class="num">Weight</th></tr>
+    <tr><td>Weekly problem sets</td><td class="num">20%</td></tr>
+    <tr><td>Two supervised AI-off tests of proofs and short problems</td><td class="num">40%</td></tr>
+    <tr><td>Capstone portfolio, rubric-scored</td><td class="num">30%</td></tr>
+    <tr><td>Oral defence</td><td class="num">10%</td></tr>
+  </table>
+  <aside class="notes"><p>Passing needs 60% overall and at least 50% on each supervised test. AI policy, as the course states it: AI-off for first attempts at problem sets and proofs and in both tests; AI-tutor in labs, pointing at gaps without writing proofs; AI-full in the portfolio, which is defended orally.</p><p>Say why the oral defence exists: the portfolio may be written with AI, so the defence checks that the participant can explain one proof step by step and handle a changed hypothesis.</p></aside>
+</section>
+
+<section class="slide" id="setup-check">
+  <div class="kicker">Setup check</div>
+  <h2>One command proves your setup</h2>
+  <div class="cols cols-2">
+    <div>
+      <p>From the course folder, in a terminal:</p>
+      <pre class="code" data-file="terminal"><code class="language-bash">cd labs
+uv run python -c "import pysat, networkx; print('ready')"</code></pre>
+      <p class="small">"ready" means you can run every lab. In a free hosted notebook, the first cell of each lab installs what it needs.</p>
+    </div>
+    <div class="card c-navy tint"><h4>What the course assumes</h4><p class="small mb0">School algebra, and Python with lists, loops, functions and recursion (FND-PRG-101 or equivalent). Nothing of FND-PRG-101 is taught again.</p></div>
+  </div>
+  <aside class="notes"><p>Run the command on the projector first. Typical failures: uv not on the path (open a new terminal after installing it); a proxy blocking the first package download (the solver library is about 2 MB). The hosted notebook route needs only a browser.</p></aside>
+</section>
+
+<section class="slide" id="the-centre">
+  <div class="kicker">The case</div>
+  <h2>All seven weeks work on one community volunteer centre</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>A non-profit in one city: <b>4,000 volunteers</b> in twelve postal districts, PD-01 to PD-12</li>
+      <li>It trains them, staffs <b>30 events</b> a month and runs a nightly data pipeline</li>
+      <li>You are its new data analyst; you work with the volunteer coordinator, the data protection officer and the operations lead</li>
+    </ul>
+    <div class="card c-teal"><h4>Synthetic, and coded</h4><p class="small mb0">Every record is generated with a fixed seed. People appear only as codes such as V-00412: no names, no phone numbers, no real identifiers.</p></div>
+  </div>
+  <aside class="notes"><p>The centre is fictional and unnamed on purpose. Each week takes one of its problems: joins (week 1), access rules and a schedule (2), relation properties (3), check-in codes (5), a de-identified extract (6), the nightly pipeline (7).</p></aside>
+</section>
 
 <!-- Session 1 -->
 
 <section class="slide section" id="s1" data-auto="section" data-session="1"></section>
 
-<section class="slide" id="s1-idea">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
+<section class="slide" id="sets-are-tables" data-lo="LO1">
+  <div class="kicker">Block A · sets</div>
+  <h2>A set has no order and no repeats, and a table of distinct rows is one</h2>
   <div class="cols cols-2">
     <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
+      <li>{2, 3, 5} = {5, 3, 2} = {2, 2, 3, 5}: order and repeats do not count</li>
+      <li><b>x ∈ A</b> reads "x is a member of A"; <b>A ⊆ B</b>, every member of A is in B</li>
+      <li>A row of a table is a <b>tuple</b>: (T3, room 2) is not (room 2, T3)</li>
+      <li>A table with no duplicate rows is a set of tuples</li>
     </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+    <pre class="code" data-file="python"><code class="language-python">A = {2, 3, 5}
+B = {5, 7}
+A | B, A &amp; B, A - B
+# {2, 3, 5, 7}, {5}, {2, 3}</code></pre>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <aside class="notes"><p>Ask: is a list a set? No: [2, 2, 3] has a repeat and an order. Python's set drops both, which is why the lab counts with sets on purpose and notices when a database does not.</p></aside>
 </section>
 
-<section class="slide" id="s1-steps">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="set-algebra" data-lo="LO1">
+  <div class="kicker">Operations</div>
+  <h2>Union, intersection and difference answer the coordinator's first questions</h2>
+  <table class="t small">
+    <tr><th>Question</th><th>Operation</th><th>Example: X = {a, b, c}, Y = {b, d}</th></tr>
+    <tr><td>Worked at either site</td><td>X ∪ Y</td><td>{a, b, c, d}</td></tr>
+    <tr><td>Worked at both</td><td>X ∩ Y</td><td>{b}</td></tr>
+    <tr><td>Only at the first</td><td>X − Y</td><td>{a, c}</td></tr>
+    <tr class="hl"><td>How many at either</td><td>|X ∪ Y| = |X| + |Y| − |X ∩ Y|</td><td>3 + 2 − 1 = 4</td></tr>
+  </table>
+  <p class="small mt">The last line is inclusion-exclusion for two sets. Week 6 uses it on a whole register.</p>
+  <aside class="notes"><p>Test before prove, the first time: generate random sets in code and check the last line on a thousand pairs. Then the proof: every element of X ∩ Y is counted twice in |X| + |Y|, once too often, and every other element of the union once.</p></aside>
+</section>
+
+<section class="slide" id="cartesian" data-lo="LO1">
+  <div class="kicker">Products</div>
+  <h2>A Cartesian product holds every pair, and its size is the product of the sizes</h2>
+  <div class="cols cols-2">
+    <div>
+      <p>{T1, T2} × {room 1, room 2, room 3} =</p>
+      <p class="small">{(T1, room 1), (T1, room 2), (T1, room 3), (T2, room 1), (T2, room 2), (T2, room 3)}</p>
+      <p><b>|A × B| = |A| · |B| = 2 · 3 = 6</b></p>
+    </div>
+    <div class="card c-purple"><h4>A relation is a subset of a product</h4><p class="small mb0">Any set of pairs from A × B is a relation from A to B. With 6 pairs there are 2⁶ = 64 relations, from the empty one to all of A × B.</p></div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <aside class="notes"><p>Here T1 and T2 are training modules and the rooms are a parallel example, not the lab's tables. The count of relations previews week 5: each pair is in or out, two choices six times.</p></aside>
+</section>
+
+<section class="slide" id="check-sets" data-lo="LO1">
+  <div class="kicker">Checkpoint</div>
+  <h2>How many pairs?</h2>
+  <div class="quiz" data-type="single" data-lo="LO1">
+    <p class="lead">A training team lists 8 modules and 5 rooms. It wants one row for every module and room that could be booked together. How many rows does that table have?</p>
+    <div class="opts">
+      <div class="opt" data-why="Adds the sizes: that counts modules or rooms, not pairs of them">13</div>
+      <div class="opt" data-ok>40</div>
+      <div class="opt" data-why="Counts the relations, the subsets of the product, not the pairs in it">2 to the power 40</div>
+      <div class="opt" data-why="Thinks a module and a room in either order make two rows: a pair from A × B has a fixed order">80</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The table is the product of the two sets: 8 · 5 = 40 pairs.</div>
+  </div>
+  <aside class="notes"><p>Answer B. If many choose 2 to the power 40, separate the two questions on the board: pairs in the product (40) and sets of pairs (2⁴⁰).</p></aside>
+</section>
+
+<section class="slide" id="function-definition" data-lo="LO1">
+  <div class="kicker">Block B · functions</div>
+  <h2>A function gives every input exactly one output</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>A function from X to Y</h4><p class="small mb0">A relation in which each x in X appears in exactly one pair. X is the domain, Y the codomain.</p></div>
+    <div class="card c-coral"><h4>Two ways to fail</h4><p class="small mb0">Some x has no output (the map is partial), or some x has two outputs (the map is not single-valued).</p></div>
+  </div>
+  <table class="t small mt">
+    <tr><th>Module</th><th>Room</th><th>Verdict</th></tr>
+    <tr><td>T1</td><td>room 1</td><td>fine</td></tr>
+    <tr class="hl"><td>T2</td><td>room 1, room 3</td><td>two outputs: not a function</td></tr>
+    <tr><td>T3</td><td>(none)</td><td>no output: partial</td></tr>
+  </table>
+  <aside class="notes"><p>In data, "is this column a function of that one?" is a question you ask before every lookup: if a key maps to two values, a lookup silently picks one.</p></aside>
+</section>
+
+<section class="slide" id="three-kinds" data-lo="LO1">
+  <div class="kicker">Three properties</div>
+  <h2>Injective, surjective and bijective say how outputs are shared and covered</h2>
+  <div class="cols cols-3">
+    <div class="card c-cyan"><h4>Injective</h4><p class="small mb0">No two inputs share an output. Test: f(x) = f(x′) forces x = x′.</p></div>
+    <div class="card c-purple"><h4>Surjective</h4><p class="small mb0">Every element of the codomain is reached by some input.</p></div>
+    <div class="card c-teal"><h4>Bijective</h4><p class="small mb0">Both: a perfect pairing, so the map has an inverse.</p></div>
+  </div>
+  <div class="callout note mt"><b>On the integers.</b> n ↦ 3n is injective and not surjective (5 is never reached); n ↦ n − 7 is a bijection.</div>
+  <aside class="notes"><p>Prove the first claim on the board: 3m = 3n gives m = n, so injective; 5 = 3n has no integer solution, so not surjective. This is the first direct proof and the first counterexample of the course.</p></aside>
+</section>
+
+<section class="slide" id="why-functions-matter" data-lo="LO1">
+  <div class="kicker">In data work</div>
+  <h2>Each property is a promise a system relies on</h2>
+  <table class="t small">
+    <tr><th>Property</th><th>Where a system relies on it</th></tr>
+    <tr><td>Function (total)</td><td>Every record finds its value in a lookup</td></tr>
+    <tr><td>Injective</td><td>A key or a code identifies one record: no two people check in as one</td></tr>
+    <tr><td>Surjective</td><td>Every category is used: every event has staff</td></tr>
+    <tr class="hl"><td>Bijective</td><td>A code can be swapped back for the record: pseudonymisation, week 6</td></tr>
+  </table>
+  <aside class="notes"><p>Link forward: in week 5 short check-in codes stop being injective as the centre grows; in week 6 a bijective code still leaves people findable, because other columns identify them.</p></aside>
+</section>
+
+<section class="slide" id="check-functions" data-lo="LO1">
+  <div class="kicker">Checkpoint</div>
+  <h2>What kind of map is this?</h2>
+  <div class="quiz" data-type="single" data-lo="LO1">
+    <p class="lead">A sports hall gives each of its 120 lockers to one of 4 cleaning rounds, every round gets 30 lockers. As a map from lockers to rounds, which is true?</p>
+    <div class="opts">
+      <div class="opt" data-why="Thinks equal shares make a bijection: 120 lockers cannot pair one to one with 4 rounds">A bijection, since every round gets the same number</div>
+      <div class="opt" data-why="Reads 'many lockers per round' as 'many rounds per locker': each locker still has one round">Not a function, since each round has many lockers</div>
+      <div class="opt" data-why="Confuses injective with surjective: it is the reaching of every round that holds">Injective, since every round is used</div>
+      <div class="opt" data-ok>A surjective function that is not injective</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Each locker has exactly one round (a function), every round is reached (surjective), and 30 lockers share each round (not injective).</div>
+  </div>
+  <aside class="notes"><p>Answer D. Draw the arrows: many arrows land on each round, one arrow leaves each locker.</p></aside>
+</section>
+
+<section class="slide" id="relations-and-properties" data-lo="LO1">
+  <div class="kicker">Block C · relations</div>
+  <h2>Equivalences group things; orders rank them</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Equivalence relation</h4><p class="small mb0">Reflexive, symmetric and transitive. "Lives in the same district as" splits people into groups, the <b>equivalence classes</b>.</p></div>
+    <div class="card c-amber"><h4>Partial order</h4><p class="small mb0">Reflexive, antisymmetric and transitive. "Is a prerequisite of, or the same module as" ranks modules; some pairs are not comparable.</p></div>
+  </div>
+  <ul class="bullets mt">
+    <li>Reflexive: every x relates to itself. Symmetric: x R y gives y R x</li>
+    <li>Transitive: x R y and y R z give x R z. Antisymmetric: x R y and y R x give x = y</li>
+  </ul>
+  <aside class="notes"><p>Definitions only this week; week 3 checks them in code on nine relations and proves or refutes them. Ask for an everyday relation that is symmetric but not transitive ("is a neighbour of") so the four words already have examples.</p></aside>
+</section>
+
+<section class="slide" id="composition" data-lo="LO1">
+  <div class="kicker">Composition</div>
+  <h2>Composing two relations follows one, then the other</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>R: module → room</b>(T1, r1), (T2, r1), (T3, r2)</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>S: room → building</b>(r1, North), (r2, South), (r2, Annex)</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>R then S</b>(T1, North), (T2, North), (T3, South), (T3, Annex)</div>
+  </div>
+  <p class="mt">(x, z) is in the composition when <b>some</b> y has (x, y) in R and (y, z) in S.</p>
+  <aside class="notes"><p>"Some y" is the first existential quantifier of the course; week 3 names it. The order of writing differs between books (S ∘ R or R ; S): say "R, then S" aloud and the notation stops mattering.</p></aside>
+</section>
+
+<section class="slide" id="join-is-composition" data-lo="LO1">
+  <div class="kicker">In a database</div>
+  <h2>A join is a composition that keeps repeats</h2>
+  <div class="cols cols-2">
+    <pre class="code" data-file="sql"><code class="language-sql">select r.module, s.building
+from R r join S s on r.room = s.room</code></pre>
+    <ul class="bullets">
+      <li>One output row per <b>pair of matching rows</b></li>
+      <li>If T2 used room 1 twice (two bookings), (T2, North) appears twice</li>
+      <li><code>select distinct</code> returns the composition, a set</li>
+    </ul>
+  </div>
+  <div class="callout warn mt"><b>What goes wrong.</b> Counting join rows as "modules per building" overcounts by every repeat. The lab measures how many.</div>
+  <aside class="notes"><p>The relational model is built on sets; SQL tables are multisets (bags). The lab joins the centre's assignments with its shifts in an in-memory database and compares the row count with the composition.</p></aside>
+</section>
+
+<section class="slide" id="check-composition" data-lo="LO1">
+  <div class="kicker">Checkpoint</div>
+  <h2>Join rows or composition pairs?</h2>
+  <div class="quiz" data-type="single" data-lo="LO1">
+    <p class="lead">A library joins loans (reader, copy) with copies (copy, title). One reader borrowed two copies of the same title. Compared with the composition "reader borrowed title", the join returns:</p>
+    <div class="opts">
+      <div class="opt" data-why="Assumes a join removes duplicates like a set: SQL keeps one row per matching pair">the same number of rows as there are pairs</div>
+      <div class="opt" data-why="Thinks the repeated title is dropped: the join keeps both matching rows">one fewer row, as the second copy is dropped</div>
+      <div class="opt" data-ok>one more row: the (reader, title) pair appears twice</div>
+      <div class="opt" data-why="Thinks a repeat breaks the join: the join runs, it just repeats a row">an error, as the key repeats</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Each loan row matches one copy row, so two loans give two rows with the same (reader, title); the composition keeps that pair once.</div>
+  </div>
+  <aside class="notes"><p>Answer C. Then launch the lab: the centre's version of this has several repeats.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-1-1" data-auto="lab" data-lab="1.1">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>AI-tutor: it may point at a gap, never write the answer. Watch for: <code>is_function</code> written as "each x appears at most once", which passes the partial badge map; composition written with three nested loops over all pairs (correct, slow, fine at this size); participants who open the CSV in a spreadsheet and count by eye. This lab is an addition to the entry's five; nothing later depends on it.</p></aside>
+</section>
+
+<section class="slide" id="debrief-badges" data-lo="LO1">
+  <div class="kicker">Debrief · lab 1.1</div>
+  <h2>The badge map fails all three tests, and the join overcounts by eight</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Check</th><th>Result</th></tr>
+      <tr><td>Function on the 300 volunteers</td><td>no: V-00117 and V-00242 have no badge</td></tr>
+      <tr><td>Injective</td><td>no: BD-0059, BD-0420, BD-0909 issued twice</td></tr>
+      <tr><td>Shift to event</td><td>a function onto the 30 events, 3 shifts each</td></tr>
+      <tr class="hl"><td>Join rows against composition</td><td>600 rows, 592 distinct pairs</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>V-00117 is also on a shift: fix before the event</li>
+      <li>Eight volunteers work two shifts of one event</li>
+      <li>Count events per volunteer with distinct pairs</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>From the solution run of lab 1.1. Ask who wrote "at most one badge" for the function test, and why that test passed: it checks single-valued, not total.</p></aside>
 </section>
 
 <section class="slide" id="wrap-up">
   <div class="kicker">Week 1 · wrap-up</div>
   <h2>Three things to keep</h2>
   <div class="cols cols-3">
-    <div class="card c-teal"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
-    <div class="card c-coral"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
-    <div class="card c-purple"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
+    <div class="card c-teal"><h4>Tables are sets of tuples</h4><p class="small mb0">Products count the possible rows; relations are subsets of them.</p></div>
+    <div class="card c-coral"><h4>Functions make promises</h4><p class="small mb0">Total, single-valued, injective, surjective: check each one; data breaks them quietly.</p></div>
+    <div class="card c-purple"><h4>Joins compose relations</h4><p class="small mb0">With repeats. Distinct pairs are the composition.</p></div>
   </div>
+  <aside class="notes"><p>Ask each participant for one map in their own work that they assumed was injective without checking.</p></aside>
 </section>
 
 <section class="slide dark" id="next" data-label="Next">
   <div class="kicker">Next</div>
-  <h2>Week 2: REPLACE: the theme of this unit, in a few words</h2>
-  <p class="lead">REPLACE: what participants prepare before then; unfinished labs can be finished at home</p>
-  <aside class="notes">REPLACE: accounts, installs or reading participants need before the next unit</aside>
+  <h2>Week 2: Logic: truth tables and satisfiability</h2>
+  <p class="lead">Problem set 1 (60 minutes, AI off for the first attempt): labs/problem-sets/PS1.ipynb. Unfinished labs can be finished at home.</p>
+  <aside class="notes"><p>Problem sets are handed in before the next session. The code items are checked by the last cell; the written items are marked by you, with the worked answers in the trainer pack.</p></aside>
 </section>

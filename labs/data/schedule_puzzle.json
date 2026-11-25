@@ -1,0 +1,102 @@
+{
+ "volunteers": [
+  "V-00012",
+  "V-00027",
+  "V-00031",
+  "V-00048",
+  "V-00056",
+  "V-00063",
+  "V-00071",
+  "V-00084",
+  "V-00090",
+  "V-00099"
+ ],
+ "shifts": [
+  "SH-A",
+  "SH-B",
+  "SH-C",
+  "SH-D",
+  "SH-E"
+ ],
+ "first_aid": [
+  "V-00012",
+  "V-00048",
+  "V-00071",
+  "V-00090",
+  "V-00099"
+ ],
+ "available": {
+  "V-00012": [
+   "SH-A",
+   "SH-B",
+   "SH-E"
+  ],
+  "V-00027": [
+   "SH-A",
+   "SH-C"
+  ],
+  "V-00031": [
+   "SH-B",
+   "SH-C",
+   "SH-D"
+  ],
+  "V-00048": [
+   "SH-C",
+   "SH-D"
+  ],
+  "V-00056": [
+   "SH-A",
+   "SH-D",
+   "SH-E"
+  ],
+  "V-00063": [
+   "SH-B",
+   "SH-E"
+  ],
+  "V-00071": [
+   "SH-A",
+   "SH-B"
+  ],
+  "V-00084": [
+   "SH-C",
+   "SH-D",
+   "SH-E"
+  ],
+  "V-00090": [
+   "SH-D",
+   "SH-E"
+  ],
+  "V-00099": [
+   "SH-B",
+   "SH-C",
+   "SH-E"
+  ]
+ },
+ "per_shift": 2,
+ "rules": [
+  "every volunteer works exactly one shift",
+  "every shift has exactly two volunteers",
+  "a volunteer works only a shift they are available for",
+  "every shift has at least one volunteer trained in first aid",
+  "V-00027 and V-00063 do not work the same shift (one checks the other's hours)",
+  "V-00056 and V-00084 do not work the same shift (same household)"
+ ],
+ "conflicts": [
+  [
+   "V-00027",
+   "V-00063"
+  ],
+  [
+   "V-00056",
+   "V-00084"
+  ]
+ ],
+ "late_change": {
+  "V-00090": [
+   "SH-E"
+  ],
+  "V-00099": [
+   "SH-E"
+  ]
+ }
+}

@@ -9,7 +9,7 @@
     "en": "Discrete Mathematics and Logic for Computing",
     "ar": "الرياضيات المتقطعة والمنطق للحوسبة"
   },
-  "tagline": "REPLACE: one line under the title: what participants can do after the course",
+  "tagline": "Test a claim in code, then prove it: sets, relations, logic, induction, counting and graphs, applied to joins, rules, collisions, re-identification and pipelines",
   "description": "Participants practise the discrete mathematics and proof that computing degrees assume: sets, relations, logic, proof, counting and graphs. Code tests each claim on generated cases before it is proved, so the gap between testing and proof is visible. Labs link relations to joins, logic to rule checking, counting to collision and re-identification risk, and graphs to pipeline dependencies. Algorithms on graphs follow in FND-PRG-103.",
   "track": "foundations",
   "level": 100,
@@ -61,8 +61,8 @@
     }
   ],
   "case_study": {
-    "name": "REPLACE: the name of the fictional organisation every lab works on",
-    "summary": "REPLACE: two sentences on the case study and its synthetic data"
+    "name": "The community volunteer centre (fictional)",
+    "summary": "An unnamed non-profit in one unnamed city registers 4,000 volunteers, trains them and staffs community events in twelve postal districts; its analyst checks joins, access rules, a shift schedule, check-in codes, a de-identified extract and a nightly pipeline. All data is synthetic, generated with a fixed seed; people appear only as codes such as V-00412, never by name."
   },
   "format": "extended",
   "format_note": "Extended: 7 weeks part-time, one session and one lab a week, weekly graded problem sets and a capstone portfolio",
@@ -78,196 +78,475 @@
     {
       "id": "week1",
       "kind": "day",
-      "title": "REPLACE: the theme of this unit, in a few words",
+      "title": "Sets, functions and relations",
       "deck": "slides/week1.html",
       "sessions": [
         {
-          "title": "REPLACE: the title of Session 1",
+          "title": "Sets, functions and relations",
           "outcomes": [
-            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+            "Compute set operations and the size of a Cartesian product, and check them in code",
+            "Decide whether a map from the data is a function and whether it is injective, surjective or bijective",
+            "Compose two relations and explain how a database join differs from the composition"
           ],
-          "lo": [],
+          "lo": [
+            "LO1"
+          ],
           "minutes": 210,
           "lab": {
             "id": "1.1",
-            "title": "REPLACE: what participants build in lab 1.1",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
-            "minutes": 105,
-            "href": "W1_1.ipynb"
-          }
+            "title": "Sets, functions and joins in code",
+            "summary": "An added lab, beyond the entry's five: test the badge map for the properties of a function, and compare composing two tables with joining them in SQL.",
+            "minutes": 90,
+            "href": "W1_1.ipynb",
+            "steps": [
+              {
+                "text": "Set up and load the centre's tables",
+                "minutes": 10
+              },
+              {
+                "text": "Set operations and Cartesian products, by hand and in code",
+                "minutes": 10
+              },
+              {
+                "text": "Is the badge map a function? Total, injective, surjective",
+                "minutes": 20
+              },
+              {
+                "text": "Shift to event: a function onto the events?",
+                "minutes": 10
+              },
+              {
+                "text": "Inverse and composition of relations",
+                "minutes": 15
+              },
+              {
+                "text": "Compose assignments with shifts, then join them in SQL",
+                "minutes": 20
+              },
+              {
+                "text": "Record what the coordinator should fix",
+                "minutes": 5
+              }
+            ],
+            "stretch": "Show on the three tables that composing relations is associative"
+          },
+          "summary": "Sets and Cartesian products, injective, surjective and bijective functions, relations and their first properties, and joins as relation composition"
         }
-      ]
+      ],
+      "subtitle": "Data as sets of tuples, maps that are or are not functions, and joins as composition"
     },
     {
       "id": "week2",
       "kind": "day",
-      "title": "REPLACE: the theme of this unit, in a few words",
+      "title": "Logic: truth tables and satisfiability",
       "deck": "slides/week2.html",
       "sessions": [
         {
-          "title": "REPLACE: the title of Session 1",
+          "title": "Propositional logic, normal forms and SAT",
           "outcomes": [
-            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+            "Translate a plain-language rule into a propositional formula and check it by truth table",
+            "Distinguish a valid argument from an invalid one by searching for a counterexample row",
+            "Encode a small scheduling problem in conjunctive normal form and solve it with a SAT solver"
           ],
-          "lo": [],
-          "minutes": 210,
+          "lo": [
+            "LO2"
+          ],
+          "minutes": 215,
           "lab": {
             "id": "2.1",
-            "title": "REPLACE: what participants build in lab 2.1",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "title": "Truth tables in code, and a scheduling puzzle solved with a SAT solver",
+            "summary": "Check laws and arguments by truth table, find the row where two phrasings of an access rule differ, and schedule ten volunteers on five shifts with a SAT solver.",
             "minutes": 105,
-            "href": "W2_1.ipynb"
-          }
+            "href": "W2_1.ipynb",
+            "steps": [
+              {
+                "text": "Set up; a truth table by hand, then in code",
+                "minutes": 15
+              },
+              {
+                "text": "Equivalent or not: laws checked by truth table",
+                "minutes": 15
+              },
+              {
+                "text": "Valid and invalid arguments",
+                "minutes": 15
+              },
+              {
+                "text": "Two phrasings of an access rule: find the row where they differ",
+                "minutes": 15
+              },
+              {
+                "text": "Encode the shift puzzle in conjunctive normal form",
+                "minutes": 20
+              },
+              {
+                "text": "Solve it, then check the schedule against every rule",
+                "minutes": 10
+              },
+              {
+                "text": "The late change: unsatisfiable, and which rule to relax",
+                "minutes": 10
+              },
+              {
+                "text": "Count schedules on a small variant: brute force against the solver",
+                "minutes": 5
+              }
+            ],
+            "stretch": "Count every schedule of the full puzzle by blocking each solution the solver finds"
+          },
+          "summary": "Propositional logic and truth tables, valid and invalid arguments, conjunctive normal form and Boolean satisfiability with a solver"
         }
-      ]
+      ],
+      "subtitle": "Rules as formulas, arguments checked row by row, and a schedule found by a solver"
     },
     {
       "id": "week3",
       "kind": "day",
-      "title": "REPLACE: the theme of this unit, in a few words",
+      "title": "Predicates, quantifiers and first proofs",
       "deck": "slides/week3.html",
       "sessions": [
         {
-          "title": "REPLACE: the title of Session 1",
+          "title": "Quantifiers, relation properties and first proofs",
           "outcomes": [
-            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+            "Write a relation property or a data-quality rule with quantifiers and negate it correctly",
+            "Classify a relation as a function, an equivalence, a partial order or none, with a counterexample for each property it lacks",
+            "Prove a short claim directly or by contradiction, and refute a false one with a counterexample"
           ],
-          "lo": [],
-          "minutes": 210,
+          "lo": [
+            "LO1",
+            "LO2",
+            "LO3"
+          ],
+          "minutes": 215,
           "lab": {
             "id": "3.1",
-            "title": "REPLACE: what participants build in lab 3.1",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "title": "Relation properties checked in code",
+            "summary": "Write checkers for reflexive, symmetric, antisymmetric and transitive, classify nine relations from the centre's data and software, find the planted faults, and close the training prerequisites.",
             "minutes": 105,
-            "href": "W3_1.ipynb"
-          }
+            "href": "W3_1.ipynb",
+            "steps": [
+              {
+                "text": "Set up; properties as quantified statements",
+                "minutes": 10
+              },
+              {
+                "text": "Write the property checkers",
+                "minutes": 20
+              },
+              {
+                "text": "Classify nine relations",
+                "minutes": 20
+              },
+              {
+                "text": "Counterexamples: the planted faults",
+                "minutes": 15
+              },
+              {
+                "text": "Equivalence classes and the partition",
+                "minutes": 10
+              },
+              {
+                "text": "Transitive closure of the training prerequisites",
+                "minutes": 15
+              },
+              {
+                "text": "A claim over all integers: test, then prove",
+                "minutes": 10
+              },
+              {
+                "text": "Record what the checks prove and what they only test",
+                "minutes": 5
+              }
+            ],
+            "stretch": "Count, among the 512 relations on a three-element set, how many are equivalence relations"
+          },
+          "summary": "Predicates and quantifiers, the properties of relations, equivalence relations and orders, and direct proof, counterexample and contradiction"
         }
-      ]
+      ],
+      "subtitle": "Properties of relations stated with quantifiers, checked on data, then proved or refuted"
     },
     {
       "id": "week4",
       "kind": "day",
-      "title": "REPLACE: the theme of this unit, in a few words",
+      "title": "Induction, invariants and the limits of testing",
       "deck": "slides/week4.html",
       "sessions": [
         {
-          "title": "REPLACE: the title of Session 1",
+          "title": "Induction, loop invariants and testing versus proof",
           "outcomes": [
-            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+            "Prove a claim about the integers by mathematical induction after testing it in code",
+            "Prove a property of a recursive structure by structural induction",
+            "State and check a loop invariant, and use it to prove a loop correct"
           ],
-          "lo": [],
-          "minutes": 210,
+          "lo": [
+            "LO3",
+            "LO4"
+          ],
+          "minutes": 215,
           "lab": {
             "id": "4.1",
-            "title": "REPLACE: what participants build in lab 4.1",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "title": "Claims tested in code, then proved",
+            "summary": "An added lab, beyond the entry's five: test claims on generated cases, prove them by induction and invariants, meet a claim that holds for forty cases and fails on the next, and find the gap in a flawed proof.",
             "minutes": 105,
-            "href": "W4_1.ipynb"
-          }
+            "href": "W4_1.ipynb",
+            "steps": [
+              {
+                "text": "Set up; test a sum formula on many cases",
+                "minutes": 10
+              },
+              {
+                "text": "Prove it by induction",
+                "minutes": 15
+              },
+              {
+                "text": "A claim true for forty cases and false on the next",
+                "minutes": 10
+              },
+              {
+                "text": "Structural induction on the team tree",
+                "minutes": 20
+              },
+              {
+                "text": "Loop invariants asserted in code",
+                "minutes": 20
+              },
+              {
+                "text": "Find the gap in a flawed proof",
+                "minutes": 15
+              },
+              {
+                "text": "Record which claims are proved and which are only tested",
+                "minutes": 15
+              }
+            ],
+            "stretch": "Write and prove an invariant for binary search over the sorted volunteer codes"
+          },
+          "summary": "Mathematical and structural induction, loop invariants, and why a claim tested on many cases is not proved"
         }
-      ]
+      ],
+      "subtitle": "Claims that pass every test you ran, and the proofs that cover the cases you did not"
     },
     {
       "id": "week5",
       "kind": "day",
-      "title": "REPLACE: the theme of this unit, in a few words",
+      "title": "Counting, collisions and the birthday problem",
       "deck": "slides/week5.html",
       "sessions": [
         {
-          "title": "REPLACE: the title of Session 1",
+          "title": "Counting arrangements, selections and collisions",
           "outcomes": [
-            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+            "Count arrangements and selections with the sum and product rules, permutations and combinations",
+            "Compute the chance that short codes collide and verify it by exact enumeration",
+            "Use the pigeonhole principle to show when a collision is certain"
           ],
-          "lo": [],
-          "minutes": 210,
+          "lo": [
+            "LO5"
+          ],
+          "minutes": 215,
           "lab": {
             "id": "5.1",
-            "title": "REPLACE: what participants build in lab 5.1",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "title": "Hash collisions and the birthday problem, by formula and by brute force",
+            "summary": "Cut short check-in codes from a hash of the volunteer codes, count collision-free assignments by formula and by enumeration, and choose a code length the centre can live with.",
             "minutes": 105,
-            "href": "W5_1.ipynb"
-          }
+            "href": "W5_1.ipynb",
+            "steps": [
+              {
+                "text": "Set up; sum and product rules by hand, then by listing",
+                "minutes": 10
+              },
+              {
+                "text": "Permutations and combinations, formula against enumeration",
+                "minutes": 15
+              },
+              {
+                "text": "Short check-in codes from a hash",
+                "minutes": 10
+              },
+              {
+                "text": "The collision-free count: formula against brute force",
+                "minutes": 20
+              },
+              {
+                "text": "The birthday problem exactly, with fractions",
+                "minutes": 15
+              },
+              {
+                "text": "Expected colliding pairs against the codes issued",
+                "minutes": 15
+              },
+              {
+                "text": "Pigeonhole: when a collision is certain",
+                "minutes": 10
+              },
+              {
+                "text": "Choose the code length and record it",
+                "minutes": 10
+              }
+            ],
+            "stretch": "Count the pairs of volunteers who share a birthday in the register and compare with the formula"
+          },
+          "summary": "The sum and product rules, permutations and combinations, the pigeonhole principle and collisions of short codes"
         }
-      ]
+      ],
+      "subtitle": "Sum and product rules, arrangements and selections, and when two codes must collide"
     },
     {
       "id": "week6",
       "kind": "day",
-      "title": "REPLACE: the theme of this unit, in a few words",
+      "title": "Counting people: re-identification risk",
       "deck": "slides/week6.html",
       "sessions": [
         {
-          "title": "REPLACE: the title of Session 1",
+          "title": "Inclusion-exclusion and re-identification risk",
           "outcomes": [
-            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+            "Count the people who share each combination of quasi-identifiers and find who is unique",
+            "Apply inclusion-exclusion to count records that meet at least one of several conditions, and check it with sets",
+            "Explain why removing the direct identifier does not anonymise data, and what generalisation changes"
           ],
-          "lo": [],
-          "minutes": 210,
+          "lo": [
+            "LO5"
+          ],
+          "minutes": 215,
           "lab": {
             "id": "6.1",
-            "title": "REPLACE: what participants build in lab 6.1",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "title": "Re-identification risk counted from birth date, sex and postal district in a synthetic register",
+            "summary": "Count how many volunteers share each combination of birth date, sex and postal district, generalise until no one stands alone, check inclusion-exclusion with sets, and link a published sign-in sheet back to the register.",
             "minutes": 105,
-            "href": "W6_1.ipynb"
-          }
+            "href": "W6_1.ipynb",
+            "steps": [
+              {
+                "text": "Set up; the extract without the volunteer code",
+                "minutes": 10
+              },
+              {
+                "text": "Count people per combination of birth date, sex and district",
+                "minutes": 15
+              },
+              {
+                "text": "The product rule: possible combinations and expected unique people",
+                "minutes": 15
+              },
+              {
+                "text": "Generalise: birth year, five-year bands, district groups",
+                "minutes": 20
+              },
+              {
+                "text": "Inclusion-exclusion, checked with sets",
+                "minutes": 15
+              },
+              {
+                "text": "Link the published sign-in sheet to the register",
+                "minutes": 15
+              },
+              {
+                "text": "Record for the data protection officer",
+                "minutes": 15
+              }
+            ],
+            "stretch": "Find the most detailed release in which every combination holds at least five people, and what it costs the analysis"
+          },
+          "summary": "Inclusion-exclusion, the product rule over quasi-identifiers, class sizes in a register, generalisation, and personal versus anonymised data"
         }
-      ]
+      ],
+      "subtitle": "Why removing the identifier column does not anonymise a register"
     },
     {
       "id": "week7",
       "kind": "day",
-      "title": "REPLACE: the theme of this unit, in a few words",
+      "title": "Graphs, topological order and growth",
       "deck": "slides/week7.html",
       "sessions": [
         {
-          "title": "REPLACE: the title of Session 1",
+          "title": "Graphs, cycles, topological order and recurrences",
           "outcomes": [
-            "REPLACE: what a participant can do after this session; list in lo the course outcomes it serves"
+            "Model dependencies as a directed graph and decide whether it has a cycle",
+            "Compute a topological order and check that every edge points forward",
+            "Set up a recurrence for a count, solve it, and compare how fast functions grow"
           ],
-          "lo": [],
-          "minutes": 210,
+          "lo": [
+            "LO4",
+            "LO6"
+          ],
+          "minutes": 215,
           "lab": {
             "id": "7.1",
-            "title": "REPLACE: what participants build in lab 7.1",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 105",
+            "title": "Cycle detection and topological order in a pipeline graph",
+            "summary": "Load the centre's thirty nightly jobs as a directed graph, find and name the planted cycle, remove the wrong edge, check a topological order edge by edge, and count paths by a recurrence and by enumeration.",
             "minutes": 105,
-            "href": "W7_1.ipynb"
-          }
+            "href": "W7_1.ipynb",
+            "steps": [
+              {
+                "text": "Set up; a small graph by hand, then load the pipeline",
+                "minutes": 10
+              },
+              {
+                "text": "Degrees, sources and sinks",
+                "minutes": 10
+              },
+              {
+                "text": "Find a cycle: with the library and by peeling off ready jobs",
+                "minutes": 20
+              },
+              {
+                "text": "Name the cycle and remove the wrong edge",
+                "minutes": 10
+              },
+              {
+                "text": "A topological order, checked edge by edge",
+                "minutes": 15
+              },
+              {
+                "text": "Count paths by a recurrence and by enumeration",
+                "minutes": 20
+              },
+              {
+                "text": "Growth: how path counts and orders grow",
+                "minutes": 10
+              },
+              {
+                "text": "Record for the operations lead",
+                "minutes": 10
+              }
+            ],
+            "stretch": "Compute the earliest round in which each job can run when every ready job runs at once"
+          },
+          "summary": "Graphs, trees and directed acyclic graphs, paths and cycles, topological order, and recurrences and the growth of functions"
         }
-      ]
+      ],
+      "subtitle": "Dependencies as a directed graph, the cycle that blocks a run, and how counts grow"
     },
     {
       "id": "capstone",
       "kind": "capstone",
-      "title": "Capstone project presentations",
+      "title": "Portfolio oral defences",
       "deck": "slides/capstone.html",
-      "subtitle": "REPLACE: the catalog gives 10 minutes for each presentation and nothing about questions; decide whether the questions are inside those minutes, set capstone.talk_minutes and capstone.qa_minutes in course.json and the timers of the now-presenting slide, and remove this line"
+      "subtitle": "Ten minutes each: one proof the assessor selects, explained step by step, then a changed hypothesis"
     }
   ],
   "capstone": {
     "summary": "A portfolio of three proofs, at least one by induction, each preceded by test code, with a ten-minute oral defence of one proof the assessor selects",
-    "submission": "REPLACE: what participants submit and how: a public repository link, or a shared folder for a course without code",
+    "submission": "A link to a public GitHub repository holding the portfolio: three proofs, at least one by induction, each preceded by its test code and that code's output, with a record of any AI use; then a ten-minute oral defence of one proof the assessor selects, explained step by step, with a changed hypothesis to handle",
     "talk_minutes": 10,
     "rubric": [
       {
-        "criterion": "REPLACE: rubric criterion 1 and its weight (the weights add up to 100)",
-        "weight": 25
+        "criterion": "Each claim stated precisely: domain, quantifiers, hypothesis and conclusion",
+        "weight": 15
       },
       {
-        "criterion": "REPLACE: rubric criterion 2 and its weight (the weights add up to 100)",
-        "weight": 25
-      },
-      {
-        "criterion": "REPLACE: rubric criterion 3 and its weight (the weights add up to 100)",
+        "criterion": "Test code before each proof: generated or exhaustive cases, edge cases, and an honest note of what the tests cannot show",
         "weight": 20
       },
       {
-        "criterion": "REPLACE: rubric criterion 4 and its weight (the weights add up to 100)",
+        "criterion": "Each proof valid: method named, every step justified, no gap",
+        "weight": 30
+      },
+      {
+        "criterion": "The induction proof complete: base case, hypothesis stated, an inductive step that uses it (or an invariant with initialisation, maintenance and termination)",
         "weight": 20
       },
       {
-        "criterion": "REPLACE: rubric criterion 5 and its weight (the weights add up to 100)",
-        "weight": 10
+        "criterion": "Portfolio readable and reproducible: code runs, AI use recorded, sources named",
+        "weight": 15
       }
     ]
   },
@@ -309,6 +588,50 @@
   "checks": {
     "sessions_per_day": 1,
     "session_lab": true,
-    "lab_minutes": 105
-  }
+    "lab_minutes": null
+  },
+  "sources": [
+    {
+      "group": "National references",
+      "items": [
+        {
+          "title": "SDAIA: Data & AI Academic Programs Standards Framework (2026), section 3.6, the common prerequisite and bridging knowledge units",
+          "url": "https://sdaia.gov.sa/en/MediaCenter/KnowledgeCenter/ResearchLibrary/Academic-Programs-Standards-Framework-Q3.pdf"
+        },
+        {
+          "title": "SDAIA: Personal Data Protection Law, Article 1, the definition of personal data (English text)",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/PersonalDataProtectionLaw.pdf"
+        },
+        {
+          "title": "SDAIA: Personal Data Destruction, Anonymization and Pseudonymisation Guideline, version 1.0",
+          "url": "https://sdaia.gov.sa/Documents/PersonalDataDestructionAnonymizationAndEncryptionGuideline.pdf"
+        }
+      ]
+    },
+    {
+      "group": "Tools",
+      "items": [
+        {
+          "title": "PySAT: the SAT solver toolkit for Python (documentation)",
+          "url": "https://pysathq.github.io/"
+        },
+        {
+          "title": "NetworkX: directed acyclic graph algorithms, topological sort and cycles",
+          "url": "https://networkx.org/documentation/stable/reference/algorithms/dag.html"
+        },
+        {
+          "title": "Python standard library: hashlib, secure hashes and message digests",
+          "url": "https://docs.python.org/3/library/hashlib.html"
+        },
+        {
+          "title": "Python standard library: sqlite3, the database used for the join in lab 1.1",
+          "url": "https://docs.python.org/3/library/sqlite3.html"
+        },
+        {
+          "title": "Python standard library: fractions, exact rational arithmetic",
+          "url": "https://docs.python.org/3/library/fractions.html"
+        }
+      ]
+    }
+  ]
 }

@@ -3,24 +3,24 @@
   "version": 1,
   "questions": [
     {
-      "id": "q-example-1",
+      "id": "w1-product-size",
       "type": "single",
-      "prompt": "REPLACE: a practice question on LO1, as a short scenario",
+      "prompt": "A clinic lists 6 doctors and 4 consulting rooms. A rota table has one row for every possible doctor and room pair. How many rows does it have?",
       "options": [
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: the right answer",
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: a wrong option that a common misconception makes tempting"
+        "10",
+        "24",
+        "2 to the power 24",
+        "4 to the power 6"
       ],
       "correct": [
         1
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "The rows are the Cartesian product of the two sets, so there are 6 times 4 = 24 of them.",
       "misconceptions": [
-        "REPLACE: the misconception behind this option",
+        "Adds the two sizes: that counts doctors or rooms, not pairs",
         "",
-        "REPLACE: the misconception behind this option",
-        "REPLACE: the misconception behind this option"
+        "Counts the relations, every subset of the pairs, not the pairs",
+        "Counts the functions from doctors to rooms, not the pairs"
       ],
       "lo": [
         "LO1"
@@ -32,52 +32,27 @@
       "weight": 1
     },
     {
-      "id": "q-example-2",
-      "type": "tf",
-      "prompt": "REPLACE: a statement on LO2 that is true",
-      "options": [
-        "True",
-        "False"
-      ],
-      "correct": [
-        0
-      ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
-      "misconceptions": [
-        "",
-        "REPLACE: the misconception behind this option"
-      ],
-      "lo": [
-        "LO2"
-      ],
-      "day": "week1",
-      "session": 1,
-      "level": "understand",
-      "pool": "practice",
-      "weight": 1
-    },
-    {
-      "id": "q-example-3",
+      "id": "w1-not-a-function",
       "type": "single",
-      "prompt": "REPLACE: a practice question on LO3, as a short scenario",
+      "prompt": "A staff table maps each employee code to a desk. Two codes have no desk and one code has two desks. Which statement is right?",
       "options": [
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: the right answer",
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: a wrong option that a common misconception makes tempting"
+        "It is an injective function",
+        "It is a function, only not surjective",
+        "It is not a function on the employee codes",
+        "It is a bijection once the duplicates are removed"
       ],
       "correct": [
-        1
+        2
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "A function needs exactly one output for every input: a missing desk and a second desk each break that.",
       "misconceptions": [
-        "REPLACE: the misconception behind this option",
+        "Thinks injectivity is about inputs having outputs: it is about outputs not being shared",
+        "Misses that a missing or second output breaks the function itself",
         "",
-        "REPLACE: the misconception behind this option",
-        "REPLACE: the misconception behind this option"
+        "Believes removing rows fixes totality: the two codes without a desk still have no output"
       ],
       "lo": [
-        "LO3"
+        "LO1"
       ],
       "day": "week1",
       "session": 1,
@@ -86,52 +61,27 @@
       "weight": 1
     },
     {
-      "id": "q-example-4",
-      "type": "tf",
-      "prompt": "REPLACE: a statement on LO4 that is true",
-      "options": [
-        "True",
-        "False"
-      ],
-      "correct": [
-        0
-      ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
-      "misconceptions": [
-        "",
-        "REPLACE: the misconception behind this option"
-      ],
-      "lo": [
-        "LO4"
-      ],
-      "day": "week1",
-      "session": 1,
-      "level": "understand",
-      "pool": "practice",
-      "weight": 1
-    },
-    {
-      "id": "q-example-5",
+      "id": "w1-injective-integers",
       "type": "single",
-      "prompt": "REPLACE: a practice question on LO5, as a short scenario",
+      "prompt": "Which map from the integers to the integers is injective but not surjective?",
       "options": [
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: the right answer",
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: a wrong option that a common misconception makes tempting"
+        "n to n squared",
+        "n to n minus 4",
+        "n to 5n",
+        "n to the remainder of n divided by 2"
       ],
       "correct": [
-        1
+        2
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "5m = 5n gives m = n, so it is injective; 7 is never reached, so it is not surjective.",
       "misconceptions": [
-        "REPLACE: the misconception behind this option",
+        "Misses that n and minus n share a square, so it is not injective",
+        "Misses that every integer m is reached by m plus 4: it is a bijection",
         "",
-        "REPLACE: the misconception behind this option",
-        "REPLACE: the misconception behind this option"
+        "Misses that infinitely many integers share each remainder"
       ],
       "lo": [
-        "LO5"
+        "LO1"
       ],
       "day": "week1",
       "session": 1,
@@ -140,27 +90,31 @@
       "weight": 1
     },
     {
-      "id": "q-example-6",
-      "type": "tf",
-      "prompt": "REPLACE: a statement on LO6 that is true",
+      "id": "w1-join-rows",
+      "type": "single",
+      "prompt": "A warehouse joins orders (customer, order) with order lines (order, product). Is the join the composition 'customer ordered product'?",
       "options": [
-        "True",
-        "False"
+        "Yes, row for row",
+        "Its distinct rows are; the join can repeat a pair",
+        "No, a join is never related to composition",
+        "Only when every order has one line"
       ],
       "correct": [
-        0
+        1
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "The join has one row per matching pair of rows; removing repeated rows leaves the composition, a set of pairs.",
       "misconceptions": [
+        "Forgets that a customer can order one product in two orders, which repeats the pair",
         "",
-        "REPLACE: the misconception behind this option"
+        "Misses that the join's distinct rows are exactly the composition",
+        "Thinks one line per order prevents repeats: two orders of one product by one customer still repeat"
       ],
       "lo": [
-        "LO6"
+        "LO1"
       ],
       "day": "week1",
       "session": 1,
-      "level": "understand",
+      "level": "apply",
       "pool": "practice",
       "weight": 1
     }

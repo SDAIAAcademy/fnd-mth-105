@@ -13,6 +13,12 @@ Exercise regions (code cells only):
     # END SOLUTION
 Student notebooks (labs/*.ipynb) get a placeholder that raises NotImplementedError;
 solution notebooks (labs/solutions/*.ipynb) keep the code, minus the markers.
+
+The same markers in a markdown cell hold a model answer (a proof, a translation): the student
+notebook shows "*Your answer:*" in its place, the solution notebook shows the model answer.
+
+Problem-set sources (labs/_src/PS*.py) are written to labs/problem-sets/ only, with no solution
+notebook: their worked answers are kept by the trainer, outside this repository.
 """
 
 from __future__ import annotations
@@ -59,6 +65,19 @@ def convert(src: Path, student: bool) -> Path:
             return
         if kind == "markdown":
             lines = [l[2:] if l.startswith("# ") else l.lstrip("#") for l in lines]
+            md, inside = [], False
+            for l in lines:
+                if l.strip() == "BEGIN SOLUTION":
+                    inside = True
+                    if student:
+                        md.append("*Your answer:*")
+                    continue
+                if l.strip() == "END SOLUTION":
+                    inside = False
+                    continue
+                if not (inside and student):
+                    md.append(l)
+            lines = md
         else:
             lines = strip_solutions(lines, student)
         source = [l + "\n" for l in lines]
@@ -88,7 +107,10 @@ def convert(src: Path, student: bool) -> Path:
     }
     for i, c in enumerate(nb["cells"]):
         c["id"] = f"{src.stem[:20].lower().replace('_', '-')}-{i:03d}"
-    out_dir = LABS if student else LABS / "solutions"
+    if src.stem.startswith("PS"):
+        out_dir = LABS / "problem-sets"
+    else:
+        out_dir = LABS if student else LABS / "solutions"
     out_dir.mkdir(exist_ok=True)
     out = out_dir / f"{src.stem}.ipynb"
     out.write_text(json.dumps(nb, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
@@ -99,5 +121,5 @@ if __name__ == "__main__":
     names = sys.argv[1:]
     sources = [SRC / f"{n}.py" for n in names] if names else sorted(SRC.glob("*.py"))
     for s in sources:
-        for student in (True, False):
-            print("wrote", convert(s, student).relative_to(LABS))
+        for student in ((True,) if s.stem.startswith("PS") else (True, False)):
+            print("wrote", convert(s, student).relative_to(LABS).as_posix())
